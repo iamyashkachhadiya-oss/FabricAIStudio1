@@ -1,26 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #F7F6F2;
+  --bg-darker: #F0EEE8;
+  --surface: #FFFFFF;
+  --primary: #1B1F3B;
+  --primary-light: #2A2F52;
+  --accent: #E8A838;
+  --accent-hover: #D4952E;
+  --border: #E2E0D8;
+  --border-light: #EDEBE5;
+  --text-1: #1B1F3B;
+  --text-2: #6B6960;
+  --text-3: #9B9890;
+  --input-h: 44px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-family: var(--font-body);
+  color: var(--text-1);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ─── Global Input Styles ─────────────────────────────────── */
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 14px;
+  height: var(--input-h);
+  padding: 0 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-1);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+textarea {
+  height: auto;
+  padding: 12px 14px;
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232, 168, 56, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-3);
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+/* ─── Section Headers ─────────────────────────────────────── */
+
+.section-header {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* ─── Button Styles ───────────────────────────────────────── */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--input-h);
+  padding: 0 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 31, 59, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--input-h);
+  padding: 0 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-accent:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232, 168, 56, 0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  background: var(--surface);
+  color: var(--text-1);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  background: rgba(27, 31, 59, 0.03);
+}
+
+/* ─── Pill Toggle Buttons ─────────────────────────────────── */
+
+.pill-group {
+  display: inline-flex;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.pill-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  border: none;
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pill-btn + .pill-btn {
+  border-left: 1px solid var(--border);
+}
+
+.pill-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* ─── Card / Panel ────────────────────────────────────────── */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Modern Input Overrides ──────────────────────────────── */
+
+input, select, textarea {
+  border-color: #E8E8E8 !important;
+  background: #FAFAFA !important;
+}
+
+input:focus, select:focus {
+  background: #FFFFFF !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 4px rgba(27, 31, 59, 0.05) !important;
+}
+
+/* ─── Pulse Animation ─────────────────────────────────────── */
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-indicator {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-3);
+}
+
+/* ─── Collapsible ─────────────────────────────────────────── */
+
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 12px 0;
+  user-select: none;
+}
+
+.collapsible-header:hover {
+  color: var(--accent);
+}
+
+/* ─── Tab System ──────────────────────────────────────────── */
+
+.tab-bar {
+  display: flex;
+  border-bottom: 2px solid var(--border-light);
+  gap: 0;
+}
+
+.tab-btn {
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-body);
+}
+
+.tab-btn:hover {
+  color: var(--text-1);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
 }
