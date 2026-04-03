@@ -8,15 +8,14 @@ import WarpSystemForm from '@/components/design/WarpSystemForm'
 import WeftForm from '@/components/design/WeftForm'
 import LoomForm from '@/components/design/LoomForm'
 import CalcPanel from '@/components/design/CalcPanel'
-import PegPlanEditor from '@/components/design/PegPlanEditor'
 import WeaveCanvas from '@/components/design/WeaveCanvas'
 import SimulationPreview from '@/components/outputs/SimulationExport'
 import BorderForm from '@/components/design/BorderForm'
 import MachineExportPanel from '@/components/outputs/MachineExport'
-import CostingPanel from '@/components/design/CostingPanel'
+
 import SimulationAssistantUI from '@/components/analysis/SimulationAssistant'
 
-type DemoTab = 'Identity' | 'Warp' | 'Weft' | 'Loom' | 'Peg Plan' | 'Border' | 'Costing' | 'AI Analysis' | 'Export'
+type DemoTab = 'Identity' | 'Warp' | 'Weft' | 'Loom' | 'Border' | 'AI Analysis' | 'Export'
 
 export default function DemoPage() {
   const [activeTab, setActiveTab] = useState<DemoTab>('Weft')
@@ -41,7 +40,6 @@ export default function DemoPage() {
   const handlePegPlanChange = useCallback((text: string, matrix: number[][]) => {
     store.setPegPlan(text, matrix); store.recalculate()
   }, [store])
-
   const handleWeaveToggle = useCallback((row: number, col: number) => {
     const matrix = store.pegPlanMatrix.map((r, ri) =>
       ri === row ? r.map((c, ci) => ci === col ? (c === 1 ? 0 : 1) : c) : [...r]
@@ -103,8 +101,8 @@ export default function DemoPage() {
             borderBottom: '2px solid var(--border-light)',
             overflowX: 'auto', flexShrink: 0,
           }}>
-            {['Identity', 'Warp', 'Weft', 'Loom', 'Peg\nPlan', 'Border', 'Cos…'].map((label, i) => {
-              const tabMap: DemoTab[] = ['Identity', 'Warp', 'Weft', 'Loom', 'Peg Plan', 'Border', 'Costing']
+            {['Identity', 'Warp', 'Weft', 'Loom', 'Border'].map((label, i) => {
+              const tabMap: DemoTab[] = ['Identity', 'Warp', 'Weft', 'Loom', 'Border']
               const tab = tabMap[i]
               return (
                 <button key={tab} className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
@@ -122,13 +120,8 @@ export default function DemoPage() {
             {activeTab === 'Warp' && <WarpSystemForm />}
             {activeTab === 'Weft' && <WeftForm />}
             {activeTab === 'Loom' && <LoomForm />}
-            {activeTab === 'Peg Plan' && (
-              <div style={{ fontSize: 12, color: 'var(--text-3)', fontStyle: 'italic', padding: '12px 0' }}>
-                Use the bidirectional editor in the center panel to edit the peg plan.
-              </div>
-            )}
             {activeTab === 'Border' && <BorderForm />}
-            {activeTab === 'Costing' && <CostingPanel />}
+
             {activeTab === 'AI Analysis' && <SimulationAssistantUI />}
             {activeTab === 'Export' && <MachineExportPanel />}
           </div>
@@ -136,20 +129,6 @@ export default function DemoPage() {
 
         {/* ═══ CENTER WORKSPACE — ALWAYS SHOWS FULL LAYOUT ═══ */}
         <div style={{ flex: 1, overflowY: 'auto', padding: 20, display: 'flex', flexDirection: 'column', gap: 20 }}>
-
-          {/* ── 1. PEG PLAN — BIDIRECTIONAL EDITOR (always visible) ── */}
-          <div className="card" style={{ padding: 24 }}>
-            <div style={{ marginBottom: 4 }}>
-              <h3 style={{
-                fontSize: 14, fontWeight: 800, color: 'var(--text-1)',
-                textTransform: 'uppercase', letterSpacing: '0.08em',
-              }}>PEG PLAN — BIDIRECTIONAL EDITOR</h3>
-              <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>
-                Click cells to toggle · Text syncs automatically
-              </div>
-            </div>
-            <PegPlanEditor shaftCount={16} onChange={handlePegPlanChange} initialText={store.pegPlanText} />
-          </div>
 
           {/* ── 2. WEAVE GRID (always visible) ── */}
           {store.pegPlanMatrix.length > 0 && (

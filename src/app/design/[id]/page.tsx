@@ -9,14 +9,14 @@ import WarpSystemForm from '@/components/design/WarpSystemForm'
 import WeftForm from '@/components/design/WeftForm'
 import LoomForm from '@/components/design/LoomForm'
 import CalcPanel from '@/components/design/CalcPanel'
-import CostingPanel from '@/components/design/CostingPanel'
+
 import SimulationPanel from '@/components/design/SimulationPanel'
-import PegPlanEditor from '@/components/design/PegPlanEditor'
+
 import BorderForm from '@/components/design/BorderForm'
 import VariantsPanel from '@/components/design/VariantsPanel'
 import SimulationPreview from '@/components/outputs/SimulationExport'
 
-type DesignTab = 'Identity' | 'Warp' | 'WarpSystem' | 'Weft' | 'Loom' | 'PegPlan' | 'Border' | 'Costing' | 'AI'
+type DesignTab = 'Identity' | 'Warp' | 'WarpSystem' | 'Weft' | 'Loom' | 'Border' | 'AI'
 
 export default function DesignPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
@@ -52,7 +52,7 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
     router.push(`/design/${designId}`)
   }, [router])
 
-  const tabs: DesignTab[] = ['Identity', 'Warp', 'WarpSystem', 'Weft', 'Loom', 'PegPlan', 'Border', 'Costing', 'AI']
+  const tabs: DesignTab[] = ['Identity', 'Warp', 'WarpSystem', 'Weft', 'Loom', 'Border', 'AI']
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: 'var(--bg)' }}>
@@ -126,7 +126,7 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
                 className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
                 onClick={() => setActiveTab(tab)}
               >
-                {tab === 'PegPlan' ? 'Peg Plan' : tab === 'WarpSystem' ? 'Warp+' : tab}
+                {tab === 'WarpSystem' ? 'Warp+' : tab}
               </button>
             ))}
           </div>
@@ -138,15 +138,9 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
             {activeTab === 'WarpSystem' && <WarpSystemForm />}
             {activeTab === 'Weft' && <WeftForm />}
             {activeTab === 'Loom' && <LoomForm />}
-            {activeTab === 'PegPlan' && (
-              <PegPlanEditor
-                shaftCount={16}
-                onChange={handlePegPlanChange}
-                initialText={store.pegPlanText}
-              />
-            )}
+
             {activeTab === 'Border' && <BorderForm />}
-            {activeTab === 'Costing' && <CostingPanel />}
+
             {activeTab === 'AI' && <SimulationPanel />}
           </div>
         </div>
@@ -165,19 +159,7 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
             </div>
           )}
 
-          {/* Peg Plan Visual (large view) - Conditional Visibility */}
-          {(activeTab === 'PegPlan' || activeTab === 'Identity' || activeTab === 'Weft') && (
-            <div className="card">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                <div className="section-header" style={{ marginBottom: 0 }}>Peg Plan — Sequence Editor</div>
-              </div>
-              <PegPlanEditor
-                shaftCount={16}
-                onChange={handlePegPlanChange}
-                initialText={store.pegPlanText}
-              />
-            </div>
-          )}
+
 
           {/* Border Preview Section */}
           {activeTab === 'Border' && (
@@ -208,10 +190,7 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
             />
           </div>
 
-          {/* Costing Panel */}
-          <div className="card">
-            <CostingPanel />
-          </div>
+
 
           {/* Fabric Output Simulation Engine */}
           <div className="card">
