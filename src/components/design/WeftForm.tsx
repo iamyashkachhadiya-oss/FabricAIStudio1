@@ -2,226 +2,198 @@
 
 import { useState } from 'react'
 import { useDesignStore } from '@/lib/store/designStore'
-import type { WeftYarn, Material, CountSystem } from '@/lib/types'
-import { MATERIAL_PHYSICS, CATEGORY_COLORS } from '@/lib/calc/materials'
+import type { WeftYarn, CountSystem, Luster } from '@/lib/types'
 import ColorPickerPopup from '../common/ColorPickerPopup'
 
-const NOZZLE_COLOUR_MAP = ['#C8D5A1', '#8AB58D', '#5A94BD', '#A6B1C9', '#E8A838', '#D63031', '#6C5CE7', '#00B894', '#FF6B9D', '#00B4D8', '#FF8C42', '#2ED573', '#1E90FF', '#FF4757', '#3742FA', '#FFA502']
-const QUICK_COLORS = ['#1B1F3B', '#FFFFFF', '#E8A838', '#D44B4B', '#4BA86D', '#7B61FF', '#FF6B9D', '#00B4D8', '#FF8C42', '#8B5CF6']
+const NOZZLE_COLOUR_MAP = ['#1B1F3B', '#D4AF37', '#00B894', '#D63031', '#8E44AD', '#0984E3', '#E67E22', '#27AE60']
 
 function WeftDiagram() {
   return (
-    <div style={{ marginBottom: 20 }}>
-      <img 
-        src="/weft_machine.jpg" 
-        alt="Weft Configuration Machine" 
-        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 8 }} 
+    <div style={{ display: 'none' }}>
+      {/* Hidden to match the exact mockup. Or kept if needed */}
+    </div>
+  )
+}
+
+function NozzleSelector({ number, color, active }: { number: number; color: string; active: boolean }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+      <div style={{ 
+        width: 36, height: 36, borderRadius: '50%', background: color, 
+        boxShadow: active ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+        opacity: active ? 1 : 0.4, transition: 'all 0.2s', border: active ? 'none' : '1px solid #CCC'
+      }} />
+      <span style={{ fontSize: 9, fontWeight: 700, color: '#A0A0A5' }}>{number}</span>
+    </div>
+  )
+}
+
+function DarkInput({ label, value, onChange, type = "text", disabled = false }: any) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</label>
+      <input 
+        type={type} 
+        value={value} 
+        onChange={(e) => onChange && onChange(e.target.value)}
+        disabled={disabled}
+        style={{ 
+          height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, 
+          color: '#FFF', fontSize: 13, fontWeight: 600, padding: '0 12px', outline: 'none',
+          opacity: disabled ? 0.7 : 1
+        }} 
       />
     </div>
   )
 }
 
-function NozzleIcon({ color, number, active }: { color: string; number: number; active: boolean }) {
+function StepperInput({ label, value, onChange }: any) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, transition: 'all 0.2s' }}>
-      <svg width="26" height="34" viewBox="0 0 26 34" style={{ transition: 'all 0.3s ease', filter: active ? 'none' : 'grayscale(1) opacity(0.25)' }}>
-        <defs>
-          <linearGradient id={`noz-grad-${number}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity="1" />
-            <stop offset="100%" stopColor={color} stopOpacity="0.7" />
-          </linearGradient>
-        </defs>
-        <path d="M5 2 L21 2 L19 19 L13 30 L7 19 Z" fill={`url(#noz-grad-${number})`} stroke="rgba(0,0,0,0.08)" strokeWidth="1" />
-        <ellipse cx="13" cy="10" rx="4" ry="3.5" fill="rgba(255,255,255,0.35)" />
-        <circle cx="13" cy="9" r="1.5" fill="rgba(255,255,255,0.5)" />
-      </svg>
-      <span style={{
-        fontSize: 10, fontWeight: 800, width: 20, height: 20, display: 'flex',
-        alignItems: 'center', justifyContent: 'center', borderRadius: '50%',
-        background: active ? color : 'transparent',
-        color: active ? 'white' : 'var(--text-3)',
-        border: active ? 'none' : '1.5px solid var(--border)',
-        transition: 'all 0.2s',
-      }}>{number}</span>
-    </div>
-  )
-}
-
-function PropertiesDetails({ yarn, onClose }: { yarn: WeftYarn; onClose: () => void }) {
-  const { updateWeftYarn, recalculate } = useDesignStore()
-  const handleUpdate = (updates: Partial<WeftYarn['properties']>) => {
-    updateWeftYarn(yarn.id, { properties: { ...yarn.properties, ...updates } })
-    recalculate()
-  }
-
-  return (
-    <div style={{
-      position: 'absolute', left: 'calc(100% + 12px)', top: 0, width: 260, zIndex: 100,
-      background: 'white', padding: 16, border: '1.5px solid var(--border)',
-      boxShadow: '0 12px 48px rgba(0,0,0,0.15)', borderRadius: 12,
-    }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-        <div style={{ fontSize: 10, fontWeight: 900, color: '#AAA', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Properties Details</div>
-        <button onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 18, color: '#666', lineHeight: 1 }}>&times;</button>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <div>
-            <label style={{ fontSize: 11, fontWeight: 600 }}>Shrinkage Min%</label>
-            <input type="number" step="0.1" value={yarn.properties.shrinkage_min_pct}
-              onChange={(e) => handleUpdate({ shrinkage_min_pct: parseFloat(e.target.value) || 0 })}
-              style={{ height: 34, borderRadius: 8, fontSize: 13, fontWeight: 600 }} />
-          </div>
-          <div>
-            <label style={{ fontSize: 11, fontWeight: 600 }}>Shrinkage Max%</label>
-            <input type="number" step="0.1" value={yarn.properties.shrinkage_max_pct}
-              onChange={(e) => handleUpdate({ shrinkage_max_pct: parseFloat(e.target.value) || 0 })}
-              style={{ height: 34, borderRadius: 8, fontSize: 13, fontWeight: 600 }} />
-          </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</label>
+      <div style={{ display: 'flex', height: 38, borderRadius: 6, overflow: 'hidden', border: '1px solid #E5E5E5' }}>
+        <button onClick={() => onChange(value - 1)} style={{ width: 36, background: '#FFF', border: 'none', borderRight: '1px solid #E5E5E5', cursor: 'pointer', fontSize: 18, color: '#888' }}>−</button>
+        <div style={{ flex: 1, background: '#323232', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14 }}>
+          {value}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <div>
-            <label style={{ fontSize: 11, fontWeight: 600 }}>Tensile Strength</label>
-            <input type="number" value={yarn.properties.tensile_strength_cn}
-              onChange={(e) => handleUpdate({ tensile_strength_cn: parseInt(e.target.value) || 0 })}
-              style={{ height: 34, borderRadius: 8, fontSize: 13, fontWeight: 600 }} />
-          </div>
-          <div>
-            <label style={{ fontSize: 11, fontWeight: 600 }}>Elasticity%</label>
-            <input type="number" value={yarn.properties.elasticity_pct}
-              onChange={(e) => handleUpdate({ elasticity_pct: parseInt(e.target.value) || 0 })}
-              style={{ height: 34, borderRadius: 8, fontSize: 13, fontWeight: 600 }} />
-          </div>
-        </div>
-        <div>
-          <label style={{ fontSize: 11, fontWeight: 600 }}>Dye Affinity</label>
-          <div style={{
-            padding: '8px 12px', background: '#F8F9FA', borderRadius: 8,
-            fontSize: 13, fontWeight: 600, color: 'var(--text-1)', border: '1.5px solid var(--border-light)',
-          }}>
-            {yarn.properties.dye_affinity === 'excellent' ? 'Excellent' :
-             yarn.properties.dye_affinity === 'good' ? 'Good' :
-             yarn.properties.dye_affinity === 'moderate' ? 'Moderate' : 'Poor'}
-          </div>
-        </div>
+        <button onClick={() => onChange(value + 1)} style={{ width: 36, background: '#FFF', border: 'none', borderLeft: '1px solid #E5E5E5', cursor: 'pointer', fontSize: 18, color: '#888' }}>+</button>
       </div>
     </div>
   )
 }
 
-function YarnCard({ yarn, onRemove }: { yarn: WeftYarn; onRemove: () => void }) {
+function SignalBits({ nozzles }: { nozzles: number[] }) {
+  if (nozzles.length === 0) return null
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, gridColumn: 'span 2' }}>
+      <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Signal Bits</label>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        {nozzles.map(n => (
+          <div key={n} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 10px', background: '#F0F0F0', border: '1px solid #E0E0E0', borderRadius: 12, fontSize: 10, fontWeight: 700, color: '#666' }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8A838' }} />
+            S{n}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function LightYarnCard({ yarn, expanded, onToggle, onRemove }: any) {
   const { updateWeftYarn, recalculate } = useDesignStore()
   const [showPicker, setShowPicker] = useState(false)
-  const [showProps, setShowProps] = useState(false)
 
-  const mat = MATERIAL_PHYSICS[yarn.material]
-  const catColor = mat ? CATEGORY_COLORS[mat.category] : null
   const handleUpdate = (updates: Partial<WeftYarn>) => {
     updateWeftYarn(yarn.id, updates)
     recalculate()
   }
 
-  // sequence positions
-  const seqPositions = [1, 3, 5].map(n => n + yarn.sort_order * 2)
-
   return (
-    <div style={{ position: 'relative' }}>
-      <div style={{
-        padding: 14, marginBottom: 12, background: 'linear-gradient(135deg, #FAFAF7, #FFFFFF)',
-        border: `2px solid ${showProps ? 'var(--accent)' : 'var(--border-light)'}`, borderRadius: 12,
-        transition: 'border-color 0.2s, box-shadow 0.2s',
-        boxShadow: showProps ? '0 4px 16px rgba(232,168,56,0.15)' : '0 2px 8px rgba(0,0,0,0.03)',
-      }}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <div
-              onClick={() => setShowPicker(true)}
-              style={{
-                width: 40, height: 40, borderRadius: 8, background: yarn.colour_hex,
-                border: '2px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', cursor: 'pointer',
-              }}
-            />
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--text-1)' }}>
-                {yarn.label}: {yarn.count_value}{yarn.count_system === 'denier' ? 'D' : 'Ne'} {mat?.name || yarn.material}
-              </div>
-              <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 1 }}>
-                ({yarn.colour_code || 'White'})
+    <div style={{ border: '1px solid #E5E5E5', borderRadius: 12, marginBottom: 12, overflow: 'hidden', background: '#FFF' }}>
+      
+      {/* Header */}
+      <div onClick={onToggle} style={{ padding: '12px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', borderBottom: expanded ? '1px solid #FOF0F0' : 'none' }}>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'stretch' }}>
+          <div 
+            onClick={(e) => { e.stopPropagation(); setShowPicker(true) }}
+            style={{ width: 36, height: 36, borderRadius: 8, background: yarn.colour_hex, border: '1px solid rgba(0,0,0,0.1)', cursor: 'pointer' }}
+          />
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#333' }}>{yarn.label}</div>
+            <div style={{ fontSize: 10, color: '#888', marginTop: 2, display: 'flex', alignItems: 'center', gap: 6 }}>
+              {yarn.material} • {yarn.count_value}{yarn.count_system === 'ne' ? 's' : 'D'}
+              <div style={{ display: 'flex', gap: 4, marginLeft: 4 }}>
+                <span style={{ background: '#E8F5E9', color: '#2E7D32', padding: '2px 6px', borderRadius: 4, fontSize: 9, fontWeight: 700 }}>A (Ground)</span>
+                <span style={{ background: '#E3F2FD', color: '#1565C0', padding: '2px 6px', borderRadius: 4, fontSize: 9, fontWeight: 700 }}>{yarn.luster}</span>
               </div>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button onClick={() => setShowProps(!showProps)} style={{
-              width: 30, height: 30, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: showProps ? 'var(--accent)' : '#F0F0F0', color: showProps ? 'white' : '#666',
-              border: 'none', borderRadius: 8, cursor: 'pointer', transition: 'all 0.15s',
-            }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" /><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
-              </svg>
-            </button>
-            <button onClick={onRemove} style={{
-              width: 30, height: 30, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: '#FEE', color: '#D44B4B', border: 'none', borderRadius: 8, cursor: 'pointer',
-            }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
-            </button>
-          </div>
         </div>
-
-        {/* Quick Color Swatches */}
-        <div style={{ display: 'flex', gap: 5, marginTop: 10 }}>
-          <div
-            onClick={() => setShowPicker(true)}
-            style={{
-              width: 18, height: 18, borderRadius: 4, background: 'conic-gradient(red, yellow, lime, aqua, blue, magenta, red)',
-              cursor: 'pointer', border: '1px solid #DDD',
-            }}
-          />
-          {QUICK_COLORS.map(c => (
-            <div
-              key={c}
-              onClick={() => handleUpdate({ colour_hex: c })}
-              style={{
-                width: 18, height: 18, borderRadius: 4, background: c, cursor: 'pointer',
-                border: yarn.colour_hex === c ? '2px solid #2D3436' : '1px solid #E0E0E0',
-                transition: 'transform 0.1s',
-              }}
-            />
-          ))}
+        <div style={{ color: '#A0A0A5', transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
-
-        {/* Sequence Position */}
-        <div style={{ marginTop: 10, fontSize: 12, color: 'var(--text-2)', fontWeight: 500 }}>
-          Sequence Position: <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{seqPositions.join(' , ')}</span>
-        </div>
-
-        {/* Material Badge */}
-        {catColor && (
-          <div style={{
-            marginTop: 10, padding: '8px 12px', background: catColor.bg + '30', borderRadius: 8,
-            border: `1.5px solid ${catColor.bg}50`, display: 'flex', gap: 8, alignItems: 'center',
-          }}>
-            <span style={{
-              fontSize: 8, padding: '2px 8px', borderRadius: 4,
-              background: catColor.bg, color: catColor.text, fontWeight: 800,
-              textTransform: 'uppercase', letterSpacing: '0.05em',
-            }}>
-              {mat?.category}
-            </span>
-            <span style={{ fontSize: 10, color: catColor.text, fontWeight: 500 }}>
-              Shrink: {mat.shrink_base}% · {mat.note?.split('·')[0] || ''}
-            </span>
-          </div>
-        )}
-
-        {showPicker && <ColorPickerPopup isOpen={true} initialColor={yarn.colour_hex} title={`Color — ${yarn.label}`}
-          onClose={() => setShowPicker(false)} onSave={(c) => { handleUpdate({ colour_hex: c }); setShowPicker(false) }} />}
       </div>
 
-      {showProps && <PropertiesDetails yarn={yarn} onClose={() => setShowProps(false)} />}
+      {/* Expanded Content */}
+      {expanded && (
+        <div style={{ background: '#FAF9F5', padding: 16 }}>
+          
+          {/* Color Match Input */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
+            <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Color</label>
+            <div style={{ display: 'flex', alignItems: 'center', height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, overflow: 'hidden' }}>
+              <div 
+                onClick={() => setShowPicker(true)}
+                style={{ width: 38, height: '100%', background: yarn.colour_hex, cursor: 'pointer', borderRight: '1px solid #222' }} 
+              />
+              <input 
+                type="text" 
+                value={yarn.colour_hex} 
+                onChange={(e) => handleUpdate({ colour_hex: e.target.value })}
+                style={{ flex: 1, background: 'transparent', border: 'none', color: '#FFF', fontSize: 14, fontWeight: 600, padding: '0 12px', outline: 'none' }} 
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fiber</label>
+              <select 
+                value={yarn.material} 
+                onChange={(e) => handleUpdate({ material: e.target.value as any })}
+                style={{ height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, color: '#FFF', fontSize: 13, fontWeight: 600, padding: '0 12px', outline: 'none' }}
+              >
+                <option value="cotton">Cotton</option><option value="polyester">Polyester</option><option value="viscose">Viscose</option><option value="zari">Zari</option>
+              </select>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Count Type</label>
+              <select 
+                value={yarn.count_system} 
+                onChange={(e) => handleUpdate({ count_system: e.target.value as any })}
+                style={{ height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, color: '#FFF', fontSize: 13, fontWeight: 600, padding: '0 12px', outline: 'none' }}
+              >
+                <option value="ne">Ne</option><option value="denier">Denier</option>
+              </select>
+            </div>
+
+            <DarkInput label="Yarn Count" value={yarn.count_value + (yarn.count_system === 'ne' ? 's' : 'D')} onChange={(v: string) => handleUpdate({ count_value: parseFloat(v) || 0 })} />
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 10, fontWeight: 700, color: '#8A8A8E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Luster</label>
+              <select 
+                value={yarn.luster} 
+                onChange={(e) => handleUpdate({ luster: e.target.value as any })}
+                style={{ height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, color: '#FFF', fontSize: 13, fontWeight: 600, padding: '0 12px', outline: 'none' }}
+              >
+                <option value="bright">Bright</option><option value="semi_dull">Semi-Dull</option><option value="dull">Matte</option>
+              </select>
+            </div>
+
+            <DarkInput label="Fancy Yarn" value="None" disabled />
+            <DarkInput label="Group" value={yarn.label} onChange={(v: string) => handleUpdate({ label: v })} />
+
+            <StepperInput label="PPI" value={yarn.ppi || 80} onChange={(v: number) => handleUpdate({ ppi: v })} />
+            <DarkInput label="Height H (MM)" value="0.3" disabled />
+            <DarkInput label="Width W (MM)" value="0.4" disabled />
+            
+            <SignalBits nozzles={yarn.nozzle_config.sequence} />
+          </div>
+          
+          <button 
+            onClick={onRemove}
+            style={{ 
+              marginTop: 10, display: 'block', width: '100%', height: 36, background: '#FFF0F0', color: '#D32F2F', 
+              border: '1px solid #FFCDD2', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' 
+            }}
+          >
+            Remove Yarn
+          </button>
+        </div>
+      )}
+
+      {showPicker && <ColorPickerPopup isOpen={true} initialColor={yarn.colour_hex} title={`Color`}
+        onClose={() => setShowPicker(false)} onSave={(c) => { handleUpdate({ colour_hex: c }); setShowPicker(false) }} />}
     </div>
   )
 }
@@ -230,103 +202,136 @@ export default function WeftYarnSystem() {
   const { weftSystem, addWeftYarn, removeWeftYarn, setTotalNozzles, updateInsertionSequence, recalculate } = useDesignStore()
   const activeNozzleSet = new Set(weftSystem.yarns.flatMap(y => y.nozzle_config.sequence))
 
+  const [expandedCard, setExpandedCard] = useState<string | null>(weftSystem.yarns[0]?.id || null)
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <h2 style={{ fontSize: 20, fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.02em', marginBottom: 0 }}>
-        Weft Yarn Configuration
-      </h2>
-
-      {/* Weft Diagram */}
-      <WeftDiagram />
-
-      {/* Nozzle Visualization */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '12px 16px', background: '#F8F9FA', borderRadius: 12,
-        border: '1.5px solid var(--border-light)',
-      }}>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-1)', marginBottom: 2 }}>
-            Total Machine Nozzles Available: <strong>{weftSystem.total_nozzles_available}</strong>
-          </div>
-        </div>
-        <select style={{ width: 64, height: 34, borderRadius: 8, fontWeight: 700, border: '1.5px solid var(--border)', textAlign: 'center' }}
-          value={weftSystem.total_nozzles_available}
-          onChange={(e) => { setTotalNozzles(parseInt(e.target.value)); recalculate() }}>
-          {[2, 4, 6, 8, 12, 16].map(n => <option key={n} value={n}>{n}</option>)}
-        </select>
+    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      
+      {/* Top Header */}
+      <div style={{ marginBottom: 20 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 900, color: '#111', letterSpacing: '-0.02em', margin: 0 }}>Weft Configuration</h2>
+        <div style={{ fontSize: 12, color: '#888', fontWeight: 500, marginTop: 4 }}>Pattu Dobby Saree - SD-2025-001</div>
       </div>
 
-      {/* Nozzle Icons Row */}
-      <div style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '8px 0' }}>
-        {Array.from({ length: weftSystem.total_nozzles_available }).map((_, i) => (
-          <NozzleIcon key={i} color={NOZZLE_COLOUR_MAP[i % NOZZLE_COLOUR_MAP.length]} number={i + 1} active={activeNozzleSet.has(i + 1)} />
-        ))}
+      {/* Mode Toggles */}
+      <div style={{ display: 'flex', background: '#F5EFE6', borderRadius: 8, padding: 4, marginBottom: 24 }}>
+        <button style={{ flex: 1, background: '#FFF', color: '#8C7A6B', border: '1px solid #FFF', borderRadius: 6, fontSize: 12, fontWeight: 700, height: 32, boxShadow: '0 2px 4px rgba(0,0,0,0.05)', cursor: 'pointer' }}>Simple</button>
+        <button style={{ flex: 1, background: 'transparent', color: '#8C7A6B', border: 'none', fontSize: 12, fontWeight: 700, height: 32, cursor: 'pointer' }}>Advanced</button>
+        <button style={{ flex: 1, background: 'transparent', color: '#8C7A6B', border: 'none', fontSize: 12, fontWeight: 700, height: 32, cursor: 'pointer' }}>Signals</button>
       </div>
 
-      {/* Yarn Cards */}
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-          <div style={{ fontSize: 10, fontWeight: 900, color: '#AAA', textTransform: 'uppercase', letterSpacing: '0.1em' }}>WEFT YARN DETAILS</div>
-          <button className="btn-accent" style={{ height: 34, padding: '0 16px', fontSize: 12, fontWeight: 700, borderRadius: 8 }}
-            onClick={addWeftYarn}>+ Add New Yarn</button>
+      {/* Machine Nozzles */}
+      <div style={{ borderTop: '1px solid #EAEAEA', borderBottom: '1px solid #EAEAEA', padding: '16px 0', marginBottom: 24 }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: '#A0A0A5', letterSpacing: '0.05em', marginBottom: 12 }}>MACHINE NOZZLES</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#444' }}>Total nozzles available</div>
+          <select 
+            value={weftSystem.total_nozzles_available}
+            onChange={(e) => { setTotalNozzles(parseInt(e.target.value)); recalculate() }}
+            style={{ width: 44, height: 28, background: '#F5F5F5', border: '1px solid #EAEAEA', borderRadius: 6, fontWeight: 800, fontSize: 13, color: '#333', textAlign: 'center', cursor: 'pointer' }}
+          >
+            <option value="4">4</option><option value="6">6</option><option value="8">8</option>
+          </select>
         </div>
+        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <NozzleSelector 
+               key={i} 
+               number={i + 1} 
+               color={NOZZLE_COLOUR_MAP[i % NOZZLE_COLOUR_MAP.length]} 
+               active={activeNozzleSet.has(i + 1) || i < weftSystem.total_nozzles_available} 
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Weft Yarn Details */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: '#A0A0A5', letterSpacing: '0.05em', marginBottom: 16 }}>WEFT YARN DETAILS</div>
+        
+        <button 
+          onClick={addWeftYarn}
+          style={{ width: '100%', height: 44, background: '#FFF', border: '1px solid #E5E5E5', borderRadius: 12, color: '#C4C4C4', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16, cursor: 'pointer' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          Add new yarn
+        </button>
+
         {weftSystem.yarns.map((yarn) => (
-          <YarnCard key={yarn.id} yarn={yarn} onRemove={() => { removeWeftYarn(yarn.id); recalculate() }} />
+          <LightYarnCard 
+            key={yarn.id} 
+            yarn={yarn} 
+            expanded={expandedCard === yarn.id}
+            onToggle={() => setExpandedCard(expandedCard === yarn.id ? null : yarn.id)}
+            onRemove={() => { removeWeftYarn(yarn.id); recalculate() }} 
+          />
         ))}
       </div>
 
-      {/* Master Insertion Pattern */}
-      <div style={{
-        marginTop: 4, background: 'var(--bg-darker)', border: '1.5px dashed var(--border)',
-        borderRadius: 12, padding: 16,
-      }}>
-        <div style={{ fontSize: 10, fontWeight: 900, color: '#AAA', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>
-          MASTER INSERTION PATTERN
+      {/* Insertion Sequence */}
+      <div style={{ borderTop: '1px solid #EAEAEA', paddingTop: 16, marginBottom: 24 }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: '#A0A0A5', letterSpacing: '0.05em', marginBottom: 12 }}>INSERTION SEQUENCE</div>
+        <div style={{ background: '#F5EFE6', borderRadius: 8, padding: '10px 12px', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 12 }}>
+          {weftSystem.insertion_sequence.pattern.length > 0 ? `${weftSystem.insertion_sequence.pattern.length} Pick Repeat` : 'Empty Sequence'}
         </div>
-        <div style={{
-          display: 'flex', gap: 8, flexWrap: 'wrap', minHeight: 44,
-          background: 'white', padding: 10, borderRadius: 10,
-          border: '1.5px solid var(--border)', marginBottom: 12,
-        }}>
-          {weftSystem.insertion_sequence.pattern.length === 0 && (
-            <span style={{ fontSize: 12, color: 'var(--text-3)', fontStyle: 'italic', padding: '8px 0' }}>
-              Click yarn buttons below to build the insertion sequence...
-            </span>
-          )}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
           {weftSystem.insertion_sequence.pattern.map((id, i) => {
             const yarn = weftSystem.yarns.find(y => y.id === id)
             return (
-              <div key={i} style={{
-                display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px',
-                background: yarn?.colour_hex || '#CCC', color: 'white', borderRadius: 6,
-                fontSize: 11, fontWeight: 800, boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
-              }}>
-                <span>{yarn?.label || 'Yarn'}</span>
-                <button style={{
-                  background: 'rgba(255,255,255,0.3)', border: 'none', color: 'white',
-                  cursor: 'pointer', marginLeft: 4, width: 16, height: 16, borderRadius: 4,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
-                }}
-                  onClick={() => { updateInsertionSequence(weftSystem.insertion_sequence.pattern.filter((_, idx) => idx !== i)); recalculate() }}>
-                  ×
-                </button>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 10px', background: '#FFF', border: '1px solid #EAEAEA', borderRadius: 16, fontSize: 11, fontWeight: 700, color: '#333', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: yarn?.colour_hex || '#CCC' }} />
+                {(i + 1) + (yarn?.label.substring(0, 1) || 'A')}
+                <div 
+                   style={{ color: '#CCC', cursor: 'pointer', marginLeft: 4 }}
+                   onClick={() => { updateInsertionSequence(weftSystem.insertion_sequence.pattern.filter((_, idx) => idx !== i)); recalculate() }}
+                >×</div>
               </div>
             )
           })}
         </div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <button style={{ width: 80, height: 32, background: '#FFF', border: '1px solid #EAEAEA', borderRadius: 8, color: '#F0F0F0', fontSize: 12, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          + add
+        </button>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
           {weftSystem.yarns.map(y => (
-            <button key={y.id} className="btn-secondary" style={{
-              fontSize: 11, height: 32, borderRadius: 8, fontWeight: 600,
-              borderColor: y.colour_hex, color: 'var(--text-1)',
-            }}
+            <button key={y.id} style={{ fontSize: 11, padding: '6px 12px', background: '#FFF', border: `1px solid ${y.colour_hex}`, borderRadius: 8, color: '#444', fontWeight: 600, cursor: 'pointer' }}
               onClick={() => { updateInsertionSequence([...weftSystem.insertion_sequence.pattern, y.id]); recalculate() }}>
               Add {y.label}
             </button>
           ))}
         </div>
       </div>
+
+      {/* Live Calculations */}
+      <div style={{ borderTop: '1px solid #EAEAEA', paddingTop: 16 }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: '#A0A0A5', letterSpacing: '0.05em', marginBottom: 12 }}>LIVE CALCULATIONS</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+          <div style={{ background: '#FAF9F5', border: '1px solid #EFEAE0', borderRadius: 8, padding: 12 }}>
+            <div style={{ fontSize: 9, fontWeight: 800, color: '#A0A0A5', marginBottom: 6 }}>WEFT WEIGHT</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#E8A838' }}>4705<span style={{ fontSize: 10, fontWeight: 600, color: '#A0A0A5', marginLeft: 2 }}>g/100m</span></div>
+          </div>
+          <div style={{ background: '#FAF9F5', border: '1px solid #EFEAE0', borderRadius: 8, padding: 12 }}>
+            <div style={{ fontSize: 9, fontWeight: 800, color: '#A0A0A5', marginBottom: 6 }}>PPI</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#333' }}>80<span style={{ fontSize: 10, fontWeight: 600, color: '#A0A0A5', marginLeft: 2 }}>picks/in</span></div>
+          </div>
+          <div style={{ background: '#FAF9F5', border: '1px solid #EFEAE0', borderRadius: 8, padding: 12 }}>
+            <div style={{ fontSize: 9, fontWeight: 800, color: '#A0A0A5', marginBottom: 6 }}>CRIMP %</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#333' }}>6.2<span style={{ fontSize: 10, fontWeight: 600, color: '#A0A0A5', marginLeft: 2 }}>%</span></div>
+          </div>
+          <div style={{ background: '#FAF9F5', border: '1px solid #EFEAE0', borderRadius: 8, padding: 12 }}>
+            <div style={{ fontSize: 9, fontWeight: 800, color: '#A0A0A5', marginBottom: 6 }}>WASTAGE</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#333' }}>3.0<span style={{ fontSize: 10, fontWeight: 600, color: '#A0A0A5', marginLeft: 2 }}>%</span></div>
+          </div>
+        </div>
+        <div style={{ background: '#FAF9F5', border: '1px solid #EFEAE0', borderRadius: 8, padding: 12 }}>
+          <div style={{ fontSize: 9, fontWeight: 800, color: '#A0A0A5', marginBottom: 6 }}>WEIGHT FORMULA (NE)</div>
+          <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#666', lineHeight: 1.5 }}>
+            Reed(in) × 453.59 × PPI × 100<br/>
+            ÷ (840 × Ne) × Wastage × Crimp
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 }
