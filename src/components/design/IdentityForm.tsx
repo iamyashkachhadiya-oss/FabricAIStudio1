@@ -34,7 +34,7 @@ export default function IdentityForm() {
             <input
               id={id}
               type="text"
-              value={(identity as Record<string, string>)[key]}
+              value={(identity as unknown as Record<string, string>)[key] || ''}
               onChange={(e) => updateIdentity({ [key]: e.target.value })}
               placeholder={placeholder}
             />
