@@ -26,6 +26,12 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialText])
 
+  // Re-parse matrix when shaftCount changes
+  useEffect(() => {
+    setMatrix(textToMatrix(text, shaftCount))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shaftCount])
+
   // TEXT → GRID (debounced 300ms)
   const handleTextChange = useCallback((newText: string) => {
     if (isUpdatingFromGrid.current) return
@@ -88,90 +94,88 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
   const repeatH = picks
 
   return (
-    <div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 16,
-      }}>
+    <div style={{ width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* LEFT — Text Input */}
-        <div>
-          <label style={{ marginBottom: 8, display: 'block' }}>
-            Peg Plan (text format)
-          </label>
-          <textarea
-            value={text}
-            onChange={(e) => handleTextChange(e.target.value)}
-            placeholder={`1-->1,3,5,6\n---\n2-->2,4,6,8\n---\n3-->1,3,5,7`}
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 13,
-              lineHeight: 1.6,
-              background: 'var(--bg-darker)',
-              minHeight: 240,
-              resize: 'vertical',
-            }}
-          />
-          <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 6 }}>
-            Format: pick--&gt;shaft,shaft,shaft
-          </div>
-        </div>
-
-        {/* RIGHT — Visual Grid */}
-        <div>
-          <label style={{ marginBottom: 8, display: 'block' }}>
-            Peg Plan (visual grid)
-          </label>
-          <div style={{
-            background: 'var(--bg)',
-            borderRadius: 10,
-            padding: 16,
-            border: '1px solid var(--border-light)',
-            minHeight: 240,
-            display: 'flex',
-            alignItems: 'flex-start',
-          }}>
-            {matrix.length > 0 ? (
-              <WeaveCanvas
-                matrix={matrix}
-                shaftCount={shaftCount}
-                onToggle={handleToggle}
-                repeatW={repeatW}
-                repeatH={repeatH}
-              />
-            ) : (
-              <div style={{
+        <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ flex: '0 0 340px', minWidth: 240 }}>
+            <label style={{ marginBottom: 6, display: 'block', fontSize: 12, fontWeight: 500, color: 'var(--text-2)' }}>
+              Peg Plan — Text Format
+            </label>
+            <textarea
+              value={text}
+              onChange={(e) => handleTextChange(e.target.value)}
+              placeholder={`1-->1,3,5,6\n---\n2-->2,4,6,8\n---\n3-->1,3,5,7`}
+              rows={Math.max(16, text.split('\n').length)}
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 12.5,
+                lineHeight: 1.65,
+                background: 'var(--bg)',
+                borderRadius: 10,
                 width: '100%',
-                textAlign: 'center',
-                color: 'var(--text-3)',
-                fontSize: 13,
-                paddingTop: 60,
-              }}>
-                Enter peg plan text or click to draw
-              </div>
-            )}
+              }}
+            />
+            <div style={{ fontSize: 11, color: 'var(--text-4)', marginTop: 5, letterSpacing: '-0.005em' }}>
+              Format: pick--&gt;shaft,shaft,shaft
+            </div>
+          </div>
+
+          {/* RIGHT — Visual Grid */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <label style={{ marginBottom: 6, display: 'block', fontSize: 12, fontWeight: 500, color: 'var(--text-2)' }}>
+              Peg Plan — Visual Grid
+            </label>
+            <div style={{
+              background: 'var(--bg)',
+              borderRadius: 12,
+              padding: 16,
+              border: '1px solid var(--border-light)',
+              minHeight: 200,
+              overflow: 'auto',
+            }}>
+              {matrix.length > 0 ? (
+                <WeaveCanvas
+                  matrix={matrix}
+                  shaftCount={shaftCount}
+                  onToggle={handleToggle}
+                  repeatW={repeatW}
+                  repeatH={repeatH}
+                />
+              ) : (
+                <div style={{
+                  textAlign: 'center',
+                  color: 'var(--text-4)',
+                  fontSize: 13,
+                  paddingTop: 60,
+                }}>
+                  Enter peg plan text or click to draw
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 14,
-        paddingTop: 14,
-        borderTop: '1px solid var(--border-light)',
-      }}>
-        <div style={{ fontSize: 12, color: 'var(--text-2)' }}>
-          Picks: <strong>{picks}</strong> · Shafts: <strong>{shafts}</strong> · Repeat: <strong>{repeatW}×{repeatH}</strong>
-        </div>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-5 pt-4 gap-3 sm:gap-0" style={{ borderTop: '1px solid var(--border-light)' }}>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={handleClear} className="btn-secondary" style={{ fontSize: 12, height: 32 }}>
-            Clear all
+          {[`Picks: ${picks}`, `Shafts: ${shafts}`, `Repeat: ${repeatW}×${repeatH}`].map(s => (
+            <span key={s} style={{
+              fontSize: 11, fontWeight: 600,
+              color: 'var(--text-2)',
+              background: 'rgba(0,0,0,0.05)',
+              padding: '3px 9px', borderRadius: 99,
+              letterSpacing: '-0.01em',
+            }}>{s}</span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button onClick={handleClear} className="btn-secondary">
+            Clear
           </button>
-          <button onClick={handleStraightDraft} className="btn-secondary" style={{ fontSize: 12, height: 32 }}>
-            Generate straight draft
+          <button onClick={handleStraightDraft} className="btn-secondary">
+            Straight Draft
           </button>
         </div>
       </div>

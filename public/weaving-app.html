@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surat Loom CAD — Textile Weaving Design Engine</title>
+<meta name="description" content="Industrial-grade weaving CAD software for Surat power loom sector. Design weave patterns, map feeder colors, and preview drawdown with full yarn technical data.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0d14;
+    --bg2: #111621;
+    --bg3: #1a2035;
+    --card: #151c2e;
+    --border: #1e2a45;
+    --accent: #4f8ef7;
+    --accent2: #7c5cfc;
+    --accent3: #00d4aa;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, #0d1526 0%, #151c35 50%, #0d1526 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; }
+  .logo-sub { font-size: 0.7rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .header-badge {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* Layout */
+  .app {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 0;
+    min-height: calc(100vh - 64px);
+  }
+  .sidebar {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-height: calc(100vh - 64px);
+    position: relative;
+  }
+  .sidebar-scroll {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .sidebar-footer {
+    padding: 0.875rem 1.25rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    position: sticky;
+    bottom: 0;
+  }
+  .main {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 64px);
+  }
+  /* Workflow stepper */
+  .stepper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .step.active { color: var(--accent); }
+  .step.done { color: var(--success); }
+  .step-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.62rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step.active .step-num { background: var(--accent); border-color: var(--accent); color: white; }
+  .step.done .step-num { background: var(--success); border-color: var(--success); color: white; }
+  .step-arrow { color: var(--text3); font-size: 0.7rem; margin: 0 0.2rem; flex-shrink: 0; }
+  /* Pulse animation for configure button when yarn selected */
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 0 0 rgba(79,142,247,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(79,142,247,0); }
+  }
+  .btn-pulse { animation: pulse-glow 1.5s infinite; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 0.875rem 1.125rem;
+    background: linear-gradient(135deg, rgba(79,142,247,0.08), rgba(124,92,252,0.05));
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .card-num {
+    width: 20px; height: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-body { padding: 1.125rem; }
+
+  /* Form Elements */
+  label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 0.375rem;
+  }
+  input, select {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79,142,247,0.12);
+  }
+  input[type="color"] {
+    padding: 2px 4px;
+    height: 36px;
+    cursor: pointer;
+  }
+  .form-row { margin-bottom: 0.875rem; }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    letter-spacing: 0.03em;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    width: 100%;
+    padding: 0.625rem;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,142,247,0.3); }
+  .btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.73rem;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-pattern {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    flex: 1;
+  }
+  .btn-pattern:hover { border-color: var(--accent3); color: var(--accent3); }
+
+  /* Yarn Data Panel */
+  .yarn-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .yarn-stat:last-child { border-bottom: none; }
+  .yarn-stat-label { font-size: 0.73rem; color: var(--text3); }
+  .yarn-stat-value {
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent3);
+  }
+  .compat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .compat-ok { background: rgba(34,197,94,0.12); color: var(--success); border: 1px solid rgba(34,197,94,0.25); }
+  .compat-warn { background: rgba(245,158,11,0.12); color: var(--warn); border: 1px solid rgba(245,158,11,0.25); }
+  .compat-danger { background: rgba(239,68,68,0.12); color: var(--danger); border: 1px solid rgba(239,68,68,0.25); }
+
+  .warn-box {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    font-size: 0.78rem;
+    color: #fca5a5;
+    margin-top: 0.75rem;
+    line-height: 1.5;
+  }
+  .info-box {
+    background: rgba(79,142,247,0.06);
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* Design Matrix */
+  .matrix-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.875rem;
+    flex-wrap: wrap;
+  }
+  .matrix-wrap {
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    max-height: 380px;
+  }
+  #designGrid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+  }
+  .cell {
+    width: 16px; height: 16px;
+    cursor: pointer;
+    transition: transform 0.05s;
+  }
+  .cell:hover { transform: scale(1.2); z-index: 2; position: relative; }
+  .cell.warp-up { background: #1e2a45; }
+  .cell.warp-down { background: #c8a94a; }
+
+  /* Feeder Panel */
+  .feeder-row {
+    display: grid;
+    grid-template-columns: 28px 44px 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.375rem;
+    transition: border-color 0.2s;
+  }
+  .feeder-row:hover { border-color: var(--accent); }
+  .feeder-num {
+    width: 24px; height: 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feeder-color-input { width: 40px; height: 32px; padding: 2px; border-radius: 6px; }
+
+  /* Drawdown */
+  .drawdown-wrap {
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #0c0f1a;
+    max-height: 520px;
+  }
+  #drawdownCanvas {
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  /* Report */
+  .report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .report-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.625rem 0.75rem;
+  }
+  .report-label { font-size: 0.68rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.25rem; }
+  .report-val { font-size: 0.85rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--text); }
+
+  /* Legend */
+  .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text2); }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.1); }
+
+  /* Tabs (for feeder count) */
+  .count-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.875rem; }
+  .count-row label { margin: 0; white-space: nowrap; }
+
+  /* Warp color row */
+  .warp-color-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.875rem;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Animations */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .card { animation: fadeIn 0.3s ease both; }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin: 0.25rem 0;
+  }
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🧵</div>
+    <div>
+      <div class="logo-text">Surat Loom CAD</div>
+      <div class="logo-sub">Textile Weaving Design Engine</div>
+    </div>
+  </div>
+  <div class="header-badge">Industrial · Surat v1.0</div>
+</header>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-scroll">
+
+    <!-- SECTION 1: Loom Config -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">1</div>
+        <div class="card-title">Loom Configuration</div>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <label>Yarn Type</label>
+          <select id="yarnType" onchange="onYarnChange()">
+            <option value="">— Select Yarn —</option>
+            <option value="polyester75d">Polyester 75D Filament (DTY/FDY)</option>
+            <option value="polyviscose8020">80/20 Poly-Viscose Spun Blend</option>
+            <option value="cotton40s">40s Combed Cotton Spun</option>
+          </select>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Shafts</label>
+            <input type="number" id="shafts" value="4" min="2" max="32">
+          </div>
+          <div class="form-row">
+            <label>Ends (Warp)</label>
+            <input type="number" id="ends" value="16" min="4" max="64">
+          </div>
+          <div class="form-row">
+            <label>Picks (Weft)</label>
+            <input type="number" id="picks" value="16" min="4" max="64">
+          </div>
+          <div class="form-row">
+            <label>Loom Type</label>
+            <select id="loomType" onchange="onLoomChange()">
+              <option value="rapier">Rapier</option>
+              <option value="waterjet">Water-Jet</option>
+              <option value="airjet">Air-Jet</option>
+              <option value="projectile">Projectile</option>
+            </select>
+          </div>
+        </div>
+        <div class="warp-color-row">
+          <label style="margin:0">Warp Color</label>
+          <input type="color" id="warpColor" value="#2a4a8a" style="width:44px;height:32px;padding:2px;border-radius:6px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Feeder Assignment (shown after configure) -->
+    <div class="card" id="feederCard" style="display:none">
+      <div class="card-header">
+        <div class="card-num">4</div>
+        <div class="card-title">Feeder Assignment</div>
+      </div>
+      <div class="card-body">
+        <div class="count-row">
+          <label>Active Feeders:</label>
+          <input type="number" id="feederCount" value="2" min="1" max="16" style="width:60px;" onchange="renderFeeders()">
+        </div>
+        <div id="feedersContainer"></div>
+        <div class="form-row" style="margin-top:0.875rem;">
+          <label>Pick Sequence (feeder IDs, e.g. 1,2,1,2)</label>
+          <input type="text" id="pickSequence" value="1,2" placeholder="e.g. 1,2,1,2 or 1,1,2,2">
+        </div>
+        <button class="btn btn-primary" onclick="renderDrawdown()">🎨 Render Color Drawdown</button>
+      </div>
+    </div>
+
+    </div><!-- end sidebar-scroll -->
+
+    <!-- STICKY FOOTER BUTTON -->
+    <div class="sidebar-footer">
+      <div id="configHint" style="font-size:0.7rem;color:var(--text3);text-align:center;margin-bottom:0.5rem;display:none;">✓ Select yarn above to auto-configure</div>
+      <button class="btn btn-primary" id="configBtn" onclick="configureLoom()">⚙ Configure Loom &amp; Generate Grid</button>
+    </div>
+
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- WORKFLOW STEPPER -->
+    <div class="stepper" id="stepper">
+      <div class="step done" id="step1"><div class="step-num">1</div> Config</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step2"><div class="step-num">2</div> Yarn Data</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step3"><div class="step-num">3</div> Design Grid</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step4"><div class="step-num">4</div> Feeders</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step5"><div class="step-num">5</div> Drawdown</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step6"><div class="step-num">6</div> Report</div>
+    </div>
+
+    <!-- SECTION 2: Yarn Data Panel (moved to main) -->
+    <div class="card" id="yarnPanel" style="display:none">
+      <div class="card-header">
+        <div class="card-num">2</div>
+        <div class="card-title">Yarn Technical Data</div>
+      </div>
+      <div class="card-body" id="yarnPanelBody"></div>
+    </div>
+
+    <!-- SECTION 3: Design Matrix -->
+    <div class="card" id="designCard" style="display:none">
+      <div class="card-header">
+        <div class="card-num">3</div>
+        <div class="card-title">Design Matrix — Binary Drawdown Grid</div>
+      </div>
+      <div class="card-body">
+        <div class="matrix-controls">
+          <button class="btn btn-pattern btn-sm" onclick="applyPattern('plain')">▦ Plain Weave</button>
+          <button class="btn btn-pattern btn-sm" onclick="applyPattern('twill22')">◩ Twill 2/2</button>
+          <button class="btn btn-pattern btn-sm" onclick="applyPattern('satin')">◈ Satin</button>
+          <button class="btn btn-pattern btn-sm" onclick="applyPattern('clear')">✕ Clear</button>
+          <button class="btn btn-pattern btn-sm" onclick="applyPattern('fill')">■ Fill All</button>
+        </div>
+        <div class="info-box" style="margin-bottom:0.75rem;">
+          Click cells to toggle: <strong style="color:#c8a94a">■ Amber = Warp Up (1)</strong> · <strong style="color:#94a3b8">□ Dark = Weft Up (0)</strong>
+        </div>
+        <div class="matrix-wrap">
+          <div id="designGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Color Drawdown Preview -->
+    <div class="card" id="drawdownCard" style="display:none">
+      <div class="card-header">
+        <div class="card-num">5</div>
+        <div class="card-title">Color Drawdown Preview</div>
+      </div>
+      <div class="card-body">
+        <div class="legend" id="drawdownLegend"></div>
+        <div class="drawdown-wrap">
+          <canvas id="drawdownCanvas"></canvas>
+        </div>
+        <div class="info-box" style="margin-top:0.75rem;" id="drawdownInfo"></div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Technical Report -->
+    <div class="card" id="reportCard" style="display:none">
+      <div class="card-header">
+        <div class="card-num">6</div>
+        <div class="card-title">Yarn Technical Report</div>
+      </div>
+      <div class="card-body" id="reportBody"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ===== YARN DATABASE (from Document 1 – Surat Power Loom Yarn Technical Data) =====
+const YARN_DB = {
+  polyester75d: {
+    id: 'polyester75d',
+    name: 'Polyester 75D Filament',
+    material: '100% Polyester (PET)',
+    type: 'Continuous Synthetic Filament (DTY/FDY)',
+    count: '75 Denier (83.3 dtex)',
+    mechanical: {
+      tenacity: [35.0, 45.0],
+      elongation: [16.1, 22.1],
+      elongationAvg: 19.1,
+      youngsModulus: [90.0, 120.0],
+    },
+    thermal: {
+      bws: [2.0, 3.1],
+      bwsAvg: 2.58,
+      dhs180: [5.5, 8.0],
+    },
+    geometric: {
+      tpi: '1.5 – 3.0 TPI (or ~150 intermingling nodes/m)',
+      filamentCount: '72 filaments (75D/72F typical)',
+    },
+    production: {
+      rapierRPM: [350, 500],
+      waterjetRPM: [800, 1200],
+      airjetRPM: [500, 900],
+      waterjetCompat: 'optimal',
+      rapierCompat: 'compatible',
+      notes: 'Hydrophobic (moisture regain 0.4%). Ideal for water-jet. High elongation (19.1%) acts as kinetic buffer for high-RPM insertion.'
+    },
+    floatMax: { cotton: 5, synthetic: 10, heavy: 3 },
+    maxFloat: 10,
+    waterjetWarn: null,
+  },
+  polyviscose8020: {
+    id: 'polyviscose8020',
+    name: '80/20 Poly-Viscose Blend',
+    material: '80% Polyester Staple / 20% Viscose',
+    type: 'Composite Spun Staple Blend',
+    count: '30s – 40s Ne',
+    mechanical: {
+      tenacity: [16.0, 20.0],
+      elongation: [10.0, 14.0],
+      youngsModulus: [70.0, 90.0],
+    },
+    thermal: {
+      bws: [2.0, 4.0],
+      dhs180: [3.0, 5.0],
+    },
+    geometric: {
+      tpi: '22.0 – 26.0 TPI (TM 3.5–4.0)',
+      filamentCount: 'Spun staple — no filaments',
+    },
+    production: {
+      rapierRPM: [350, 500],
+      waterjetRPM: [0, 0],
+      airjetRPM: [400, 600],
+      waterjetCompat: 'incompatible',
+      rapierCompat: 'compatible',
+      notes: 'Moisture regain 11–13% (viscose). Instant swelling in water-jet causes mid-flight stall, distortion, mildew risk, warp breakage. RAPIER ONLY.'
+    },
+    maxFloat: 7,
+    waterjetWarn: 'INCOMPATIBLE: Viscose component (20%) absorbs water instantly. Swelling strips kinetic energy from the water jet causing weft stall, severe fabric distortion, mildew risk and catastrophic warp breakage. Use Rapier or Air-Jet only.',
+  },
+  cotton40s: {
+    id: 'cotton40s',
+    name: '40s Combed Cotton',
+    material: '100% Combed Cotton (Gossypium)',
+    type: 'Spun Natural Staple (Premium Combed)',
+    count: '40s Ne',
+    mechanical: {
+      tenacity: [15.5, 25.0],
+      tenacityAvg: 15.8,
+      elongation: [4.3, 6.0],
+      youngsModulus: [100.0, 150.0],
+    },
+    thermal: {
+      bws: [0.0, 2.0],
+      dhs180: [0.0, 1.0],
+      dhs180Note: 'Negligible – but prolonged 180°C causes oxidation, yellowing, embrittlement',
+    },
+    geometric: {
+      tpi: '22.0 – 26.0 TPI (TM 3.6–4.0)',
+      filamentCount: 'Spun staple — no filaments',
+      moistureRegain: '7.0 – 8.0%',
+    },
+    production: {
+      rapierRPM: [350, 500],
+      waterjetRPM: [0, 0],
+      airjetRPM: [350, 500],
+      waterjetCompat: 'incompatible',
+      rapierCompat: 'compatible',
+      notes: 'CRITICAL: Elongation 4.3–6.0% is extremely low. Any RPM calibration error causes immediate warp rupture. Requires electronic let-off servo and precise tension control. No water-jet — moisture regain 7-8% causes instant absorption.'
+    },
+    maxFloat: 6,
+    waterjetWarn: 'INCOMPATIBLE: Cotton is highly hydrophilic (moisture regain 7–8%). High-pressure water-jet causes instant absorption, catastrophic mass increase, weft insertion failure, post-weaving distortion, and severe mildew risk.',
+  }
+};
+
+// ===== LOOM MAX FEEDERS (from Document 4) =====
+const LOOM_MAX_FEEDERS = { rapier: 16, waterjet: 4, airjet: 8, projectile: 8 };
+const LOOM_SPEED = { rapier: '350–700 PPM', waterjet: '800–1200+ PPM', airjet: '1000–1200+ PPM', projectile: '300–500 PPM' };
+
+// ===== STATE =====
+let state = {
+  yarn: null, loom: 'rapier',
+  ends: 16, picks: 16, shafts: 4,
+  matrix: [], // [pick][end] = 0|1
+  feeders: [], // [{color, label}]
+  feederCount: 2,
+  pickSeq: [1,2], // expanded
+  warpColor: '#2a4a8a',
+  configured: false,
+};
+
+// ===== YARN CHANGE — auto configure =====
+function onYarnChange() {
+  const id = document.getElementById('yarnType').value;
+  state.yarn = id ? YARN_DB[id] : null;
+  if (id) {
+    // Pulse the configure button to guide user
+    document.getElementById('configBtn').classList.add('btn-pulse');
+    document.getElementById('configHint').style.display = 'block';
+    // Auto-configure immediately
+    configureLoom();
+  }
+}
+
+function onLoomChange() {
+  const loom = document.getElementById('loomType').value;
+  state.loom = loom;
+  renderYarnPanel();
+  if (state.configured) renderReport();
+}
+
+function renderYarnPanel() {
+  const panel = document.getElementById('yarnPanel');
+  const body = document.getElementById('yarnPanelBody');
+  if (!state.yarn) { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+
+  const y = state.yarn;
+  const loom = document.getElementById('loomType').value;
+  const isWaterjet = loom === 'waterjet';
+  const compat = isWaterjet ? y.production.waterjetCompat : y.production.rapierCompat;
+  const rpm = isWaterjet ? y.production.waterjetRPM : y.production.rapierRPM;
+
+  let compatHtml = '';
+  if (compat === 'optimal') {
+    compatHtml = `<span class="compat-badge compat-ok">✓ Optimal for ${loom}</span>`;
+  } else if (compat === 'compatible') {
+    compatHtml = `<span class="compat-badge compat-ok">✓ Compatible — ${loom}</span>`;
+  } else {
+    compatHtml = `<span class="compat-badge compat-danger">✗ INCOMPATIBLE — ${loom}</span>`;
+  }
+
+  const warnHtml = (isWaterjet && y.waterjetWarn)
+    ? `<div class="warn-box">⚠ ${y.waterjetWarn}</div>` : '';
+
+  body.innerHTML = `
+    <div style="margin-bottom:0.625rem;">
+      <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">${y.name}</div>
+      <div style="font-size:0.72rem;color:var(--text3);margin-bottom:0.5rem;">${y.type}</div>
+      ${compatHtml}
+    </div>
+    <div class="section-divider">Mechanical</div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Tenacity</span><span class="yarn-stat-value">${y.mechanical.tenacity[0]}–${y.mechanical.tenacity[1]} cN/tex</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Elongation at Break</span><span class="yarn-stat-value">${y.mechanical.elongation[0]}–${y.mechanical.elongation[1]}%</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Young's Modulus</span><span class="yarn-stat-value">${y.mechanical.youngsModulus[0]}–${y.mechanical.youngsModulus[1]} cN/tex</span></div>
+    <div class="section-divider" style="margin-top:0.5rem;">Thermal</div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Boiling Water Shrinkage</span><span class="yarn-stat-value">${y.thermal.bws[0] === 0 ? '<' : y.thermal.bws[0]}–${y.thermal.bws[1]}%</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Dry Heat Shrinkage @180°C</span><span class="yarn-stat-value">${y.thermal.dhs180[0]}–${y.thermal.dhs180[1]}%</span></div>
+    <div class="section-divider" style="margin-top:0.5rem;">Geometric / Production</div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Count / Linear Density</span><span class="yarn-stat-value">${y.count}</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">TPI Range</span><span class="yarn-stat-value">${y.geometric.tpi}</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Max Float (allowed)</span><span class="yarn-stat-value">${y.maxFloat} threads</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Rapier RPM</span><span class="yarn-stat-value">${y.production.rapierRPM[0]}–${y.production.rapierRPM[1]}</span></div>
+    <div class="yarn-stat"><span class="yarn-stat-label">Water-Jet RPM</span><span class="yarn-stat-value" style="color:${y.production.waterjetRPM[0]===0?'var(--danger)':'var(--accent3)'};">${y.production.waterjetRPM[0]===0?'⛔ NOT RECOMMENDED':`${y.production.waterjetRPM[0]}–${y.production.waterjetRPM[1]}`}</span></div>
+    ${warnHtml}
+    <div class="info-box" style="margin-top:0.625rem;font-size:0.72rem;">${y.production.notes}</div>
+  `;
+}
+
+// ===== CONFIGURE LOOM =====
+function configureLoom() {
+  const yarnId = document.getElementById('yarnType').value;
+  if (!yarnId) { return; } // silently ignore if no yarn selected yet
+
+  state.yarn = YARN_DB[yarnId];
+  state.loom = document.getElementById('loomType').value;
+  state.ends = Math.max(4, Math.min(64, parseInt(document.getElementById('ends').value) || 16));
+  state.picks = Math.max(4, Math.min(64, parseInt(document.getElementById('picks').value) || 16));
+  state.shafts = Math.max(2, Math.min(32, parseInt(document.getElementById('shafts').value) || 4));
+  state.warpColor = document.getElementById('warpColor').value;
+  state.configured = true;
+
+  // Init matrix (preserve if same dimensions)
+  if (state.matrix.length !== state.picks || (state.matrix[0] && state.matrix[0].length !== state.ends)) {
+    state.matrix = Array.from({length: state.picks}, () => new Array(state.ends).fill(0));
+  }
+
+  renderDesignGrid();
+  renderFeeders();
+  renderYarnPanel();
+  renderReport();
+  updateStepper(3);
+
+  document.getElementById('designCard').style.display = 'block';
+  document.getElementById('yarnPanel').style.display = 'block';
+  document.getElementById('feederCard').style.display = 'block';
+  document.getElementById('reportCard').style.display = 'block';
+  document.getElementById('configBtn').classList.remove('btn-pulse');
+  document.getElementById('configHint').style.display = 'none';
+  // Scroll main area to top
+  document.querySelector('.main').scrollTop = 0;
+}
+
+function updateStepper(activeStep) {
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('step'+i);
+    if (!el) continue;
+    el.className = 'step ' + (i < activeStep ? 'done' : i === activeStep ? 'active' : '');
+  }
+}
+
+// ===== DESIGN MATRIX =====
+function renderDesignGrid() {
+  const grid = document.getElementById('designGrid');
+  const {ends, picks} = state;
+  const cellSize = Math.max(10, Math.min(22, Math.floor(420 / Math.max(ends, picks))));
+  grid.style.gridTemplateColumns = `repeat(${ends}, ${cellSize}px)`;
+  grid.innerHTML = '';
+  for (let p = 0; p < picks; p++) {
+    for (let e = 0; e < ends; e++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell ' + (state.matrix[p][e] === 1 ? 'warp-up' : 'warp-down');
+      cell.style.width = cellSize + 'px';
+      cell.style.height = cellSize + 'px';
+      cell.dataset.p = p; cell.dataset.e = e;
+      cell.addEventListener('click', toggleCell);
+      grid.appendChild(cell);
+    }
+  }
+}
+
+function toggleCell(ev) {
+  const p = parseInt(ev.target.dataset.p);
+  const e = parseInt(ev.target.dataset.e);
+  state.matrix[p][e] = state.matrix[p][e] === 1 ? 0 : 1;
+  ev.target.className = 'cell ' + (state.matrix[p][e] === 1 ? 'warp-up' : 'warp-down');
+}
+
+// ===== WEAVE PATTERNS (from Document 3) =====
+function applyPattern(type) {
+  if (!state.configured) { alert('Configure loom first.'); return; }
+  const {ends, picks} = state;
+  for (let p = 0; p < picks; p++) {
+    for (let e = 0; e < ends; e++) {
+      let val = 0;
+      if (type === 'plain') {
+        val = (p + e) % 2 === 0 ? 1 : 0;
+      } else if (type === 'twill22') {
+        val = ((p + e) % 4 < 2) ? 1 : 0;
+      } else if (type === 'satin') {
+        // 5-satin: warp up at position (p + e*3) mod 5 == 0
+        const rep = Math.min(5, Math.min(ends, picks));
+        val = ((p * 3 + e) % rep === 0) ? 1 : 0;
+      } else if (type === 'fill') {
+        val = 1;
+      } else if (type === 'clear') {
+        val = 0;
+      }
+      state.matrix[p][e] = val;
+    }
+  }
+  renderDesignGrid();
+}
+
+// ===== FEEDERS =====
+const DEFAULT_COLORS = ['#e63946','#457b9d','#2a9d8f','#e9c46a','#f4a261','#8338ec','#fb5607','#06d6a0','#118ab2','#ef476f','#ffd166','#06a77d','#d62828','#7400b8','#4cc9f0','#f72585'];
+
+function renderFeeders() {
+  if (!state.configured) return;
+  state.feederCount = Math.max(1, Math.min(LOOM_MAX_FEEDERS[state.loom] || 16, parseInt(document.getElementById('feederCount').value) || 2));
+  document.getElementById('feederCount').value = state.feederCount;
+
+  // Keep existing colors
+  while (state.feeders.length < state.feederCount) {
+    state.feeders.push({ color: DEFAULT_COLORS[state.feeders.length % DEFAULT_COLORS.length], label: `Yarn ${state.feeders.length + 1}` });
+  }
+
+  const container = document.getElementById('feedersContainer');
+  container.innerHTML = '';
+  for (let i = 0; i < state.feederCount; i++) {
+    const row = document.createElement('div');
+    row.className = 'feeder-row';
+    row.innerHTML = `
+      <div class="feeder-num">${i+1}</div>
+      <input type="color" class="feeder-color-input" value="${state.feeders[i].color}" data-fi="${i}" onchange="feederColorChange(this)">
+      <input type="text" placeholder="Yarn label" value="${state.feeders[i].label}" data-fi="${i}" onchange="feederLabelChange(this)" style="font-size:0.78rem;">
+    `;
+    container.appendChild(row);
+  }
+}
+
+function feederColorChange(el) {
+  state.feeders[parseInt(el.dataset.fi)].color = el.value;
+}
+function feederLabelChange(el) {
+  state.feeders[parseInt(el.dataset.fi)].label = el.value;
+}
+
+// ===== PARSE PICK SEQUENCE =====
+function parsePickSeq(str) {
+  // Simple comma/space separated list of feeder IDs
+  return str.split(/[\s,]+/).map(s => parseInt(s.trim())).filter(n => !isNaN(n) && n >= 1);
+}
+
+function expandPickSeq(seq, picks) {
+  if (!seq || seq.length === 0) return new Array(picks).fill(1);
+  const full = [];
+  while (full.length < picks) full.push(...seq);
+  return full.slice(0, picks);
+}
+
+// ===== RENDER DRAWDOWN (from Documents 4 & 5) =====
+// Core logic: if matrix[pick][end] == 1 → show warp color; if 0 → show feeder color
+function renderDrawdown() {
+  if (!state.configured) { alert('Configure loom first.'); return; }
+
+  const seqStr = document.getElementById('pickSequence').value;
+  const baseSeq = parsePickSeq(seqStr);
+  if (baseSeq.length === 0) { alert('Invalid pick sequence. Use comma-separated feeder IDs like 1,2,1,2'); return; }
+
+  state.pickSeq = expandPickSeq(baseSeq, state.picks);
+  state.warpColor = document.getElementById('warpColor').value;
+
+  const {ends, picks} = state;
+  const cellSize = Math.max(6, Math.min(20, Math.floor(900 / Math.max(ends, picks))));
+
+  const canvas = document.getElementById('drawdownCanvas');
+  canvas.width = ends * cellSize;
+  canvas.height = picks * cellSize;
+  const ctx = canvas.getContext('2d');
+
+  // Build legend
+  const legend = document.getElementById('drawdownLegend');
+  legend.innerHTML = `
+    <div class="legend-item"><div class="legend-swatch" style="background:${state.warpColor}"></div>Warp (matrix=1)</div>
+    ${state.feeders.slice(0, state.feederCount).map((f,i) => `
+      <div class="legend-item"><div class="legend-swatch" style="background:${f.color}"></div>F${i+1}: ${f.label}</div>
+    `).join('')}
+  `;
+
+  // Core rendering algorithm (Document 4, Section 4.1)
+  for (let p = 0; p < picks; p++) {
+    const feederId = state.pickSeq[p]; // 1-based
+    const feederIdx = Math.max(0, Math.min(state.feederCount - 1, feederId - 1));
+    const weftColor = state.feeders[feederIdx] ? state.feeders[feederIdx].color : '#888';
+
+    for (let e = 0; e < ends; e++) {
+      const cellVal = state.matrix[p][e];
+      ctx.fillStyle = cellVal === 1 ? state.warpColor : weftColor;
+      ctx.fillRect(e * cellSize, p * cellSize, cellSize, cellSize);
+
+      // Grid line
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+      ctx.strokeRect(e * cellSize + 0.5, p * cellSize + 0.5, cellSize - 1, cellSize - 1);
+    }
+  }
+
+  // Float warnings (from Document 3)
+  const floatWarns = checkFloats();
+
+  // LCM info (from Document 4 section 4.2)
+  const lcmVal = lcm(baseSeq.length, state.picks);
+  const infoEl = document.getElementById('drawdownInfo');
+  infoEl.innerHTML = `
+    Pattern LCM (structural repeat × color repeat): <strong>${lcmVal} picks</strong> — true visual repeat resolves at pick ${lcmVal}.
+    ${floatWarns ? `<br><span style="color:var(--warn)">⚠ Float warnings: ${floatWarns}</span>` : ' <span style="color:var(--success)">✓ No float violations detected.</span>'}
+  `;
+
+  document.getElementById('drawdownCard').style.display = 'block';
+  updateStepper(5);
+  renderReport();
+}
+
+// ===== FLOAT CHECK (from Document 3) =====
+function checkFloats() {
+  const maxFloat = state.yarn ? state.yarn.maxFloat : 7;
+  const warns = [];
+  const {picks, ends} = state;
+
+  // Horizontal floats
+  for (let p = 0; p < picks; p++) {
+    let run = 0; let last = -1;
+    for (let e = 0; e < ends; e++) {
+      if (state.matrix[p][e] === last) { run++; } else { run = 1; last = state.matrix[p][e]; }
+      if (run > maxFloat) { warns.push(`Row ${p+1} has float >${maxFloat} at end ${e+1}`); break; }
+    }
+  }
+  // Vertical floats
+  for (let e = 0; e < ends; e++) {
+    let run = 0; let last = -1;
+    for (let p = 0; p < picks; p++) {
+      if (state.matrix[p][e] === last) { run++; } else { run = 1; last = state.matrix[p][e]; }
+      if (run > maxFloat) { warns.push(`End ${e+1} has float >${maxFloat} at pick ${p+1}`); break; }
+    }
+  }
+  return warns.length ? warns.slice(0,3).join('; ') : null;
+}
+
+// ===== MATH UTILS =====
+function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+function lcm(a, b) { return (a * b) / gcd(a, b); }
+
+// ===== TECHNICAL REPORT (from Document 1) =====
+function renderReport() {
+  const body = document.getElementById('reportBody');
+  const y = state.yarn;
+  if (!y) { body.innerHTML = '<div class="info-box">Select a yarn to see the technical report.</div>'; return; }
+
+  const loom = state.loom;
+  const isWaterjet = loom === 'waterjet';
+  const compat = isWaterjet ? y.production.waterjetCompat : y.production.rapierCompat;
+
+  let verdictClass = 'compat-ok', verdictText = '✓ COMPATIBLE', verdictReason = 'Yarn and loom combination is suitable for production.';
+  if (compat === 'optimal') { verdictClass = 'compat-ok'; verdictText = '★ OPTIMAL'; verdictReason = y.production.notes; }
+  else if (compat === 'incompatible') { verdictClass = 'compat-danger'; verdictText = '✗ INCOMPATIBLE'; verdictReason = y.waterjetWarn || y.production.notes; }
+
+  const rpm = isWaterjet ? y.production.waterjetRPM : y.production.rapierRPM;
+
+  body.innerHTML = `
+    <div style="margin-bottom:0.875rem;">
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">${y.name}</div>
+      <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.625rem;">${y.material} · ${y.type}</div>
+      <span class="compat-badge ${verdictClass}">${verdictText}</span>
+    </div>
+    <div class="report-grid">
+      <div class="report-item"><div class="report-label">Tenacity</div><div class="report-val">${y.mechanical.tenacity[0]}–${y.mechanical.tenacity[1]} cN/tex</div></div>
+      <div class="report-item"><div class="report-label">Elongation</div><div class="report-val">${y.mechanical.elongation[0]}–${y.mechanical.elongation[1]}%</div></div>
+      <div class="report-item"><div class="report-label">Young's Modulus</div><div class="report-val">${y.mechanical.youngsModulus[0]}–${y.mechanical.youngsModulus[1]} cN/tex</div></div>
+      <div class="report-item"><div class="report-label">Count</div><div class="report-val">${y.count}</div></div>
+      <div class="report-item"><div class="report-label">BWS (Boiling Water)</div><div class="report-val">${y.thermal.bws[0]}–${y.thermal.bws[1]}%</div></div>
+      <div class="report-item"><div class="report-label">DHS @ 180°C</div><div class="report-val">${y.thermal.dhs180[0]}–${y.thermal.dhs180[1]}%</div></div>
+      <div class="report-item"><div class="report-label">TPI Range</div><div class="report-val" style="font-size:0.72rem">${y.geometric.tpi}</div></div>
+      <div class="report-item"><div class="report-label">Max Float Length</div><div class="report-val">${y.maxFloat} threads</div></div>
+      <div class="report-item"><div class="report-label">Rapier RPM</div><div class="report-val">${y.production.rapierRPM[0]}–${y.production.rapierRPM[1]}</div></div>
+      <div class="report-item"><div class="report-label">Water-Jet RPM</div><div class="report-val" style="color:${y.production.waterjetRPM[0]===0?'var(--danger)':'var(--accent3)'};">${y.production.waterjetRPM[0]===0?'NOT REC.':y.production.waterjetRPM[0]+'–'+y.production.waterjetRPM[1]}</div></div>
+      <div class="report-item"><div class="report-label">Selected Loom</div><div class="report-val">${loom.charAt(0).toUpperCase()+loom.slice(1)}</div></div>
+      <div class="report-item"><div class="report-label">Loom Speed</div><div class="report-val">${LOOM_SPEED[loom]}</div></div>
+    </div>
+    <div style="margin-top:0.875rem;">
+      <div class="report-label" style="margin-bottom:0.375rem;">Loom Compatibility Verdict</div>
+      <div class="${compat==='incompatible'?'warn-box':'info-box'}">${verdictReason}</div>
+    </div>
+    ${y.thermal.dhs180[1] >= 5 ? `
+    <div class="info-box" style="margin-top:0.625rem;">
+      <strong>Heat-Setting Note:</strong> At 180°C stenter, this yarn shrinks ${y.thermal.dhs180[0]}–${y.thermal.dhs180[1]}%.
+      To achieve target width W, weave greige fabric at W × ${(1 + y.thermal.dhs180[1]/100).toFixed(3)} (${y.thermal.dhs180[1]}% wider).
+    </div>` : ''}
+    <div style="margin-top:0.75rem;padding:0.625rem;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);">
+      <div style="font-size:0.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.375rem;">Loom Configuration Summary</div>
+      <div style="font-size:0.78rem;color:var(--text2);font-family:'JetBrains Mono',monospace;">
+        Shafts: ${state.shafts} · Ends: ${state.ends} · Picks: ${state.picks} · Feeders: ${state.feederCount}
+      </div>
+    </div>
+  `;
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Default feeders
+  state.feeders = DEFAULT_COLORS.slice(0, 8).map((c, i) => ({ color: c, label: `Yarn ${i+1}` }));
+  document.getElementById('feederCount').value = 2;
+});
+</script>
+</body>
+</html>

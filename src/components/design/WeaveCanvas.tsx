@@ -13,11 +13,11 @@ interface WeaveCanvasProps {
 
 const CELL_SIZE = 20
 const LABEL_MARGIN = 28
-const RAISED_COLOR = '#1B1F3B'
+const RAISED_COLOR = '#1D1D1F'
 const LOWERED_COLOR = '#FFFFFF'
-const GRID_COLOR = '#E2E0D8'
-const REPEAT_COLOR = '#E8A838'
-const LABEL_COLOR = '#999'
+const GRID_COLOR = 'rgba(0,0,0,0.08)'
+const REPEAT_COLOR = '#007AFF'
+const LABEL_COLOR = '#86868B'
 
 export default function WeaveCanvas({
   matrix,
@@ -49,7 +49,7 @@ export default function WeaveCanvas({
     ctx.clearRect(0, 0, w, h)
 
     // Draw shaft labels (top)
-    ctx.font = '11px "DM Sans", sans-serif'
+    ctx.font = '600 10px "Inter", -apple-system, sans-serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillStyle = LABEL_COLOR

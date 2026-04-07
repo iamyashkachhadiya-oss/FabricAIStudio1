@@ -7,6 +7,7 @@ import { runAllCalculations } from '@/lib/calc/engine'
 import { runFabricSimulation, type WeaveType } from '@/lib/calc/simulation'
 import { createClient } from '@/lib/supabase/client'
 import { denierToNe } from '@/lib/calc/engine'
+import { textToMatrix } from '@/lib/pegplan/parser'
 
 interface DesignIdentity {
   design_name: string
@@ -30,6 +31,7 @@ interface DesignState {
   loom: LoomSpec | null
 
   // Peg plan & Draft
+  shaftCount: number
   pegPlanText: string
   pegPlanMatrix: number[][]
   draftSequence: number[]
@@ -62,6 +64,7 @@ interface DesignState {
   setTotalNozzles: (count: number) => void
 
   updateLoom: (loom: Partial<LoomSpec>) => void
+  setShaftCount: (count: number) => void
   setPegPlan: (text: string, matrix: number[][]) => void
   setDraftSequence: (seq: number[]) => void
   setWeaveMatrix: (matrix: number[][]) => void
@@ -131,6 +134,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
   warpSystem: { ...defaultWarpSystem },
   weftSystem: { ...defaultWeftSystem },
   loom: { ...defaultLoom },
+  shaftCount: 16,
   pegPlanText: '1-->1,3,5,7,9,11,13,15\n2-->2,4,6,8,10,12,14,16\n3-->1,3,5,7,9,11,13,15\n4-->2,4,6,8,10,12,14,16\n5-->1,2,5,6,9,10,13,14\n6-->3,4,7,8,11,12,15,16\n7-->1,2,5,6,9,10,13,14\n8-->3,4,7,8,11,12,15,16',
   pegPlanMatrix: [
     [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
@@ -289,6 +293,16 @@ export const useDesignStore = create<DesignState>((set, get) => ({
       loom: s.loom ? { ...s.loom, ...loom } : { ...defaultLoom, ...loom },
       isDirty: true,
     }))
+  },
+
+  setShaftCount: (count) => {
+    const { pegPlanText, draftSequence } = get()
+    // Re-parse peg plan with new shaft count
+    const newMatrix = textToMatrix(pegPlanText, count)
+    // Resize draft sequence: keep as many as we have, extend or trim to new count
+    const newDraft = Array.from({ length: count }, (_, i) => draftSequence[i] ?? (i + 1))
+    set({ shaftCount: count, pegPlanMatrix: newMatrix, draftSequence: newDraft, isDirty: true })
+    get().recalculate()
   },
 
   setPegPlan: (text, matrix) => {
@@ -483,6 +497,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
       warpSystem: { ...defaultWarpSystem },
       weftSystem: { ...defaultWeftSystem },
       loom: { ...defaultLoom },
+      shaftCount: 16,
       pegPlanText: '',
       pegPlanMatrix: [],
       weaveMatrix: [],

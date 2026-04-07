@@ -121,7 +121,10 @@ export default function DashboardPage() {
             <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{factoryName || 'Your Factory'}</div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <button onClick={() => router.push('/weaving')} className="btn-accent" style={{ fontSize: 12, height: 36, padding: '0 14px' }}>
+            🧵 Weaving CAD
+          </button>
           <span style={{ fontSize: 13, color: 'var(--text-2)' }}>{userName}</span>
           <button onClick={handleLogout} className="btn-secondary" style={{ fontSize: 12 }}>
             Sign Out
@@ -131,6 +134,50 @@ export default function DashboardPage() {
 
       {/* Main */}
       <main style={{ maxWidth: 960, margin: '0 auto', padding: '40px 24px' }}>
+
+        {/* ─── Weaving CAD Banner ──────────────────────── */}
+        <div style={{
+          background: 'linear-gradient(135deg, #1B1F3B 0%, #2A2F52 60%, #3a4070 100%)',
+          borderRadius: 16, padding: '28px 32px',
+          marginBottom: 32,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          overflow: 'hidden', position: 'relative',
+        }}>
+          {/* Decorative grid */}
+          <div style={{
+            position: 'absolute', right: 0, top: 0, bottom: 0, width: 300, opacity: 0.08,
+            backgroundImage: 'repeating-linear-gradient(0deg, white 0px, white 1px, transparent 1px, transparent 18px), repeating-linear-gradient(90deg, white 0px, white 1px, transparent 1px, transparent 18px)',
+          }} />
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 8 }}>NEW TOOL</div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: 'white', letterSpacing: '-0.02em', marginBottom: 6 }}>Weaving CAD Engine</div>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', maxWidth: 420, lineHeight: 1.6 }}>
+              Configure looms, set up draft threading plans, assign feeder colors, and explore all generated weave patterns — Plain, Twill, Satin, Dobby.
+            </p>
+            <div style={{ display: 'flex', gap: 16, marginTop: 12, flexWrap: 'wrap' }}>
+              {['Rapier · Dobby · Water-Jet · Jacquard', 'Surat Yarn DB (3 verified yarns)', 'Color Drawdown Preview', 'Float Violation Detection'].map((feat, i) => (
+                <div key={i} style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <span style={{ color: '#E8A838' }}>✓</span> {feat}
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={() => router.push('/weaving')}
+            style={{
+              background: 'var(--accent)', color: 'white', border: 'none', borderRadius: 12,
+              padding: '14px 28px', fontSize: 14, fontWeight: 700, cursor: 'pointer',
+              flexShrink: 0, transition: 'all 0.2s', fontFamily: 'var(--font-body)',
+              boxShadow: '0 4px 16px rgba(232,168,56,0.4)',
+              whiteSpace: 'nowrap',
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}
+          >
+            Open Weaving CAD →
+          </button>
+        </div>
+
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           marginBottom: 32,

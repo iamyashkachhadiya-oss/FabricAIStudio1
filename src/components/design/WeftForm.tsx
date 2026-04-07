@@ -2,390 +2,460 @@
 
 import { useState } from 'react'
 import { useDesignStore } from '@/lib/store/designStore'
-import type { WeftYarn, CountSystem, Luster } from '@/lib/types'
+import type { WeftYarn } from '@/lib/types'
 import ColorPickerPopup from '../common/ColorPickerPopup'
 
-const NOZZLE_COLOUR_MAP = ['#1B1F3B', '#D4AF37', '#00B894', '#D63031', '#8E44AD', '#0984E3', '#E67E22', '#27AE60']
-
-const ChevronDownIcon = ({ expanded }: { expanded: boolean }) => (
-  <svg 
-    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-    className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+/* ─── Micro Icons ─────────────────────────────────────────── */
+const ChevronDown = ({ open }: { open: boolean }) => (
+  <svg
+    width="14" height="14" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+    style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease', flexShrink: 0 }}
   >
-    <polyline points="6 9 12 15 18 9"></polyline>
+    <polyline points="6 9 12 15 18 9" />
   </svg>
 )
 
 const TrashIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="3 6 5 6 21 6" />
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
   </svg>
 )
 
-function NozzleSelector({ number, color, active }: { number: number; color: string; active: boolean }) {
+/* ─── Field Components ────────────────────────────────────── */
+function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-1.5 min-w-[40px]">
-      <div 
-        className={`w-9 h-9 rounded-full transition-all duration-200 border-2 ${active ? 'border-transparent shadow-md' : 'border-gray-200'}`}
-        style={{ background: color, opacity: active ? 1 : 0.3 }}
-      />
-      <span className="text-[10px] font-bold text-gray-400">{number}</span>
+    <div style={{
+      fontSize: 11, fontWeight: 600, color: 'var(--text-3)',
+      textTransform: 'uppercase', letterSpacing: '0.07em',
+      marginBottom: 6,
+    }}>
+      {children}
     </div>
   )
 }
 
-function DarkInput({ label, value, onChange, type = "text", disabled = false, placeholder = "" }: any) {
+function SegmentedControl({
+  value, options, onChange,
+}: {
+  value: string
+  options: { label: string; val: string }[]
+  onChange: (v: string) => void
+}) {
   return (
-    <div className="flex flex-col gap-1.5 flex-1 w-full">
-      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{label}</label>
-      <input 
-        type={type} 
-        value={value} 
-        onChange={(e) => onChange && onChange(e.target.value)}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={`h-10 bg-white border border-gray-200 rounded-xl px-3 text-sm font-medium text-gray-800 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all ${disabled ? 'bg-gray-50 text-gray-400 cursor-not-allowed' : ''}`}
-      />
+    <div style={{
+      display: 'flex',
+      background: 'rgba(0,0,0,0.05)',
+      borderRadius: 9, padding: 3, gap: 2,
+    }}>
+      {options.map(opt => {
+        const active = value === opt.val
+        return (
+          <button
+            key={opt.val}
+            onClick={() => onChange(opt.val)}
+            style={{
+              flex: 1, padding: '5px 0',
+              fontSize: 12, fontWeight: active ? 600 : 500,
+              color: active ? 'var(--text-1)' : 'var(--text-3)',
+              background: active ? 'var(--surface)' : 'transparent',
+              border: 'none', borderRadius: 7,
+              cursor: 'pointer',
+              boxShadow: active ? '0 1px 4px rgba(0,0,0,0.10)' : 'none',
+              transition: 'all 0.15s ease',
+              letterSpacing: '-0.01em',
+            }}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
     </div>
   )
 }
 
-function StepperInput({ label, value, onChange }: any) {
+function StepperField({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{label}</label>
-      <div className="flex h-10 border border-gray-200 rounded-xl overflow-hidden bg-white focus-within:border-amber-400 focus-within:ring-2 focus-within:ring-amber-400/20 transition-all">
-        <button className="w-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold border-r border-gray-200 transition-colors" onClick={() => onChange(value - 1)}>−</button>
-        <div className="flex-1 flex items-center justify-center font-semibold text-gray-800 text-sm">
+    <div>
+      <FieldLabel>{label}</FieldLabel>
+      <div style={{
+        display: 'flex', height: 38,
+        border: '1px solid rgba(0,0,0,0.12)',
+        borderRadius: 10, overflow: 'hidden',
+        background: '#FAFAFA',
+      }}>
+        <button
+          onClick={() => onChange(Math.max(1, value - 1))}
+          style={{
+            width: 38, flexShrink: 0,
+            background: 'rgba(0,0,0,0.03)',
+            border: 'none', borderRight: '1px solid rgba(0,0,0,0.07)',
+            cursor: 'pointer', fontSize: 17, lineHeight: 1,
+            color: 'var(--text-2)', transition: 'background 0.1s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.03)')}
+        >−</button>
+        <div style={{
+          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, fontWeight: 600, color: 'var(--text-1)',
+          letterSpacing: '-0.02em',
+        }}>
           {value}
         </div>
-        <button className="w-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold border-l border-gray-200 transition-colors" onClick={() => onChange(value + 1)}>+</button>
+        <button
+          onClick={() => onChange(value + 1)}
+          style={{
+            width: 38, flexShrink: 0,
+            background: 'rgba(0,0,0,0.03)',
+            border: 'none', borderLeft: '1px solid rgba(0,0,0,0.07)',
+            cursor: 'pointer', fontSize: 17, lineHeight: 1,
+            color: 'var(--text-2)', transition: 'background 0.1s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.03)')}
+        >+</button>
       </div>
     </div>
   )
 }
 
-function SelectInput({ label, value, onChange, options }: any) {
-  return (
-    <div className="flex flex-col gap-1.5 flex-1 w-full">
-      <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{label}</label>
-      <div className="relative">
-        <select 
-          value={value} 
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full h-10 bg-white border border-gray-200 rounded-xl px-3 text-sm font-medium text-gray-800 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all appearance-none cursor-pointer"
-        >
-          {options.map((opt: any) => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-        <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
-          <ChevronDownIcon expanded={false} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function LightYarnCard({ yarn, active, expanded, onClick, onToggleAdvanced, onRemove }: any) {
+/* ─── Single Yarn Card ────────────────────────────────────── */
+function YarnCard({ yarn, isFirst, expanded, onToggle, onRemove }: {
+  yarn: WeftYarn
+  isFirst: boolean
+  expanded: boolean
+  onToggle: () => void
+  onRemove: () => void
+}) {
   const { updateWeftYarn, recalculate } = useDesignStore()
   const [showPicker, setShowPicker] = useState(false)
-  const [showAdvanced, setShowAdvanced] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
 
-  const handleUpdate = (updates: Partial<WeftYarn>) => {
+  const set = (updates: Partial<WeftYarn>) => {
     updateWeftYarn(yarn.id, updates)
     recalculate()
   }
 
   return (
-    <div className="mt-3 bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm transition-all duration-200">
-      {/* Target Tab / Card Header */}
-      <div 
-        onClick={onClick} 
-        className={`px-4 py-3.5 flex items-center justify-between cursor-pointer ${expanded ? 'bg-gray-50 border-b border-gray-200' : 'hover:bg-gray-50'}`}
+    <div style={{
+      borderRadius: 14,
+      border: '1px solid var(--border-light)',
+      background: 'var(--surface)',
+      overflow: 'hidden',
+      transition: 'box-shadow 0.15s',
+    }}>
+      {/* ── Header ───────────────────────────────────────── */}
+      <div
+        onClick={onToggle}
+        style={{
+          display: 'flex', alignItems: 'center',
+          gap: 11, padding: '12px 14px',
+          cursor: 'pointer',
+          borderBottom: expanded ? '1px solid var(--border-light)' : 'none',
+          background: expanded ? 'rgba(0,0,0,0.015)' : 'transparent',
+          transition: 'background 0.15s',
+          userSelect: 'none',
+        }}
       >
-        <div className="flex gap-3 items-center">
-          <div 
-            onClick={(e) => { e.stopPropagation(); setShowPicker(true) }}
-            className="w-10 h-10 rounded-xl border-2 border-white shadow-sm cursor-pointer"
-            style={{ background: yarn.colour_hex }}
-          />
-          <div className="flex flex-col">
-            <div className="text-sm font-bold text-gray-900">{yarn.label}</div>
-            <div className="text-[11px] font-medium text-gray-500 mt-0.5 flex gap-2 items-center">
-              <span>{yarn.material} • {yarn.count_value}{yarn.count_system === 'ne' ? 's' : 'D'}</span>
-              {(yarn.label.includes('Ground') || yarn.label === 'Yarn A') && (
-                <span className="bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase">Ground</span>
-              )}
-            </div>
+        {/* Color swatch */}
+        <div
+          onClick={e => { e.stopPropagation(); setShowPicker(true) }}
+          style={{
+            width: 28, height: 28, borderRadius: 8, flexShrink: 0,
+            background: yarn.colour_hex,
+            border: '2px solid rgba(255,255,255,0.9)',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.18)',
+            cursor: 'pointer',
+          }}
+        />
+
+        {/* Label + meta */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            fontSize: 14, fontWeight: 600,
+            color: 'var(--text-1)', letterSpacing: '-0.015em',
+            display: 'flex', alignItems: 'center', gap: 7,
+          }}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {yarn.label}
+            </span>
+            {isFirst && (
+              <span style={{
+                fontSize: 9, fontWeight: 700, letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                color: 'var(--green)',
+                background: 'rgba(52,199,89,0.10)',
+                padding: '2px 6px', borderRadius: 99, flexShrink: 0,
+              }}>Ground</span>
+            )}
+          </div>
+          <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 1 }}>
+            {yarn.material.charAt(0).toUpperCase() + yarn.material.slice(1)}
+            {' · '}
+            {yarn.count_value}{yarn.count_system === 'ne' ? 's Ne' : 'D'}
+            {' · '}
+            {yarn.ppi || 80} PPI
           </div>
         </div>
-        <div className={`text-gray-400 ${expanded ? 'text-amber-500' : ''}`}>
-          <ChevronDownIcon expanded={expanded} />
+
+        <div style={{ color: expanded ? 'var(--accent)' : 'var(--text-4)', flexShrink: 0 }}>
+          <ChevronDown open={expanded} />
         </div>
       </div>
 
-      {/* Expanded Content Form */}
+      {/* ── Expanded Form ──────────────────────────────── */}
       {expanded && (
-        <div className="p-5 flex flex-col gap-6">
-          
-          <div className="flex gap-4 w-full">
-            <div className="flex flex-col gap-1.5 flex-1">
-              <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Color Indicator</label>
-              <div 
-                className="h-10 w-full border border-gray-200 rounded-xl flex items-center pl-1.5 pr-3 gap-2 cursor-pointer hover:border-gray-300 transition-colors"
+        <div style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+          {/* Row 1: Color swatch + Name */}
+          <div style={{ display: 'flex', gap: 10, alignItems: 'flex-end' }}>
+            {/* Color picker row */}
+            <div style={{ flex: 1 }}>
+              <FieldLabel>Color</FieldLabel>
+              <div
                 onClick={() => setShowPicker(true)}
+                style={{
+                  height: 38, display: 'flex', alignItems: 'center', gap: 9,
+                  border: '1px solid rgba(0,0,0,0.12)', borderRadius: 10,
+                  background: '#FAFAFA', padding: '0 10px',
+                  cursor: 'pointer', transition: 'border-color 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--accent)')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(0,0,0,0.12)')}
               >
-                <div className="w-7 h-7 rounded-lg shadow-sm" style={{ background: yarn.colour_hex }} />
-                <span className="text-sm font-mono font-medium text-gray-600">{yarn.colour_hex}</span>
+                <div style={{
+                  width: 20, height: 20, borderRadius: 5, flexShrink: 0,
+                  background: yarn.colour_hex, border: '1px solid rgba(0,0,0,0.10)',
+                }} />
+                <span style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: 'var(--text-2)', letterSpacing: '0.02em' }}>
+                  {yarn.colour_hex}
+                </span>
               </div>
             </div>
-            <DarkInput label="Group Name" value={yarn.label} onChange={(v: string) => handleUpdate({ label: v })} />
-          </div>
-          
-          <div className="flex flex-col gap-4">
-             <div className="flex gap-3">
-               <SelectInput 
-                 label="Fiber Material" 
-                 value={yarn.material} 
-                 onChange={(v: any) => handleUpdate({ material: v })} 
-                 options={[{value:'cotton',label:'Cotton'},{value:'polyester',label:'Polyester'},{value:'viscose',label:'Viscose'},{value:'zari',label:'Zari'}]} 
-               />
-               <SelectInput 
-                 label="Luster" 
-                 value={yarn.luster} 
-                 onChange={(v: any) => handleUpdate({ luster: v })} 
-                 options={[{value:'bright',label:'Bright'},{value:'semi_dull',label:'Semi-Dull'},{value:'dull',label:'Matte'}]} 
-               />
-             </div>
-             <div className="flex gap-3">
-               <SelectInput 
-                 label="Count Type" 
-                 value={yarn.count_system} 
-                 onChange={(v: any) => handleUpdate({ count_system: v })} 
-                 options={[{value:'ne',label:'Ne (English)'},{value:'denier',label:'Denier'}]} 
-               />
-               <DarkInput label="Yarn Count" type="number" value={yarn.count_value} onChange={(v: string) => handleUpdate({ count_value: parseFloat(v) || 0 })} />
-             </div>
-          </div>
-          
-          <div className="flex flex-col gap-3 pt-2 border-t border-gray-100">
-             <StepperInput label="Picks Per Inch (PPI)" value={yarn.ppi || 80} onChange={(v: number) => handleUpdate({ ppi: v })} />
+
+            <div style={{ flex: 1 }}>
+              <FieldLabel>Name</FieldLabel>
+              <input
+                type="text"
+                value={yarn.label}
+                onChange={e => set({ label: e.target.value })}
+                style={{ height: 38 }}
+              />
+            </div>
           </div>
 
-          <div className="pt-2">
-            <button 
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className="text-xs font-semibold text-gray-500 hover:text-amber-500 flex items-center gap-1 transition-colors"
-            >
-              <ChevronDownIcon expanded={showAdvanced} /> {showAdvanced ? "Hide Advanced Settings" : "Show Advanced Settings"}
-            </button>
-            
-            {showAdvanced && (
-              <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-col gap-4">
-                <DarkInput label="Fancy Yarn Setup" value="None" disabled />
-                <div className="flex gap-3">
-                  <DarkInput label="Height (mm)" value="0.3" disabled />
-                  <DarkInput label="Width (mm)" value="0.4" disabled />
-                </div>
+          {/* Row 2: Fiber + Count system */}
+          <div style={{ display: 'flex', gap: 10 }}>
+            <div style={{ flex: 1 }}>
+              <FieldLabel>Fiber</FieldLabel>
+              <div style={{ position: 'relative' }}>
+                <select
+                  value={yarn.material}
+                  onChange={e => set({ material: e.target.value as any })}
+                  style={{ appearance: 'none', paddingRight: 28, height: 38 }}
+                >
+                  <option value="polyester">Polyester</option>
+                  <option value="cotton">Cotton</option>
+                  <option value="viscose">Viscose</option>
+                  <option value="zari">Zari</option>
+                  <option value="silk">Silk</option>
+                </select>
+                <svg style={{ position: 'absolute', right: 9, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--text-3)' }}
+                  width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
               </div>
-            )}
+            </div>
+
+            <div style={{ flex: 1 }}>
+              <FieldLabel>Count</FieldLabel>
+              <div style={{ display: 'flex', gap: 6, height: 38 }}>
+                <select
+                  value={yarn.count_system}
+                  onChange={e => set({ count_system: e.target.value as any })}
+                  style={{ width: 68, appearance: 'none', textAlign: 'center', padding: '0 8px', height: 38, flexShrink: 0 }}
+                >
+                  <option value="ne">Ne</option>
+                  <option value="denier">D</option>
+                </select>
+                <input
+                  type="number" min="1"
+                  value={yarn.count_value}
+                  onChange={e => set({ count_value: parseFloat(e.target.value) || 0 })}
+                  style={{ height: 38 }}
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Danger Zone */}
-          <div className="pt-4 mt-2 border-t border-gray-100">
-             {!confirmDelete ? (
-               <button 
-                 onClick={() => setConfirmDelete(true)}
-                 className="flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-red-500 transition-colors"
-               >
-                 <TrashIcon /> Remove this yarn
-               </button>
-             ) : (
-               <div className="flex items-center justify-between bg-red-50 p-3 rounded-xl border border-red-100">
-                 <span className="text-xs font-bold text-red-600">Are you sure?</span>
-                 <div className="flex gap-2">
-                   <button onClick={() => setConfirmDelete(false)} className="text-xs font-semibold px-3 py-1.5 text-gray-600 hover:bg-gray-200 rounded-lg">Cancel</button>
-                   <button onClick={onRemove} className="text-xs font-bold px-3 py-1.5 bg-red-500 text-white hover:bg-red-600 rounded-lg transition-colors shadow-sm">Delete</button>
-                 </div>
-               </div>
-             )}
-          </div>
+          {/* Row 3: PPI Stepper */}
+          <StepperField
+            label="Picks Per Inch (PPI)"
+            value={yarn.ppi || 80}
+            onChange={v => set({ ppi: v })}
+          />
 
+          {/* Remove */}
+          {!isFirst && (
+            <div style={{ paddingTop: 6, borderTop: '1px solid var(--border-light)' }}>
+              {!confirmDelete ? (
+                <button
+                  onClick={() => setConfirmDelete(true)}
+                  style={{
+                    background: 'none', border: 'none', padding: 0,
+                    display: 'flex', alignItems: 'center', gap: 5,
+                    fontSize: 12, fontWeight: 500, color: 'var(--text-4)',
+                    cursor: 'pointer', transition: 'color 0.15s',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--red)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-4)')}
+                >
+                  <TrashIcon /> Remove yarn
+                </button>
+              ) : (
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  background: 'rgba(255,59,48,0.06)', padding: '9px 12px',
+                  borderRadius: 10, border: '1px solid rgba(255,59,48,0.15)',
+                }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--red)' }}>Remove this yarn?</span>
+                  <div style={{ display: 'flex', gap: 7 }}>
+                    <button
+                      onClick={() => setConfirmDelete(false)}
+                      style={{ fontSize: 12, fontWeight: 500, padding: '4px 12px', background: 'rgba(0,0,0,0.06)', border: 'none', borderRadius: 7, cursor: 'pointer', color: 'var(--text-1)' }}
+                    >Cancel</button>
+                    <button
+                      onClick={onRemove}
+                      style={{ fontSize: 12, fontWeight: 600, padding: '4px 12px', background: 'var(--red)', border: 'none', borderRadius: 7, cursor: 'pointer', color: '#fff' }}
+                    >Delete</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
-      {showPicker && <ColorPickerPopup isOpen={true} initialColor={yarn.colour_hex} title={`Color Preview`}
-        onClose={() => setShowPicker(false)} onSave={(c) => { handleUpdate({ colour_hex: c }); setShowPicker(false) }} />}
+      {/* Color Picker */}
+      {showPicker && (
+        <ColorPickerPopup
+          isOpen
+          initialColor={yarn.colour_hex}
+          title="Yarn Color"
+          onClose={() => setShowPicker(false)}
+          onSave={(c: string) => { set({ colour_hex: c }); setShowPicker(false) }}
+        />
+      )}
     </div>
   )
 }
 
+/* ─── Main WeftForm ───────────────────────────────────────── */
 export default function WeftForm() {
-  const { weftSystem, addWeftYarn, removeWeftYarn, setTotalNozzles, updateInsertionSequence, recalculate } = useDesignStore()
-  const activeNozzleSet = new Set(weftSystem.yarns.flatMap(y => y.nozzle_config.sequence))
+  const { weftSystem, addWeftYarn, removeWeftYarn, recalculate } = useDesignStore()
+  const [expandedId, setExpandedId] = useState<string | null>(weftSystem.yarns[0]?.id ?? null)
 
-  const [expandedCard, setExpandedCard] = useState<string | null>(weftSystem.yarns[0]?.id || null)
-  const [activeTab, setActiveTab] = useState('config') // config, sequence, advanced
-
-  const handleAddNewYarn = () => {
+  const handleAdd = () => {
     addWeftYarn()
-    // Find the latest yarn and expand it (handled by effect in a real app, but here we just expand the last one logically)
     setTimeout(() => {
-       const newYarn = useDesignStore.getState().weftSystem.yarns.slice(-1)[0];
-       if(newYarn) setExpandedCard(newYarn.id);
-    }, 100);
+      const latest = useDesignStore.getState().weftSystem.yarns.at(-1)
+      if (latest) setExpandedId(latest.id)
+    }, 60)
   }
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 overflow-y-auto">
-      
-      {/* Header Section */}
-      <div className="px-6 py-6 pb-4 bg-white border-b border-gray-100 sticky top-0 z-10 flex-shrink-0">
-        <h2 className="text-2xl font-black text-gray-900 tracking-tight">Weft Manager</h2>
-        <p className="text-xs font-semibold text-gray-400 mt-1 uppercase tracking-wider">Pattu Dobby Saree • SD-2025-001</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
 
-        {/* Tab Navigation */}
-        <div className="flex gap-6 mt-6 border-b border-gray-100">
-          {[
-            { id: 'config', label: 'Yarn Setup' },
-            { id: 'sequence', label: 'Insertion Sequence' }
-          ].map(tab => (
-            <button 
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`pb-3 text-sm font-bold relative transition-colors ${activeTab === tab.id ? 'text-amber-500' : 'text-gray-400 hover:text-gray-800'}`}
-            >
-              {tab.label}
-              {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-t-full" />}
-            </button>
+      {/* ── Title ──────────────────────────────────────── */}
+      <div style={{ marginBottom: 20 }}>
+        <h2 style={{
+          fontSize: 17, fontWeight: 700, color: 'var(--text-1)',
+          letterSpacing: '-0.02em', marginBottom: 3,
+        }}>Weft Yarns</h2>
+        <p style={{ fontSize: 12, color: 'var(--text-3)' }}>
+          Configure yarn types and picks per inch
+        </p>
+      </div>
+
+      {/* ── Yarn Cards ─────────────────────────────────── */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {weftSystem.yarns.map((yarn, i) => (
+          <YarnCard
+            key={yarn.id}
+            yarn={yarn}
+            isFirst={i === 0}
+            expanded={expandedId === yarn.id}
+            onToggle={() => setExpandedId(expandedId === yarn.id ? null : yarn.id)}
+            onRemove={() => {
+              removeWeftYarn(yarn.id)
+              setExpandedId(null)
+              recalculate()
+            }}
+          />
+        ))}
+      </div>
+
+      {/* ── Add New Yarn ────────────────────────────────── */}
+      <button
+        onClick={handleAdd}
+        style={{
+          marginTop: 12,
+          width: '100%', height: 42,
+          background: 'rgba(0,122,255,0.06)',
+          border: '1.5px dashed rgba(0,122,255,0.22)',
+          borderRadius: 12,
+          color: 'var(--accent)',
+          fontSize: 13, fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+          cursor: 'pointer', letterSpacing: '-0.01em',
+          transition: 'all 0.15s ease',
+        }}
+        onMouseEnter={e => {
+          const b = e.currentTarget as HTMLButtonElement
+          b.style.background = 'rgba(0,122,255,0.11)'
+          b.style.borderColor = 'rgba(0,122,255,0.38)'
+        }}
+        onMouseLeave={e => {
+          const b = e.currentTarget as HTMLButtonElement
+          b.style.background = 'rgba(0,122,255,0.06)'
+          b.style.borderColor = 'rgba(0,122,255,0.22)'
+        }}
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Add Yarn
+      </button>
+
+      {/* ── Summary strip ───────────────────────────────── */}
+      {weftSystem.yarns.length > 1 && (
+        <div style={{
+          marginTop: 16,
+          padding: '11px 14px',
+          background: 'var(--bg)',
+          border: '1px solid var(--border-light)',
+          borderRadius: 12,
+          display: 'flex', alignItems: 'center', gap: 8,
+          flexWrap: 'wrap',
+        }}>
+          <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.07em', marginRight: 4 }}>
+            Yarns
+          </span>
+          {weftSystem.yarns.map((y, i) => (
+            <div key={y.id} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              <div style={{
+                width: 8, height: 8, borderRadius: '50%', background: y.colour_hex,
+                boxShadow: `0 0 0 2px ${y.colour_hex}33`,
+              }} />
+              <span style={{ fontSize: 11, color: 'var(--text-2)', fontWeight: 500 }}>
+                {String.fromCharCode(65 + i)}
+              </span>
+            </div>
           ))}
         </div>
-      </div>
-
-      <div className="p-6 flex-1 flex flex-col gap-8 max-w-full lg:max-w-xl">
-        
-        {activeTab === 'config' && (
-          <>
-            {/* Machine Resources */}
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Available Nozzles</span>
-                <select 
-                  value={weftSystem.total_nozzles_available}
-                  onChange={(e) => { setTotalNozzles(parseInt(e.target.value)); recalculate() }}
-                  className="bg-white border border-gray-200 text-sm font-bold text-gray-700 h-8 rounded-lg px-2 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/20"
-                >
-                  <option value="4">4-Color</option>
-                  <option value="6">6-Color</option>
-                  <option value="8">8-Color</option>
-                </select>
-              </div>
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
-                {Array.from({ length: weftSystem.total_nozzles_available }).map((_, i) => (
-                  <NozzleSelector 
-                     key={i} 
-                     number={i + 1} 
-                     color={NOZZLE_COLOUR_MAP[i % NOZZLE_COLOUR_MAP.length]} 
-                     active={activeNozzleSet.has(i + 1)} 
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Yarn Definitions */}
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Weft Yarns List</span>
-              </div>
-              
-              <div className="flex flex-col gap-1">
-                {weftSystem.yarns.map((yarn) => (
-                  <LightYarnCard 
-                    key={yarn.id} 
-                    yarn={yarn} 
-                    active={expandedCard === yarn.id}
-                    expanded={expandedCard === yarn.id}
-                    onClick={() => setExpandedCard(expandedCard === yarn.id ? null : yarn.id)}
-                    onRemove={() => { removeWeftYarn(yarn.id); setExpandedCard(null); recalculate() }} 
-                  />
-                ))}
-              </div>
-
-              {/* Primary Add Action */}
-              <button 
-                onClick={handleAddNewYarn}
-                className="mt-4 w-full h-[52px] bg-gray-900 hover:bg-gray-800 text-white rounded-xl shadow-md hover:shadow-lg font-bold text-sm flex items-center justify-center gap-2 transition-all"
-              >
-                <div className="bg-white/20 p-1 rounded-md"><PlusIcon /></div>
-                Add Additional Yarn
-              </button>
-            </div>
-          </>
-        )}
-
-        {activeTab === 'sequence' && (
-           <div className="flex flex-col gap-6">
-             <div className="flex flex-col gap-3">
-               <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Pick Sequence</span>
-               <div className="flex flex-wrap gap-2">
-                 {weftSystem.insertion_sequence.pattern.map((id, i) => {
-                   const yarn = weftSystem.yarns.find(y => y.id === id)
-                   return (
-                     <div key={i} className="flex flex-col items-center gap-1 group">
-                       <div className="h-10 px-3 bg-white border border-gray-200 rounded-xl flex items-center gap-2 shadow-sm font-bold text-sm text-gray-800">
-                         <div className="w-3 h-3 rounded-full" style={{ background: yarn?.colour_hex || '#CCC' }} />
-                         {yarn?.label.split(' ')[1] || 'A'}
-                       </div>
-                       <div className="text-[9px] font-bold text-gray-300">#{i + 1}</div>
-                     </div>
-                   )
-                 })}
-               </div>
-             </div>
-
-             <div className="mt-4">
-               <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">Append to Pattern</span>
-               <div className="flex flex-wrap gap-2">
-                 {weftSystem.yarns.map(y => (
-                   <button 
-                     key={y.id} 
-                     onClick={() => { updateInsertionSequence([...weftSystem.insertion_sequence.pattern, y.id]); recalculate() }}
-                     className="h-9 px-3 bg-white border rounded-lg font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center gap-2 shadow-sm transition-colors"
-                     style={{ borderColor: y.colour_hex }}
-                   >
-                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: y.colour_hex }} /> Add {y.label}
-                   </button>
-                 ))}
-                 
-                 {weftSystem.insertion_sequence.pattern.length > 0 && (
-                   <button 
-                     onClick={() => { updateInsertionSequence(weftSystem.insertion_sequence.pattern.slice(0, -1)); recalculate() }}
-                     className="h-9 px-3 border border-gray-200 rounded-lg font-bold text-xs text-red-500 hover:bg-red-50 hover:border-red-100 flex items-center gap-1 transition-colors ml-auto"
-                   >
-                     <TrashIcon /> Undo Last
-                   </button>
-                 )}
-               </div>
-               
-               <button 
-                 onClick={() => { updateInsertionSequence([]); recalculate() }}
-                 className="mt-8 text-[11px] font-bold text-gray-400 hover:text-red-500 transition-colors uppercase tracking-widest"
-               >
-                 Clear Entire Sequence
-               </button>
-             </div>
-           </div>
-        )}
-      </div>
-
+      )}
     </div>
   )
 }
-
-const PlusIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>
-)

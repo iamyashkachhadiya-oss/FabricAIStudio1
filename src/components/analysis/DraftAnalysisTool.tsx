@@ -4,11 +4,10 @@ import { useDesignStore } from '@/lib/store/designStore'
 
 export default function DraftAnalysisTool() {
   const store = useDesignStore()
-  const { draftSequence, setDraftSequence } = store
+  const { draftSequence, setDraftSequence, shaftCount } = store
 
-  // Typically draft is equal to Weft picks, but for this simple grid we assume 16 ends.
-  const ends = draftSequence.length || 16
-  const shafts = 16
+  const ends = draftSequence.length || shaftCount
+  const shafts = shaftCount
 
   const setDraftCell = (endIndex: number, shaftIndex: number) => {
     const newDraft = [...draftSequence]
@@ -16,18 +15,15 @@ export default function DraftAnalysisTool() {
     setDraftSequence(newDraft)
   }
 
-  const handleRandomDraft = () => {
+  const handleRandomDraft = () =>
     setDraftSequence(Array.from({ length: ends }, () => Math.floor(Math.random() * shafts) + 1))
-  }
 
-  const handleStraightDraft = () => {
+  const handleStraightDraft = () =>
     setDraftSequence(Array.from({ length: ends }, (_, i) => (i % shafts) + 1))
-  }
 
   const handlePointedDraft = () => {
-    const seq = []
-    let dir = 1
-    let curr = 1
+    const seq: number[] = []
+    let dir = 1, curr = 1
     for (let i = 0; i < ends; i++) {
       seq.push(curr)
       if (curr === shafts) dir = -1
@@ -38,55 +34,79 @@ export default function DraftAnalysisTool() {
   }
 
   return (
-    <div style={{ background: 'var(--surface)', color: 'var(--text-1)', borderRadius: 12, padding: 0, fontFamily: 'system-ui, sans-serif' }}>
-      
-      {/* Top Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-        <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-1)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-          Interactive Draft Matrix
+    <div style={{ color: 'var(--text-1)', fontFamily: 'var(--font-body)' }}>
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
+        <div>
+          <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.01em', marginBottom: 2 }}>
+            Draft Matrix
+          </h3>
+          <div style={{ fontSize: 12, color: 'var(--text-3)' }}>Click cells to assign shaft threading</div>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={handleStraightDraft} className="btn-secondary" style={{ padding: '6px 12px', fontSize: 11 }}>Straight</button>
-          <button onClick={handlePointedDraft} className="btn-secondary" style={{ padding: '6px 12px', fontSize: 11 }}>Pointed</button>
-          <button onClick={handleRandomDraft} className="btn-secondary" style={{ padding: '6px 12px', fontSize: 11 }}>Random</button>
+        <div className="flex flex-wrap gap-2">
+          <button onClick={handleStraightDraft} className="btn-secondary">Straight</button>
+          <button onClick={handlePointedDraft} className="btn-secondary">Pointed</button>
+          <button onClick={handleRandomDraft} className="btn-secondary">Random</button>
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 24 }}>
-        
+      <div className="flex flex-col lg:flex-row gap-5 w-full">
+
         {/* Threading Draft Grid */}
-        <div style={{ flex: 1, border: '1px solid var(--border)', borderRadius: 8, padding: 16, overflowX: 'auto', background: 'var(--bg)' }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-3)', letterSpacing: '0.05em', marginBottom: 16, textTransform: 'uppercase' }}>
+        <div className="flex-1 min-w-0" style={{
+          border: '1px solid var(--border-light)',
+          borderRadius: 12, padding: 14,
+          background: 'var(--bg)',
+        }}>
+          <div style={{
+            fontSize: 10, fontWeight: 600, color: 'var(--text-3)',
+            letterSpacing: '0.07em', marginBottom: 12, textTransform: 'uppercase',
+          }}>
             Threading Draft — Click to assign shaft
           </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: `30px repeat(${ends}, 24px)`, gap: 1 }}>
-            {/* Header row */}
-            <div style={{ background: 'var(--border-light)' }} />
+
+          <div style={{ display: 'grid', gridTemplateColumns: `28px repeat(${ends}, 22px)`, gap: 1 }}>
+            {/* Header */}
+            <div style={{ background: 'transparent' }} />
             {Array.from({ length: ends }).map((_, c) => (
-              <div key={c} style={{ background: 'var(--surface)', color: 'var(--text-2)', fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 24, border: '1px solid var(--border-light)' }}>
+              <div key={c} style={{
+                background: 'rgba(0,0,0,0.04)',
+                color: 'var(--text-3)', fontSize: 10, fontWeight: 600,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                height: 22, borderRadius: 3,
+              }}>
                 {c + 1}
               </div>
             ))}
-            
-            {/* Grid rows */}
+
+            {/* Rows */}
             {Array.from({ length: shafts }).map((_, r) => {
               const shaftNum = r + 1
               return (
                 <div key={r} style={{ display: 'contents' }}>
-                  <div style={{ background: 'var(--surface)', color: 'var(--text-2)', fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', height: 24, border: '1px solid var(--border-light)' }}>
+                  <div style={{
+                    background: 'rgba(0,0,0,0.04)',
+                    color: 'var(--text-3)', fontSize: 10, fontWeight: 600,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    height: 22, borderRadius: 3,
+                  }}>
                     {shaftNum}
                   </div>
                   {Array.from({ length: ends }).map((_, c) => {
                     const isSelected = draftSequence[c] === shaftNum
                     return (
-                      <div 
+                      <div
                         key={c}
                         onClick={() => setDraftCell(c, shaftNum)}
-                        style={{ 
-                          background: isSelected ? 'var(--primary)' : 'var(--surface)', 
-                          border: '1px solid var(--border)', height: 24, cursor: 'pointer' 
-                        }} 
+                        style={{
+                          background: isSelected ? 'var(--accent)' : 'var(--surface)',
+                          border: '1px solid var(--border-light)',
+                          height: 22,
+                          cursor: 'pointer',
+                          borderRadius: 2,
+                          transition: 'background 0.1s',
+                        }}
                       />
                     )
                   })}
@@ -96,20 +116,34 @@ export default function DraftAnalysisTool() {
           </div>
         </div>
 
-        {/* Draft Plan Text */}
-        <div style={{ width: 280, border: '1px solid var(--border)', borderRadius: 8, padding: 16, flexShrink: 0, background: 'var(--bg)' }}>
-          <div style={{ fontSize: 10, fontWeight: 800, color: 'var(--text-3)', letterSpacing: '0.05em', marginBottom: 16, textTransform: 'uppercase' }}>
+        {/* Draft Sequence Text */}
+        <div className="w-full lg:w-[256px] shrink-0" style={{
+          border: '1px solid var(--border-light)',
+          borderRadius: 12, padding: 14,
+          background: 'var(--bg)',
+        }}>
+          <div style={{
+            fontSize: 10, fontWeight: 600, color: 'var(--text-3)',
+            letterSpacing: '0.07em', marginBottom: 12, textTransform: 'uppercase',
+          }}>
             Draft Sequence Array
           </div>
-          <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 8, padding: 16, fontFamily: 'monospace', fontSize: 13, color: 'var(--text-1)', height: '100%', minHeight: 200, overflowY: 'auto', lineHeight: 1.6 }}>
+          <div style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border-light)',
+            borderRadius: 10, padding: '12px 14px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 12, color: 'var(--text-1)',
+            lineHeight: 1.65,
+          }}>
             {draftSequence.map((sh, end) => (
-              <div key={end}>Warp {end + 1} &rarr; Shaft {sh}</div>
+              <div key={end} style={{ color: end % 2 === 0 ? 'var(--text-1)' : 'var(--text-2)' }}>
+                Warp {end + 1} &rarr; Shaft {sh}
+              </div>
             ))}
           </div>
         </div>
-
       </div>
-
     </div>
   )
 }

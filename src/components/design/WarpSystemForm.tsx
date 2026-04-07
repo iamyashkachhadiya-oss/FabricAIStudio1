@@ -2,57 +2,50 @@
 
 import { useState } from 'react'
 import { useDesignStore } from '@/lib/store/designStore'
-import type { WarpYarn, CountSystem, Luster } from '@/lib/types'
+import type { WarpYarn, CountSystem } from '@/lib/types'
 import ColorPickerPopup from '../common/ColorPickerPopup'
 
-function WarpDiagram() {
+function ALabel({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 20 }}>
-      {/* We keep the original requested photo */}
-      <img 
-        src="/warp_machine.png" 
-        alt="Warp Configuration Machine" 
-        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 8 }} 
-      />
-    </div>
+    <label style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-2)', marginBottom: 5, display: 'block', letterSpacing: '-0.005em' }}>
+      {children}
+    </label>
   )
 }
 
-function DarkInput({ label, value, onChange, type = "text", disabled = false }: any) {
+function Stepper({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 700, color: '#A0A0A5', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</label>
-      <input 
-        type={type} 
-        value={value} 
-        onChange={(e) => onChange && onChange(e.target.value)}
-        disabled={disabled}
-        style={{ 
-          height: 38, background: '#323232', border: '1px solid #444', borderRadius: 6, 
-          color: '#FFF', fontSize: 14, fontWeight: 600, padding: '0 12px', outline: 'none',
-          opacity: disabled ? 0.7 : 1
-        }} 
-      />
-    </div>
-  )
-}
-
-function LightStepperInput({ label, value, onChange }: any) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-      <label style={{ fontSize: 10, fontWeight: 700, color: '#A0A0A5', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</label>
-      <div style={{ display: 'flex', height: 38, borderRadius: 6, overflow: 'hidden', border: '1px solid #E5E5E5' }}>
-        <button onClick={() => onChange(value - 1)} style={{ width: 36, background: '#FFF', border: 'none', borderRight: '1px solid #E5E5E5', cursor: 'pointer', fontSize: 18, color: '#E0E0E0' }}>−</button>
-        <div style={{ flex: 1, background: '#323232', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14 }}>
+    <div>
+      <ALabel>{label}</ALabel>
+      <div style={{
+        display: 'flex', height: 40,
+        border: '1px solid rgba(0,0,0,0.12)',
+        borderRadius: 10, overflow: 'hidden',
+        background: '#FAFAFA',
+      }}>
+        <button
+          onClick={() => onChange(Math.max(0, value - 1))}
+          style={{ width: 40, background: 'rgba(0,0,0,0.04)', border: 'none', borderRight: '1px solid rgba(0,0,0,0.07)', cursor: 'pointer', fontSize: 16, color: 'var(--text-2)', transition: 'background 0.1s' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.04)')}
+        >−</button>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 600, color: 'var(--text-1)' }}>
           {value}
         </div>
-        <button onClick={() => onChange(value + 1)} style={{ width: 36, background: '#FFF', border: 'none', borderLeft: '1px solid #E5E5E5', cursor: 'pointer', fontSize: 18, color: '#E0E0E0' }}>+</button>
+        <button
+          onClick={() => onChange(value + 1)}
+          style={{ width: 40, background: 'rgba(0,0,0,0.04)', border: 'none', borderLeft: '1px solid rgba(0,0,0,0.07)', cursor: 'pointer', fontSize: 16, color: 'var(--text-2)', transition: 'background 0.1s' }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.04)')}
+        >+</button>
       </div>
     </div>
   )
 }
 
-function LightWarpYarnCard({ yarn, index, expanded, onToggle, onRemove }: any) {
+function WarpYarnCard({ yarn, index, expanded, onToggle }: {
+  yarn: WarpYarn; index: number; expanded: boolean; onToggle: () => void
+}) {
   const { updateWarpYarn, recalculate } = useDesignStore()
   const [showPicker, setShowPicker] = useState(false)
 
@@ -61,79 +54,91 @@ function LightWarpYarnCard({ yarn, index, expanded, onToggle, onRemove }: any) {
     recalculate()
   }
 
-  const seqPositions = [1, 3, 5, 7, 2, 4, 6, 8].map(n => n + yarn.sort_order * 2)
+  const seqPositions = [1,3,5,7,2,4,6,8].map(n => n + yarn.sort_order * 2)
 
   return (
-    <div style={{ border: '1px solid #EAEAEA', borderRadius: 12, marginBottom: 16, overflow: 'hidden', background: '#FFF' }}>
-      
-      {/* Header (Accordion Toggle) */}
-      <div 
+    <div style={{
+      border: '1px solid var(--border-light)',
+      borderRadius: 14,
+      overflow: 'hidden',
+      background: 'var(--surface)',
+      transition: 'box-shadow 0.15s',
+    }}>
+      {/* Header */}
+      <div
         onClick={onToggle}
-        style={{ 
-          padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer',
-          borderBottom: expanded ? '1px solid #EAEAEA' : 'none'
+        style={{
+          padding: '14px 16px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          cursor: 'pointer',
+          borderBottom: expanded ? '1px solid var(--border-light)' : 'none',
+          background: expanded ? 'rgba(0,0,0,0.015)' : 'transparent',
+          transition: 'background 0.15s',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div 
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div
             onClick={(e) => { e.stopPropagation(); setShowPicker(true) }}
-            style={{ 
-              width: 32, height: 32, borderRadius: 8, background: yarn.colour_hex || '#1a1a2e', 
-              border: '1px solid rgba(0,0,0,0.1)'
-            }} 
+            style={{
+              width: 30, height: 30, borderRadius: 8,
+              background: yarn.colour_hex || '#1D1D1F',
+              border: '1.5px solid rgba(255,255,255,0.8)',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
+              cursor: 'pointer', flexShrink: 0,
+            }}
           />
-          <div style={{ fontSize: 15, fontWeight: 800, color: '#333' }}>
-            Warp {index + 1}
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-1)', letterSpacing: '-0.015em' }}>
+              Warp {index + 1}
+            </div>
+            <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 1 }}>
+              {yarn.material} · {yarn.count_value}{yarn.count_system === 'ne' ? 's' : 'D'}
+            </div>
           </div>
         </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ padding: '4px 10px', background: '#F5EFE6', borderRadius: 12, fontSize: 11, fontWeight: 800, color: '#8C7A6B' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{
+            fontSize: 11, fontWeight: 600,
+            color: 'var(--text-2)',
+            background: 'rgba(0,0,0,0.05)',
+            padding: '3px 9px', borderRadius: 99,
+          }}>
             {yarn.epi_share} EPI
-          </div>
-          {/* Exact little white box from mockup */}
-          <div style={{ width: 32, height: 24, border: '1px solid #EAEAEA', borderRadius: 6, background: '#FFF' }} />
-          
-          <svg style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', color: '#A0A0A5' }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+          </span>
+          <svg
+            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+            style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', color: 'var(--text-3)' }}
+          >
+            <path d="M6 9l6 6 6-6" strokeLinecap="round" />
           </svg>
         </div>
       </div>
 
       {/* Body */}
       {expanded && (
-        <div style={{ padding: 20, background: '#FAF9F5' }}>
-          
-          {/* Color Row */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: '#A0A0A5', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Color
-            </label>
-            <div style={{ display: 'flex', alignItems: 'center', height: 44, border: '1px solid #444', borderRadius: 8, overflow: 'hidden', background: '#323232', paddingLeft: 8 }}>
-              <div 
-                onClick={() => setShowPicker(true)}
-                style={{ width: 28, height: 28, borderRadius: 6, background: yarn.colour_hex, cursor: 'pointer', flexShrink: 0, border: '1px solid #111' }} 
-              />
-              <input 
-                type="text"
-                value={yarn.colour_hex}
-                onChange={(e) => handleUpdate({ colour_hex: e.target.value })}
-                style={{ flex: 1, background: 'transparent', border: 'none', color: '#FFF', fontSize: 16, padding: '0 12px', outline: 'none', fontFamily: 'monospace' }}
-              />
+        <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: 14, background: 'rgba(0,0,0,0.012)' }}>
+          {/* Color */}
+          <div>
+            <ALabel>Color</ALabel>
+            <div
+              onClick={() => setShowPicker(true)}
+              style={{
+                height: 40, display: 'flex', alignItems: 'center', gap: 10,
+                border: '1px solid rgba(0,0,0,0.12)', borderRadius: 10,
+                background: '#FAFAFA', padding: '0 10px',
+                cursor: 'pointer', transition: 'border-color 0.15s',
+              }}
+            >
+              <div style={{ width: 24, height: 24, borderRadius: 6, background: yarn.colour_hex, border: '1px solid rgba(0,0,0,0.10)' }} />
+              <span style={{ fontSize: 13, fontFamily: 'var(--font-mono)', color: 'var(--text-2)' }}>{yarn.colour_hex}</span>
             </div>
           </div>
 
-          {/* Material & Yarn Count */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+          {/* Material + count */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: '#A0A0A5', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Fiber Material
-              </label>
-              <select 
-                value={yarn.material}
-                onChange={(e) => handleUpdate({ material: e.target.value as any })}
-                style={{ width: '100%', height: 44, background: '#323232', border: '1px solid #444', borderRadius: 8, color: '#FFF', fontSize: 15, padding: '0 12px', outline: 'none', appearance: 'none' }}
-              >
+              <ALabel>Fiber</ALabel>
+              <select value={yarn.material} onChange={(e) => handleUpdate({ material: e.target.value as any })}>
                 <option value="cotton">Cotton</option>
                 <option value="polyester">Polyester</option>
                 <option value="viscose">Viscose</option>
@@ -141,95 +146,113 @@ function LightWarpYarnCard({ yarn, index, expanded, onToggle, onRemove }: any) {
               </select>
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: '#A0A0A5', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Yarn Count
-              </label>
-              <input 
+              <ALabel>Yarn Count</ALabel>
+              <input
                 type="text"
                 value={yarn.count_value + (yarn.count_system === 'ne' ? 's' : 'D')}
                 onChange={(e) => {
-                  const val = parseFloat(e.target.value) || 0;
-                  handleUpdate({ count_value: val });
+                  const val = parseFloat(e.target.value) || 0
+                  handleUpdate({ count_value: val })
                 }}
-                style={{ width: '100%', height: 44, background: '#323232', border: '1px solid #444', borderRadius: 8, color: '#FFF', fontSize: 15, padding: '0 12px', outline: 'none' }}
               />
             </div>
           </div>
 
-          {/* Steppers: EPI & Filament Count */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-            <LightStepperInput 
-              label="Warp Count (EPI)" 
-              value={yarn.epi_share} 
-              onChange={(val: number) => handleUpdate({ epi_share: Math.max(0, val) })}
+          {/* Steppers */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <Stepper
+              label="Warp Count (EPI)"
+              value={yarn.epi_share}
+              onChange={(val) => handleUpdate({ epi_share: Math.max(0, val) })}
             />
-            <LightStepperInput 
-              label="Filament Count" 
-              value={yarn.filament_count || 1} 
-              onChange={(val: number) => handleUpdate({ filament_count: Math.max(1, val) })}
+            <Stepper
+              label="Filament Count"
+              value={yarn.filament_count || 1}
+              onChange={(val) => handleUpdate({ filament_count: Math.max(1, val) })}
             />
           </div>
 
-          {/* Drawing-In Sequence */}
+          {/* Drawing-in */}
           <div>
-            <label style={{ display: 'block', fontSize: 10, fontWeight: 700, color: '#A0A0A5', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Drawing-In Sequence
-            </label>
-            <input 
-              type="text"
-              defaultValue={seqPositions.join(', ')}
-              style={{ width: '100%', height: 44, background: '#323232', border: '1px solid #444', borderRadius: 8, color: '#FFF', fontSize: 15, padding: '0 12px', outline: 'none' }}
-            />
+            <ALabel>Drawing-In Sequence</ALabel>
+            <input type="text" defaultValue={seqPositions.join(', ')} />
           </div>
-
         </div>
       )}
 
-      {showPicker && <ColorPickerPopup isOpen={true} initialColor={yarn.colour_hex} title={`Color — ${yarn.label}`}
-        onClose={() => setShowPicker(false)} onSave={(c) => { handleUpdate({ colour_hex: c }); setShowPicker(false) }} />}
+      {showPicker && (
+        <ColorPickerPopup
+          isOpen={true}
+          initialColor={yarn.colour_hex}
+          title={`Color — Warp ${index + 1}`}
+          onClose={() => setShowPicker(false)}
+          onSave={(c) => { handleUpdate({ colour_hex: c }); setShowPicker(false) }}
+        />
+      )}
     </div>
   )
 }
 
 export default function WarpSystemForm() {
   const { warpSystem, addWarpYarn } = useDesignStore()
-
   const [expandedCard, setExpandedCard] = useState<string | null>(warpSystem.yarns[0]?.id || null)
 
   return (
-    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      
-      {/* Light Theme Header */}
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 11, fontWeight: 800, color: '#A0A0A5', letterSpacing: '0.05em', marginBottom: 12 }}>
-          WARP CONFIGURATION
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      <div style={{ marginBottom: 18 }}>
+        <h2 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.02em', marginBottom: 3 }}>
+          Warp Configuration
+        </h2>
+        <p style={{ fontSize: 12, color: 'var(--text-3)' }}>
+          Thread system and yarn properties
+        </p>
       </div>
 
-      <WarpDiagram />
+      {/* Diagram */}
+      <div style={{ marginBottom: 18 }}>
+        <img
+          src="/warp_machine.png"
+          alt="Warp Configuration"
+          style={{ width: '100%', height: 'auto', borderRadius: 12, display: 'block', border: '1px solid var(--border-light)' }}
+        />
+      </div>
 
-      <div style={{ borderTop: '1px solid #EAEAEA', paddingTop: 20 }}>
-        <button 
-          onClick={addWarpYarn}
-          style={{ 
-            width: '100%', height: 48, background: '#FFF', border: '1px solid #F0F0F0', borderRadius: 12,
-            color: '#F0F0F0', fontSize: 15, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-            marginBottom: 24, cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-          }}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Add warp type
-        </button>
+      {/* Add warp button */}
+      <button
+        onClick={addWarpYarn}
+        style={{
+          width: '100%', height: 42,
+          background: 'rgba(0,122,255,0.07)',
+          border: '1.5px dashed rgba(0,122,255,0.25)',
+          borderRadius: 12, color: 'var(--accent)',
+          fontSize: 13, fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+          cursor: 'pointer', marginBottom: 14,
+          transition: 'all 0.15s',
+          letterSpacing: '-0.01em',
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,122,255,0.12)'
+          ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(0,122,255,0.40)'
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(0,122,255,0.07)'
+          ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(0,122,255,0.25)'
+        }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Add Warp Type
+      </button>
 
+      {/* Cards */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {warpSystem.yarns.map((yarn, i) => (
-          <LightWarpYarnCard 
-            key={yarn.id} 
-            yarn={yarn} 
-            index={i} 
+          <WarpYarnCard
+            key={yarn.id}
+            yarn={yarn}
+            index={i}
             expanded={expandedCard === yarn.id}
             onToggle={() => setExpandedCard(expandedCard === yarn.id ? null : yarn.id)}
           />

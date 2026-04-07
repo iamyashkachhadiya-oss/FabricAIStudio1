@@ -32,8 +32,8 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
   const previewRef = useRef<HTMLCanvasElement>(null)
   const [rendered, setRendered] = useState(false)
 
-  const warpHex = resolveColor(warpColor, '#1B1F3B')
-  const weftHex = resolveColor(weftColor, '#E8A838')
+  const warpHex = resolveColor(warpColor, '#1D1D1F')
+  const weftHex = resolveColor(weftColor, '#007AFF')
 
   const renderSimulation = useCallback((canvas: HTMLCanvasElement, canvasSize: number) => {
     const rows = matrix.length
@@ -138,14 +138,16 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
       <div style={{
         textAlign: 'center', padding: 40,
         color: 'var(--text-3)', fontSize: 13,
-        background: '#F8F9FA', borderRadius: 12,
+        background: 'var(--bg)',
+        borderRadius: 14,
         border: '1.5px dashed var(--border)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
       }}>
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CCC" strokeWidth="1.5" style={{ marginBottom: 12 }}>
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" style={{ marginBottom: 4 }}>
           <rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 15l6-6 4 4 4-4 4 4" />
         </svg>
-        <div>Enter a peg plan to see fabric simulation</div>
-        <div style={{ fontSize: 11, marginTop: 4, color: '#BBB' }}>Go to Peg Plan tab → type or click the grid</div>
+        <div style={{ fontWeight: 500, color: 'var(--text-2)' }}>No simulation yet</div>
+        <div style={{ fontSize: 11, color: 'var(--text-4)' }}>Enter a peg plan to see the fabric preview</div>
       </div>
     )
   }
@@ -153,21 +155,18 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
   return (
     <div style={{ width: '100%' }}>
       {/* Preview */}
-      <div style={{
-        display: 'flex', justifyContent: 'center',
-        marginBottom: 16,
-      }}>
+      <div className="flex justify-center mb-4">
         <div style={{
           width: 320, height: 320,
-          borderRadius: 12,
-          overflow: 'hidden',
-          border: '1px solid var(--border)',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-          background: '#F0F0F0',
+          borderRadius: 16, overflow: 'hidden',
+          border: '1px solid var(--border-light)',
+          background: 'var(--bg)',
+          boxShadow: 'var(--shadow-md)',
+          flexShrink: 0,
         }}>
           <canvas
             ref={previewRef}
-            style={{ display: 'block', width: 320, height: 320 }}
+            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
       </div>
@@ -192,7 +191,7 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
       </div>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+      <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
         <button onClick={downloadPNG} className="btn-primary" style={{ fontSize: 12, height: 36, padding: '0 16px' }}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
