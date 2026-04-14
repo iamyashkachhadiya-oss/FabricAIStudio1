@@ -99,10 +99,7 @@ export default function DemoPage() {
               <div style={{
                 fontSize: 15, fontWeight: 800,
                 letterSpacing: '-0.04em', lineHeight: 1.1,
-                background: 'linear-gradient(135deg, #1E90FF 0%, #3B82F6 50%, #06D6AA 100%)',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                color: '#1E90FF',
               }}>
                 FabricAI Studio
               </div>
