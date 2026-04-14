@@ -15,11 +15,11 @@
   --grad-end:    #06D6AA;            /* logo teal */
   --gradient:    linear-gradient(135deg, #FF6B35 0%, #FF4D7E 50%, #06D6AA 100%);
 
-  /* ── Primary Accent — Dodger Blue ─────────────────────────── */
-  --accent:        #1E90FF;
-  --accent-hover:  #1278E0;
-  --accent-light:  rgba(30, 144, 255, 0.10);
-  --accent-ring:   rgba(30, 144, 255, 0.22);
+  /* ── Primary Accent — Ruby Pink ─────────────────────────── */
+  --accent:        #E0115F;
+  --accent-hover:  #C00E52;
+  --accent-light:  rgba(224, 17, 95, 0.10);
+  --accent-ring:   rgba(224, 17, 95, 0.22);
 
   /* ── Secondary Accent — coral/orange (energy) ────────────── */
   --accent2:       #FF6B35;

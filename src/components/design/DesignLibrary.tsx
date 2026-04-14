@@ -709,13 +709,13 @@ function GenerationBanner({
   return (
     <div style={{
       background: '#F8FFF9',
-      border: '1px solid rgba(30,144,255,0.20)', borderRadius: 12,
+      border: '1px solid rgba(224,17,95,0.20)', borderRadius: 12,
       padding: '11px 16px', display: 'flex', alignItems: 'center', gap: 12,
       marginBottom: 10, flexShrink: 0,
     }}>
       <div style={{
         width: 32, height: 32, borderRadius: 9, flexShrink: 0,
-        background: 'linear-gradient(135deg, #1E90FF, #3B82F6)',
+        background: 'linear-gradient(135deg, #E0115F, #C00E52)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round">
@@ -733,11 +733,11 @@ function GenerationBanner({
       <button onClick={onStart} style={{
         height: 30, padding: '0 14px', fontSize: 11.5, fontWeight: 700,
         border: 'none', borderRadius: 8,
-        background: 'linear-gradient(135deg, #1E90FF 0%, #3B82F6 100%)',
+        background: 'linear-gradient(135deg, #E0115F 0%, #C00E52 100%)',
         color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
         whiteSpace: 'nowrap', letterSpacing: '-0.01em',
         transition: 'all 0.18s ease',
-        boxShadow: '0 2px 8px rgba(30,144,255,0.25)',
+        boxShadow: '0 2px 8px rgba(224,17,95,0.25)',
       }}>Generate</button>
     </div>
   )
@@ -941,7 +941,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
 
   const CATEGORIES: { key: GenCategory; label: string; color: string }[] = [
     { key: 'all',         label: 'All',             color: '#1E293B' },
-    { key: 'base_weaves', label: 'Base Weaves',      color: '#1E90FF' },
+    { key: 'base_weaves', label: 'Base Weaves',      color: '#E0115F' },
     { key: 'presets',     label: 'Industry Presets', color: '#0891B2' },
     { key: 'dobby',       label: 'Dobby',            color: '#7C3AED' },
     { key: 'specialty',   label: 'Jacquard & Pile',  color: '#DC2626' },
@@ -994,7 +994,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
                   style={{
                     padding: '4px 12px', fontSize: 12, fontWeight: active ? 700 : 500,
                     border: 'none', borderRadius: 7, cursor: 'pointer',
-                    background: active ? '#1E90FF' : 'transparent',
+                    background: active ? '#E0115F' : 'transparent',
                     color: active ? '#fff' : '#86868B',
                     transition: 'all 0.15s',
                     whiteSpace: 'nowrap' as const,
@@ -1062,15 +1062,15 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             onClick={handleRandom}
             style={{
               height: 32, padding: '0 14px', fontSize: 12, fontWeight: 600, border: 'none', borderRadius: 9,
-              background: 'linear-gradient(135deg, #3B82F6 0%, #1E90FF 100%)',
+              background: 'linear-gradient(135deg, #C00E52 0%, #E0115F 100%)',
               color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
               display: 'flex', alignItems: 'center', gap: 6,
-              boxShadow: '0 2px 10px rgba(30,144,255,0.25)',
+              boxShadow: '0 2px 10px rgba(224,17,95,0.25)',
               transition: 'all 0.18s ease',
               whiteSpace: 'nowrap' as const,
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 5px 16px rgba(30,144,255,0.35)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ''; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 10px rgba(30,144,255,0.25)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 5px 16px rgba(224,17,95,0.35)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ''; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 10px rgba(224,17,95,0.25)' }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/>
@@ -1159,11 +1159,11 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
                 <label key={f} style={{
                   display: 'flex', alignItems: 'center', gap: 5,
                   fontSize: 11, padding: '3px 5px', borderRadius: 6, cursor: 'pointer',
-                  background: on ? 'rgba(30,144,255,0.10)' : 'transparent',
+                  background: on ? 'rgba(224,17,95,0.10)' : 'transparent',
                 }}>
                   <input type="radio" name="fabric" checked={on}
                     onChange={() => { setFabricFilter(on ? '' : f); setPage(1) }}
-                    style={{ width: 11, height: 11, accentColor: '#1E90FF', cursor: 'pointer', flexShrink: 0 }}
+                    style={{ width: 11, height: 11, accentColor: '#E0115F', cursor: 'pointer', flexShrink: 0 }}
                   />
                   <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1D1D1F' }}>{f}</span>
                   <span style={{ fontSize: 9.5, color: '#94A3B8' }}>{cnt}</span>
@@ -1211,7 +1211,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
         }}>
           {showSimilarTo && (
             <div style={{
-              background: 'rgba(30,144,255,0.08)', border: '1px solid rgba(30,144,255,0.2)', borderRadius: 10,
+              background: 'rgba(224,17,95,0.08)', border: '1px solid rgba(224,17,95,0.2)', borderRadius: 10,
               padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8,
               fontSize: 12, color: '#047857', fontWeight: 600,
             }}>
@@ -1220,7 +1220,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
               </svg>
               Showing similar designs
               <button onClick={() => { setShowSimilarTo(null); setPage(1) }} style={{
-                marginLeft: 'auto', background: 'rgba(30,144,255,0.10)', border: 'none',
+                marginLeft: 'auto', background: 'rgba(224,17,95,0.10)', border: 'none',
                 borderRadius: 6, cursor: 'pointer', color: '#047857', fontSize: 12,
                 fontWeight: 600, padding: '2px 10px', fontFamily: 'inherit',
               }}>Show All</button>
@@ -1269,7 +1269,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={clearAll} style={{
                   padding: '8px 20px', fontSize: 13, fontWeight: 600, borderRadius: 9,
-                  background: '#1E90FF', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                  background: '#E0115F', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                 }}>Clear Filters</button>
                 <button onClick={handleRandom} style={{
                   padding: '8px 20px', fontSize: 13, fontWeight: 600, borderRadius: 9,
