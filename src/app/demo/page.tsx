@@ -120,8 +120,8 @@ export default function DemoPage() {
         </div>
 
         {/* Right — Actions */}
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <span className="hidden sm:inline-block" style={{
             padding: '3px 9px',
             fontSize: 10, fontWeight: 700,
             color: '#fff',
@@ -135,31 +135,25 @@ export default function DemoPage() {
           <button
             onClick={() => import('@/components/outputs/PDFExport').then(m => m.downloadPDF())}
             style={{
-              height: 32, padding: '0 14px',
+              height: 32, padding: '0 12px',
               background: 'linear-gradient(135deg, #FF6B35 0%, #FF4D7E 60%, #06D6AA 100%)',
               color: '#fff', border: 'none',
               borderRadius: 8, cursor: 'pointer',
-              fontSize: 13, fontWeight: 600,
-              display: 'flex', alignItems: 'center', gap: 6,
+              fontSize: 12, fontWeight: 600,
+              display: 'flex', alignItems: 'center', gap: 5,
               letterSpacing: '-0.01em',
               transition: 'all 0.18s ease',
               boxShadow: '0 2px 10px rgba(255,77,126,0.30)',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'
-              ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(255,77,126,0.40)'
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'
-              ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 10px rgba(255,77,126,0.30)'
+              whiteSpace: 'nowrap' as const,
             }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/>
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
-            Export PDF
+            <span className="hidden sm:inline">Export PDF</span>
+            <span className="sm:hidden">PDF</span>
           </button>
         </div>
       </header>
@@ -235,23 +229,29 @@ export default function DemoPage() {
         </div>
 
         {/* ═══ CENTER WORKSPACE ═══ */}
-        <div className="flex-1 min-w-0" style={{ overflowY: 'auto', overflowX: 'hidden', padding: '20px 18px' }}>
+        <div className="flex-1 min-w-0" style={{ overflowY: 'auto', overflowX: 'hidden', padding: '12px 12px' }}>
           <div className="flex flex-col gap-4 w-full min-h-full">
 
-            {/* ── Apple HIG Segmented Control ── */}
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 4, paddingBottom: 8 }}>
-              {/* Outer frosted capsule — matches macOS Ventura control chrome */}
+            {/* ── Segmented Control — horizontally scrollable on mobile ── */}
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 4, paddingBottom: 4 }}>
               <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 2,
-                padding: '3px',
-                background: 'rgba(118,118,128,0.12)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                borderRadius: 11,
-                border: '0.5px solid rgba(0,0,0,0.07)',
+                overflowX: 'auto',
+                WebkitOverflowScrolling: 'touch' as any,
+                scrollbarWidth: 'none' as any,
+                msOverflowStyle: 'none' as any,
+                maxWidth: '100%',
               }}>
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  padding: '3px',
+                  background: 'rgba(118,118,128,0.12)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  borderRadius: 11,
+                  border: '0.5px solid rgba(0,0,0,0.07)',
+                }}>
                 {([
                   {
                     id: 'predefined' as const,
@@ -318,9 +318,9 @@ export default function DemoPage() {
                       style={{
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: 6,
-                        padding: '6px 16px',
-                        fontSize: 13,
+                        gap: 5,
+                        padding: '6px 10px',
+                        fontSize: 12,
                         fontWeight: active ? 600 : 400,
                         letterSpacing: '-0.015em',
                         color: active ? 'var(--text-1)' : 'var(--text-3)',
@@ -328,23 +328,20 @@ export default function DemoPage() {
                         border: 'none',
                         borderRadius: 8,
                         cursor: 'pointer',
-                        whiteSpace: 'nowrap',
+                        whiteSpace: 'nowrap' as const,
                         transition: 'color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease',
                         boxShadow: active
-                          ? '0 1px 5px rgba(0,0,0,0.14), 0 0.5px 1.5px rgba(0,0,0,0.10), inset 0 0.5px 0 rgba(255,255,255,1)'
+                          ? '0 1px 5px rgba(0,0,0,0.14), 0 0.5px 1.5px rgba(0,0,0,0.10)'
                           : 'none',
-                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif',
                         userSelect: 'none' as const,
                       }}
                     >
-                      {/* SVG icon */}
                       <span style={{
                         lineHeight: 0,
                         display: 'inline-flex',
                         alignItems: 'center',
                         opacity: active ? 1 : 0.5,
-                        transition: 'opacity 0.18s ease',
-                        color: active ? '#007AFF' : 'var(--text-3)',
+                        color: active ? 'var(--accent)' : 'var(--text-3)',
                       }}>
                         {svg}
                       </span>
@@ -352,6 +349,7 @@ export default function DemoPage() {
                     </button>
                   )
                 })}
+              </div>
               </div>
             </div>
 
@@ -530,7 +528,7 @@ export default function DemoPage() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: 10,
+              gap: 8,
               flexShrink: 0,
             }} className="sm:grid-cols-3 lg:grid-cols-5">
               {[
