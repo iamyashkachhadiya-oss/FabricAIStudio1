@@ -68,15 +68,11 @@ export default function AuthPage() {
       <div style={{ width: '100%', maxWidth: 440 }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: 14,
-            background: 'linear-gradient(145deg, #1B1F3B 0%, #2A2F52 100%)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 24px rgba(27,31,59,0.3)',
-            marginBottom: 16,
-          }}>
-            <span style={{ color: 'white', fontSize: 28, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-          </div>
+          <img
+            src="/fabricai-logo.png"
+            alt="FabricAI"
+            style={{ width: 56, height: 56, display: 'inline-block', objectFit: 'contain', marginBottom: 16 }}
+          />
           <h1 style={{
             fontSize: 24, fontWeight: 700, color: 'var(--primary)',
             letterSpacing: '-0.02em',

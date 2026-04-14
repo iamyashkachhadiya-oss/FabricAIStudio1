@@ -1,0 +1,103 @@
+================================================================================
+  FABRICAI STUDIO: SYSTEM OVERVIEW, UI/UX ARCHITECTURE & FEATURE GUIDE
+================================================================================
+
+1. OVERVIEW
+-----------
+FabricAI Studio is a high-fidelity, industrial-grade CAD/CAM platform specifically 
+designed for textile engineering. It bridges the gap between creative weave 
+design and technical manufacturing specifications, providing real-time feedback 
+on fabric physics, commercial costing, and loom efficiency.
+
+2. UI/UX PHILOSOPHY (APPLE-INSPIRED HIG)
+----------------------------------------
+The platform follows a premium "Pro" design language inspired by Apple’s 
+Human Interface Guidelines (HIG):
+- Glassmorphism: Use of frosted glass (backdrop-blur) for headers and sidebars.
+- Layout: A structured 3-column layout (Inputs | Workspace | Outputs).
+- Typography: High-contrast, legible sans-serif fonts with precise tracking.
+- Visual Feedback: Subtle micro-animations, pulsing loading states, and 
+  dynamic glow effects for hovered design cards.
+
+3. CORE NAVIGATION & MODULES
+----------------------------
+
+[A] Loading Splash Screen
+    The entry point of the app, featuring the FabricAI woven logo with a pulsing 
+    animation, signaling the initialization of the CAD engine and data store.
+
+[B] Dashboard
+    A centralized project hub where users manage their designs.
+    - Project cards show design names, numbers, and creation dates.
+    - Integrated "Weaving CAD Banner" provides quick access to the engine.
+    - Cloud-synced status indicators for factory-specific configurations.
+
+[C] Authentication & Factory Profile
+    Secure login/signup module. Here, users define their "Factory Identity," 
+    which is used to calculate localized production costs and efficiency.
+
+[D] The Technical Design Editor (The Engine)
+    This is the primary workspace, divided into three functional zones:
+
+    1. LEFT SIDEBAR (The Inputs):
+       - Identity: Manage design metadata, customer references, and revisions.
+       - Warp System: Configure warp yarn counts (Denier/Ne), materials, and price.
+       - Weft System: An advanced module to manage multiple weft feeders, 
+         nozzle configurations, and the pick-insertion sequence.
+       - Loom: Set machine-specific parameters like RPM, target PPI, Reed 
+         Width, and wastage percentages.
+       - Border: A specialized tool for designing selvedges. It features a 
+         "Shaft Budget" system that reserves loom shafts for borders.
+       - AI Assistant: Provides real-time technical analysis and suggestions.
+
+    2. CENTER WORKSPACE (The Creative Canvas):
+       - Draft Segmented Control: Switches between:
+         * Predefined Weaves: Quick-access industrial standards.
+         * Design Library: A browser for 80+ AI-generated and verified weaves.
+         * Conversion Tools: Mathematical tools to convert Threading Drafts 
+           to Peg Plans and vice-versa.
+       - Peg Plan Editor: A bidirectional editor where clicking a grid cell 
+         updates the raw text sequence instantly (and vice-versa).
+       - Simulation Preview: A high-fidelity grid visualizing the interlacing 
+         of warp and weft yarns with exact color representation.
+
+    3. RIGHT SIDEBAR (The Outputs):
+       - CalcPanel: The "Digital Twin" of the fabric. It displays live results 
+         from the textile math engine:
+         * Commercials: GLM (Grams per Linear Meter), GSM, and Fabric Cost.
+         * Physics: Calculated drape index, shrinkage, and tenacity.
+         * Production: Estimated loom efficiency and production meters per hour.
+
+4. KEY FEATURES & CALCULATIONS
+-------------------------------
+
+- Live Bidirectional Sync: Changes in the numerical text editor are projected 
+  onto the visual grid immediately, ensuring 100% accuracy for machine punch.
+- Fabric Simulation Engine: A physics module that predicts fabric behavior 
+  (like felting risk or stiffness) based on the material properties defined 
+  in the fiber database (Cotton, Silk, Polyester, etc.).
+- Design Library: A repository of meticulously categorized weaves (Base, 
+  Twill, Satin, Dobby, Specialty) that can be instantly applied to any project.
+- Shaft Reservation Logic: Automatically calculates how many shafts are 
+  remaining for the "body" of the fabric after accounting for complex border 
+  interlaces.
+
+5. SYSTEM CONNECTIVITY (HOW EVERYTHING LINKS)
+---------------------------------------------
+
+- Data Flow: The application uses a centralized Zustand Store (designStore). 
+  Every UI component is "wired" to this store.
+- Recalculation Trigger: Whenever a user changes an input (e.g., changing 
+  yarn count or increasing RPM), the store triggers global recalculation.
+- The Engine Sequence:
+  1. Input Change -> 2. Math Engine (Calc) -> 3. Simulation Engine (Physics) 
+  -> 4. State Update -> 5. UI Refresh.
+- Persistence: All state changes are debounced and saved to Supabase (PostgreSQL), 
+  ensuring that technical designs are never lost and can be accessed across devices.
+- Machine Integration: The system generates technical data ready for export 
+  to industrial loom controllers (via Machine Export) or as high-resolution 
+  Technical PDF Data Sheets for manufacturing floor reference.
+
+================================================================================
+  FabricAI Studio v1.0 • Technical Documentation • 2026
+================================================================================

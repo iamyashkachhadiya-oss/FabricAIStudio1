@@ -89,6 +89,11 @@ export default function DemoPage() {
 
           {/* Logo mark — matches PDF wordmark exactly */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <img
+              src="/fabricai-logo.png"
+              alt="FabricAI"
+              style={{ width: 34, height: 34, display: 'block', objectFit: 'contain' }}
+            />
             {/* Wordmark — same style as PDF brand-wordmark */}
             <div>
               <div style={{

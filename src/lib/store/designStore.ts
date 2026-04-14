@@ -36,6 +36,9 @@ interface DesignState {
   pegPlanMatrix: number[][]
   draftSequence: number[]
   weaveMatrix: number[][]
+  // Peg plan colors (Multiple weft colors)
+  rowYarnMap: Record<number, string> // row index → yarn id
+  cellYarnMap: Record<string, string> // "row_col" → yarn id
 
   // Calculations
   calcOutputs: CalcOutputs | null
@@ -66,6 +69,8 @@ interface DesignState {
   updateWeftYarn: (id: string, updates: Partial<WeftYarn>) => void
   removeWeftYarn: (id: string) => void
   updateInsertionSequence: (pattern: string[]) => void
+  setRowYarnMap: (map: Record<number, string>) => void
+  setCellYarnMap: (map: Record<string, string>) => void
   setTotalNozzles: (count: number) => void
 
   updateLoom: (loom: Partial<LoomSpec>) => void
@@ -158,6 +163,8 @@ export const useDesignStore = create<DesignState>((set, get) => ({
   ],
   draftSequence: Array.from({ length: 16 }, (_, i) => i + 1),
   weaveMatrix: [],
+  rowYarnMap: {},
+  cellYarnMap: {},
   calcOutputs: null,
   isDirty: false,
   isSaving: false,
@@ -291,6 +298,14 @@ export const useDesignStore = create<DesignState>((set, get) => ({
     get().recalculate()
   },
 
+  setRowYarnMap: (map) => {
+    set({ rowYarnMap: map, isDirty: true })
+  },
+
+  setCellYarnMap: (map) => {
+    set({ cellYarnMap: map, isDirty: true })
+  },
+
   setTotalNozzles: (count) => {
     set((s) => ({
       weftSystem: { ...s.weftSystem, total_nozzles_available: count },
@@ -337,9 +352,9 @@ export const useDesignStore = create<DesignState>((set, get) => ({
 
   recalculate: () => {
     const s = get()
-    const { loom, warp, weftSystem, warpSystem, pegPlanMatrix, draftSequence, borderEnds } = s
+    const { loom, warp, weftSystem, warpSystem, pegPlanMatrix, draftSequence, rowYarnMap, cellYarnMap, borderEnds } = s
     if (!loom || !warp || !weftSystem) return
-    const calcOutputs = runAllCalculations(loom, warp, weftSystem)
+    const calcOutputs = runAllCalculations(loom, warp, weftSystem, pegPlanMatrix, rowYarnMap, cellYarnMap, draftSequence)
 
     // ── Apply border constraint to body calculations ──────────────────────
     // Border ends eat into the total cloth width; body only has the remainder.

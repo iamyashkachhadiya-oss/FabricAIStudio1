@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useCallback, useState } from 'react'
+import { useDesignStore } from '@/lib/store/designStore'
 
 // Color name → hex lookup table
 const COLOR_MAP: Record<string, string> = {
@@ -24,7 +25,7 @@ function resolveColor(code: string | undefined, fallback: string): string {
 interface SimulationPreviewProps {
   matrix: number[][]
   warpColor: string
-  weftColor: string
+  weftColor: string   // fallback single weft color
   designName: string
 }
 
@@ -33,8 +34,29 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
   const containerRef = useRef<HTMLDivElement>(null)
   const [rendered, setRendered] = useState(false)
 
+  // Read multi-color weft data from global store
+  const rowYarnMap = useDesignStore(s => s.rowYarnMap)
+  const cellYarnMap = useDesignStore(s => s.cellYarnMap)
+  const draftSequence = useDesignStore(s => s.draftSequence)
+  const weftYarns   = useDesignStore(s => s.weftSystem.yarns)
+
   const warpHex = resolveColor(warpColor, '#1B3A6B')
-  const weftHex = resolveColor(weftColor, '#E8A838')
+  const weftFallbackHex = resolveColor(weftColor, '#E8A838')
+
+  // Build a per-row color array for the simulation
+  const getRowColor = useCallback((rowIndex: number): string => {
+    const rows = matrix.length
+    if (rows === 0) return weftFallbackHex
+
+    // The peg plan is tiled: actual row in the repeat
+    const repeatRow = rowIndex % rows
+    const yarnId = rowYarnMap[repeatRow]
+    if (yarnId) {
+      const yarn = weftYarns.find(y => y.id === yarnId)
+      if (yarn?.colour_hex) return yarn.colour_hex
+    }
+    return weftFallbackHex
+  }, [rowYarnMap, weftYarns, weftFallbackHex, matrix.length])
 
   const renderSimulation = useCallback((canvas: HTMLCanvasElement, canvasSize: number) => {
     const rows = matrix.length
@@ -46,41 +68,50 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
 
     const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1
 
-    // To make it look like actual woven fabric, the threads (cells) should be very small.
-    // We enforce a small cell size (e.g., 2px) so the pattern repeats many times.
     const cellSize = 2
-
-    // How many repeats fit in the canvas
     const tilesX = Math.ceil(canvasSize / (cols * cellSize))
     const tilesY = Math.ceil(canvasSize / (rows * cellSize))
 
     const totalW = canvasSize
     const totalH = canvasSize
 
-    // Set canvas dimensions with DPR for sharp rendering
     canvas.width = totalW * dpr
     canvas.height = totalH * dpr
     canvas.style.width = `${totalW}px`
     canvas.style.height = `${totalH}px`
     ctx.scale(dpr, dpr)
 
-    // Fill background
-    ctx.fillStyle = weftHex
+    // Fill background with the first weft color
+    ctx.fillStyle = getRowColor(0)
     ctx.fillRect(0, 0, totalW, totalH)
 
     // Draw tiled pattern
     for (let ty = 0; ty < tilesY; ty++) {
       for (let tx = 0; tx < tilesX; tx++) {
         for (let r = 0; r < rows; r++) {
+          const absoluteRow = ty * rows + r
+          const weftRowColor = getRowColor(absoluteRow)
+
           for (let c = 0; c < cols; c++) {
             const x = (tx * cols + c) * cellSize
-            const y = (ty * rows + r) * cellSize
+            const y = absoluteRow * cellSize
 
-            // Skip if outside canvas bounds
             if (x >= totalW || y >= totalH) continue
 
-            // 1 = warp up (show warp color), 0 = weft up (show weft color)
-            ctx.fillStyle = matrix[r][c] === 1 ? warpHex : weftHex
+            // 1 = warp up (show warp color), 0 = weft up (show weft yarn color)
+            let cellWeftColor = weftRowColor
+            
+            // Map the warp end 'c' to its corresponding shaft to look up the peg plan color overlay
+            // Use the repeat pattern row 'r', not the canvas absoluteRow!
+            const shaftIndex = (draftSequence[c] ?? 1) - 1
+            const cellYarnId = cellYarnMap[`${r}_${shaftIndex}`]
+            
+            if (cellYarnId) {
+              const yarn = weftYarns.find(y => y.id === cellYarnId)
+              if (yarn) cellWeftColor = yarn.colour_hex
+            }
+            
+            ctx.fillStyle = matrix[r][c] === 1 ? warpHex : cellWeftColor
             ctx.fillRect(x, y, cellSize, cellSize)
           }
         }
@@ -88,11 +119,10 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
     }
 
     setRendered(true)
-  }, [matrix, warpHex, weftHex])
+  }, [matrix, warpHex, getRowColor])
 
   useEffect(() => {
     if (previewRef.current && matrix.length > 0 && matrix[0]?.length > 0) {
-      // Small delay to ensure canvas is mounted and ready
       const timer = setTimeout(() => {
         if (previewRef.current) {
           renderSimulation(previewRef.current, 320)
@@ -100,7 +130,7 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
       }, 50)
       return () => clearTimeout(timer)
     }
-  }, [renderSimulation, matrix])
+  }, [renderSimulation, matrix, rowYarnMap, cellYarnMap])   // re-render when colors change
 
   const downloadPNG = () => {
     const canvas = document.createElement('canvas')
@@ -133,6 +163,12 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
       }
     }, 'image/png')
   }
+
+  // Unique yarn colors used (for legend)
+  const usedYarns = weftYarns.filter(yarn =>
+    Object.values(rowYarnMap).includes(yarn.id) || Object.values(cellYarnMap).includes(yarn.id)
+  )
+  const hasMultiColor = usedYarns.length > 1
 
   if (!matrix.length || !matrix[0]?.length) {
     return (
@@ -174,19 +210,41 @@ export default function SimulationPreview({ matrix, warpColor, weftColor, design
 
       {/* Color Legend */}
       <div style={{
-        display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 16, fontSize: 12,
+        display: 'flex', gap: 12, justifyContent: 'center',
+        marginBottom: 16, fontSize: 12, flexWrap: 'wrap',
       }}>
+        {/* Warp */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <div style={{ width: 16, height: 16, borderRadius: 4, background: warpHex, border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
           <span style={{ color: 'var(--text-2)', fontWeight: 500 }}>Warp</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 16, height: 16, borderRadius: 4, background: weftHex, border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
-          <span style={{ color: 'var(--text-2)', fontWeight: 500 }}>Weft</span>
-        </div>
+
+        {/* Multi-color weft legend */}
+        {hasMultiColor ? (
+          usedYarns.map((yarn, i) => (
+            <div key={yarn.id} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{
+                width: 16, height: 16, borderRadius: 4,
+                background: yarn.colour_hex,
+                border: '1px solid var(--border)',
+                boxShadow: `0 1px 3px ${yarn.colour_hex}55`,
+              }} />
+              <span style={{ color: 'var(--text-2)', fontWeight: 500 }}>
+                {yarn.label || `Weft ${String.fromCharCode(65 + i)}`}
+              </span>
+            </div>
+          ))
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: 16, height: 16, borderRadius: 4, background: weftFallbackHex, border: '1px solid var(--border)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />
+            <span style={{ color: 'var(--text-2)', fontWeight: 500 }}>Weft</span>
+          </div>
+        )}
+
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span style={{ fontSize: 11, color: 'var(--text-3)' }}>
             {matrix.length}×{matrix[0]?.length} repeat
+            {hasMultiColor && ` · ${usedYarns.length} weft colors`}
           </span>
         </div>
       </div>

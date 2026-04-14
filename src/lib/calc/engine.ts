@@ -122,7 +122,11 @@ export function calcWarpConsumed(productionMPerHr: number, crimpPct: number): nu
 export function runAllCalculations(
   loom: LoomSpec,
   warp: YarnSpec,
-  weftSystem: WeftSystem
+  weftSystem: WeftSystem,
+  pegPlanMatrix?: number[][],
+  rowYarnMap?: Record<number, string>,
+  cellYarnMap?: Record<string, string>,
+  draftSequence?: number[]
 ): CalcOutputs {
   const epi = calcEPI(loom.reed_count_stockport, loom.ends_per_dent)
   const reedSpace = calcReedSpace(loom.cloth_width_inches, loom.weft_crimp_pct)
@@ -147,26 +151,70 @@ export function runAllCalculations(
     const denier = yarn.count_system === 'denier' ? yarn.count_value : 5315 / yarn.count_value
     totalWeftWeight100m = calcWeftWeightDenier(reedSpace, denier, masterPPI, loom.weft_crimp_pct, loom.wastage_pct)
     perYarnWeftWeights[yarn.id] = totalWeftWeight100m
-  } else if (weftSystem.mode === 'advanced' && weftSystem.insertion_sequence.pattern.length > 0) {
-    // Advanced mode: Use the insertion sequence to determine weighted PPI per yarn
-    const pattern = weftSystem.insertion_sequence.pattern
-    const repeatLen = pattern.length
+  } else if (weftSystem.mode === 'advanced') {
+    // Advanced mode: Use the visual peg plan if available to calculate accurate yarn usage per-pick
+    let totalPicksInRepeat = 0
+    const yarnOccurrences: Record<string, number> = {}
+
+    // Prefer peg plan exact painting (supports cramming where single row = multiple picks)
+    if (pegPlanMatrix && pegPlanMatrix.length > 0 && rowYarnMap) {
+      pegPlanMatrix.forEach((_, r) => {
+        const uniqueYarnsInRow = new Set<string>()
+        
+        if (rowYarnMap[r]) {
+          uniqueYarnsInRow.add(rowYarnMap[r])
+        }
+        
+        // Scan for explicitly painted cells which insert additional threads into the same shed
+        const cols = pegPlanMatrix[0].length
+        for (let c = 0; c < cols; c++) {
+          const shaftIndex = draftSequence ? (draftSequence[c] ?? 1) - 1 : c
+          const mappedKey = `${r}_${draftSequence ? shaftIndex : c}`
+          if (cellYarnMap && cellYarnMap[`${r}_${c}`]) uniqueYarnsInRow.add(cellYarnMap[`${r}_${c}`])
+          if (cellYarnMap && cellYarnMap[mappedKey]) uniqueYarnsInRow.add(cellYarnMap[mappedKey])
+        }
+        
+        // If row is entirely blank in map, it defaults to the first yarn
+        if (uniqueYarnsInRow.size === 0 && activeYarns.length > 0) {
+          uniqueYarnsInRow.add(activeYarns[0].id)
+        }
+        
+        // Count each unique thread inserted on this line as a physical pick
+        uniqueYarnsInRow.forEach(y => {
+          yarnOccurrences[y] = (yarnOccurrences[y] || 0) + 1
+          totalPicksInRepeat++
+        })
+      })
+    } 
     
-    activeYarns.forEach(yarn => {
-      const occurrences = pattern.filter(id => id === yarn.id).length
-      if (occurrences > 0) {
-        const yarnPPI = (occurrences / repeatLen) * masterPPI
-        const yarnNe = yarn.count_system === 'ne' ? yarn.count_value : denierToNe(yarn.count_value)
-        
-        totalWeftGSM += (yarnPPI / yarnNe) * (100 + loom.weft_crimp_pct) * 0.2327
-        
-        const yarnDenier = yarn.count_system === 'denier' ? yarn.count_value : 5315 / yarn.count_value
-        const yarnWeight = calcWeftWeightDenier(reedSpace, yarnDenier, yarnPPI, loom.weft_crimp_pct, loom.wastage_pct)
-        
-        totalWeftWeight100m += yarnWeight
-        perYarnWeftWeights[yarn.id] = Math.round(yarnWeight * 100) / 100
-      }
-    })
+    // Fallback to insertion sequence if unpainted
+    if (totalPicksInRepeat === 0 && weftSystem.insertion_sequence.pattern.length > 0) {
+      const pattern = weftSystem.insertion_sequence.pattern
+      totalPicksInRepeat = pattern.length
+      activeYarns.forEach(y => {
+        yarnOccurrences[y.id] = pattern.filter(id => id === y.id).length
+      })
+    }
+
+    if (totalPicksInRepeat > 0) {
+      activeYarns.forEach(yarn => {
+        const occurrences = yarnOccurrences[yarn.id] || 0
+        if (occurrences > 0) {
+          // Weighted PPI for this specific yarn
+          const yarnPPI = (occurrences / totalPicksInRepeat) * masterPPI
+          const yarnNe = yarn.count_system === 'ne' ? yarn.count_value : denierToNe(yarn.count_value)
+          
+          const yarnGSM = (yarnPPI / yarnNe) * (100 + loom.weft_crimp_pct) * 0.2327
+          totalWeftGSM += yarnGSM
+          
+          const yarnDenier = yarn.count_system === 'denier' ? yarn.count_value : 5315 / yarn.count_value
+          const yarnWeight = calcWeftWeightDenier(reedSpace, yarnDenier, yarnPPI, loom.weft_crimp_pct, loom.wastage_pct)
+          
+          totalWeftWeight100m += yarnWeight
+          perYarnWeftWeights[yarn.id] = Math.round(yarnWeight * 100) / 100
+        }
+      })
+    }
   }
 
   const warpGSM = (epi / warpNe) * (100 + loom.warp_crimp_pct) * 0.2327

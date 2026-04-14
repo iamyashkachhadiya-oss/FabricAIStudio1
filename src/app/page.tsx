@@ -38,15 +38,22 @@ export default function HomePage() {
       height: '100vh', background: 'var(--bg)',
     }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{
-          width: 48, height: 48, borderRadius: 12,
-          background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)',
-          margin: '0 auto 16px',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(27,31,59,0.3)',
-        }}>
-          <span style={{ color: 'white', fontSize: 24, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-        </div>
+        <style>{`
+          @keyframes fabricai-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+          }
+        `}</style>
+        <img
+          src="/fabricai-logo.png"
+          alt="FabricAI Logo"
+          style={{
+            width: 72, height: 72,
+            display: 'block',
+            margin: '0 auto 16px',
+            animation: 'fabricai-pulse 1.6s ease-in-out infinite',
+          }}
+        />
         <p style={{ color: 'var(--text-3)', fontSize: 14 }}>Loading FabricAI Studio…</p>
       </div>
     </div>

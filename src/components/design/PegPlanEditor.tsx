@@ -14,9 +14,28 @@ interface PegPlanEditorProps {
 export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }: PegPlanEditorProps) {
   const [text, setText] = useState(initialText)
   const [matrix, setMatrix] = useState<number[][]>(() => textToMatrix(initialText, shaftCount))
-  const isUpdatingFromText = useRef(false)
-  const isUpdatingFromGrid = useRef(false)
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isUpdatingFromGrid = useRef(false)
+  const isUpdatingFromText = useRef(false)
+
+  // Multi-color weft state
+  const weftYarns = useDesignStore(s => s.weftSystem.yarns)
+  const warpColor = useDesignStore(s => s.warpSystem.yarns[0]?.colour_hex ?? s.warp?.colour_code ?? '#1B3A6B')
+  const rowYarnMapStore = useDesignStore(s => s.rowYarnMap)
+  const setRowYarnMapStore = useDesignStore(s => s.setRowYarnMap)
+  const cellYarnMapStore = useDesignStore(s => s.cellYarnMap)
+  const setCellYarnMapStore = useDesignStore(s => s.setCellYarnMap)
+  const [selectedYarnId, setSelectedYarnId] = useState<string>(() => weftYarns[0]?.id ?? '')
+  const [rowYarnMap, setRowYarnMap] = useState<Record<number, string>>(rowYarnMapStore)
+  const [cellYarnMap, setCellYarnMap] = useState<Record<string, string>>(cellYarnMapStore)
+  const [paintMode, setPaintMode] = useState<'row' | 'cell'>('row')
+
+  // Keep selectedYarnId valid
+  useEffect(() => {
+    if (!weftYarns.find(y => y.id === selectedYarnId) && weftYarns.length > 0) {
+      setSelectedYarnId(weftYarns[0].id)
+    }
+  }, [weftYarns, selectedYarnId])
 
   // Sync initial text
   useEffect(() => {
@@ -67,12 +86,30 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
     setText(newText)
     onChange(newText, newMatrix)
 
+    // Assign color
+    if (selectedYarnId) {
+      if (paintMode === 'row') {
+        const newMap = { ...rowYarnMap, [row]: selectedYarnId }
+        setRowYarnMap(newMap)
+        setRowYarnMapStore(newMap)
+      } else {
+        const key = `${row}_${col}`
+        const newMap = { ...cellYarnMap, [key]: selectedYarnId }
+        setCellYarnMap(newMap)
+        setCellYarnMapStore(newMap)
+      }
+    }
+
     isUpdatingFromGrid.current = false
-  }, [matrix, shaftCount, onChange])
+  }, [matrix, shaftCount, onChange, selectedYarnId, rowYarnMap, setRowYarnMapStore, paintMode, cellYarnMap, setCellYarnMapStore])
 
   const handleClear = () => {
     setText('')
     setMatrix([])
+    setRowYarnMap({})
+    setRowYarnMapStore({})
+    setCellYarnMap({})
+    setCellYarnMapStore({})
     onChange('', [])
   }
 
@@ -89,10 +126,24 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
     onChange(newText, newMatrix)
   }
 
+  // Row colors for canvas
+  const rowColors = matrix.map((_, i) => {
+    const yarnId = rowYarnMap[i]
+    return weftYarns.find(y => y.id === yarnId)?.colour_hex ?? weftYarns[0]?.colour_hex ?? '#1D1D1F'
+  })
+
+  const cellColorMap: Record<string, string> = {}
+  Object.entries(cellYarnMap).forEach(([key, yarnId]) => {
+    const yarn = weftYarns.find(y => y.id === yarnId)
+    if (yarn) cellColorMap[key] = yarn.colour_hex
+  })
+
   const picks = matrix.length
   const shafts = shaftCount
   const repeatW = matrix[0]?.length || 0
   const repeatH = picks
+
+  const selectedYarn = weftYarns.find(y => y.id === selectedYarnId)
 
   // Read border shaft reservation from global store
   const borderShaftsUsed = useDesignStore(s => s.borderShaftsUsed)
@@ -140,7 +191,57 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {/* LEFT — Text Input */}
-        <div style={{ display: 'flex', gap: 12 }}>
+        {/* Weft Yarn Palette */}
+      <div style={{
+        marginBottom: 16, padding: '12px 14px', background: 'var(--surface)',
+        border: '1px solid var(--border-light)', borderRadius: 12,
+      }}>
+        <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 10 }}>
+          🧵 Weft Yarn Palette
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+          {weftYarns.map((yarn, i) => {
+            const isActive = yarn.id === selectedYarnId
+            return (
+              <button
+                key={yarn.id}
+                onClick={() => setSelectedYarnId(yarn.id)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 7,
+                  padding: '6px 11px', borderRadius: 10,
+                  border: isActive ? `2px solid ${yarn.colour_hex}` : '2px solid transparent',
+                  background: isActive ? `${yarn.colour_hex}18` : 'rgba(0,0,0,0.04)',
+                  cursor: 'pointer', transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ width: 14, height: 14, borderRadius: 3, background: yarn.colour_hex }} />
+                <span style={{ fontSize: 11, fontWeight: 600, color: isActive ? yarn.colour_hex : 'var(--text-2)' }}>
+                  {yarn.label || `Yarn ${String.fromCharCode(65 + i)}`}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+        {selectedYarn && (
+          <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-4)' }}>
+            <div style={{ display: 'flex', gap: 12, marginBottom: 6, fontWeight: 500, color: 'var(--text-2)' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }}>
+                <input type="radio" checked={paintMode === 'row'} onChange={() => setPaintMode('row')} />
+                Apply to entire row
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }}>
+                <input type="radio" checked={paintMode === 'cell'} onChange={() => setPaintMode('cell')} />
+                Apply to single cell
+              </label>
+            </div>
+            <span style={{ fontStyle: 'italic', fontSize: 10 }}>
+              Click any {paintMode === 'row' ? 'row' : 'cell'} on the grid below to assign <strong>{selectedYarn.label}</strong>.
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div style={{ display: 'flex', gap: 12 }}>
           <div style={{ flex: '0 0 340px', minWidth: 240 }}>
             <label style={{ marginBottom: 6, display: 'block', fontSize: 12, fontWeight: 500, color: 'var(--text-2)' }}>
               Peg Plan — Text Format
@@ -184,6 +285,9 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
                   onToggle={handleToggle}
                   repeatW={repeatW}
                   repeatH={repeatH}
+                  rowColors={rowColors}
+                  cellColorMap={cellColorMap}
+                  warpColor={typeof warpColor === 'string' ? warpColor : undefined}
                 />
               ) : (
                 <div style={{

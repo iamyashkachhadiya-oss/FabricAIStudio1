@@ -109,13 +109,11 @@ export default function DashboardPage() {
         background: 'var(--surface)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 9,
-            background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <span style={{ color: 'white', fontSize: 18, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-          </div>
+          <img
+            src="/fabricai-logo.png"
+            alt="FabricAI"
+            style={{ width: 36, height: 36, display: 'block', objectFit: 'contain' }}
+          />
           <div>
             <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricAI Studio</div>
             <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{factoryName || 'Your Factory'}</div>

@@ -234,3 +234,37 @@ STEP 11.3: Documentation & Codebase Operations
 FINAL STATE:
 The platform is fully responsive and version-controlled. Engineering charts no longer clip on smaller screens, and the codebase is completely backed up.
 --------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+STAGE 12: MULTI-WEFT COLOR, OVERPICKING & FABRIC CRAMMING OVERHAUL
+--------------------------------------------------------------------------------
+[PROMPT / BUSINESS REQUIREMENT]
+1. Re-implement Multi-Weft color assignment while completely removing heavy/complex "Cramming Mode" UI components from previous experiments.
+2. Provide a simple, intuitive "Paint Target" experience: allowing users to apply colors to either "Entire Row" or "Single Cell" (Overpicking) on the Peg Plan.
+3. Automatically detect Weft Cramming (multiple unique wefts inserted in a single shed/row) and label it visually ("WC") without needing explicit user toggles.
+4. Integrate the true multi-pick logic natively into the cost/weight calculation engine based directly on the drawn Peg Plan matrix.
+
+[STEP-BY-STEP ACTIONS]
+STEP 12.1: Store and Data Migration
+- Restored `rowYarnMap` and introduced `cellYarnMap` into the core Zustand `designStore.ts` tracking row-level vs. pixel-level color overrides.
+- Removed all complex `CramConfig` structural arrays.
+
+STEP 12.2: Peg Plan UI Refinement (\`PegPlanEditor.tsx\`)
+- Restored the 1-click grid interactivity.
+- Integrated a radio-based "Paint Target" system offering [x] Apply to entire row and [x] Apply to single cell selections directly beneath the Yarn Palette.
+- Ensured color toggling handles single cell mapping correctly without locking into stale closure dependencies.
+- Added intelligent fallback preventing unpainted weft lines from rendering completely black (defaulting to primary thread hue).
+
+STEP 12.3: Visual Auto-Cramming Analysis (\`WeaveCanvas.tsx\`)
+- Upgraded the canvas engine to scan each row for mathematically distinct thread deployments based on intersecting \`rowColors\` and \`cellColorMap\`.
+- Injected a dynamic, burnt-orange "WC" (Weft Cramming) badge adjoining the pick-axis label for any shed containing 2+ unique threads.
+- Added a translucent white dot marker strictly for explicit overpicked pixels to provide clear visual hierarchy.
+
+STEP 12.4: Core Calculation Synchronization (\`engine.ts\` & \`SimulationExport.tsx\`)
+- Refactored \`runAllCalculations\` to consume the physical \`pegPlanMatrix\`, reading individual single-cell yarn arrays.
+- Accurately counts every overlapping thread drawn vertically into a single row as a unique physical insertion for precise total picks, weighted PPI, and multi-cost tracking.
+- Resolved a critical indexing bug in \`SimulationExport.tsx\` where absolute canvas tiles misaligned with the relative module maps, resulting in seamless, repetitive end-to-end multi-color textile renderings.
+
+FINAL STATE:
+The platform now handles highly complex true-to-loom Overpicking and Cramming configurations purely through intuitive "drawing" mechanics, automatically translating visual layout maps into exact factory-grade calculations without confusing user states.
+--------------------------------------------------------------------------------

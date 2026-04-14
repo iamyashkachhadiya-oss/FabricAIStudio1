@@ -77,13 +77,11 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
             Back
           </button>
           <div style={{ width: 1, height: 20, background: 'var(--border)' }} />
-          <div style={{
-            width: 28, height: 28, borderRadius: 7,
-            background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <span style={{ color: 'white', fontSize: 14, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-          </div>
+          <img
+            src="/fabricai-logo.png"
+            alt="FabricAI"
+            style={{ width: 28, height: 28, display: 'block', objectFit: 'contain' }}
+          />
           <div>
             <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-1)' }}>
               {store.identity.design_name || 'Untitled Design'}
