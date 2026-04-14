@@ -445,3 +445,7 @@ Import traces:
  GET /demo 200 in 364ms (next.js: 38ms, proxy.ts: 259ms, application-code: 68ms)
  GET /demo 200 in 114ms (next.js: 63ms, proxy.ts: 8ms, application-code: 43ms)
 ✓ Compiled in 60ms
+ GET /demo 200 in 349ms (next.js: 36ms, proxy.ts: 59ms, application-code: 254ms)
+ GET /demo 200 in 362ms (next.js: 18ms, proxy.ts: 24ms, application-code: 320ms)
+ GET /demo 200 in 162ms (next.js: 28ms, proxy.ts: 32ms, application-code: 101ms)
+[?25h

@@ -708,34 +708,33 @@ function GenerationBanner({
   // Idle state
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #0F0C29 0%, #1A1560 50%, #24243E 100%)',
-      border: '0.5px solid rgba(255,255,255,0.10)', borderRadius: 13,
-      padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 14,
+      background: '#F8FFF9',
+      border: '1px solid rgba(6,196,154,0.20)', borderRadius: 12,
+      padding: '11px 16px', display: 'flex', alignItems: 'center', gap: 12,
       marginBottom: 10, flexShrink: 0,
-      boxShadow: '0 4px 20px rgba(79,70,229,0.22), inset 0 1px 0 rgba(255,255,255,0.06)',
     }}>
       <div style={{
-        width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        width: 32, height: 32, borderRadius: 9, flexShrink: 0,
+        background: 'linear-gradient(135deg, #06C49A, #FF6B35)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 18, boxShadow: '0 4px 12px rgba(99,102,241,0.45)',
-      }}>⚗</div>
+        fontSize: 16,
+      }}>🧵</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 12.5, fontWeight: 800, color: '#fff', letterSpacing: '-0.015em' }}>
-          10,000+ Generative Designs
+        <div style={{ fontSize: 12, fontWeight: 700, color: '#1D1D1F', letterSpacing: '-0.01em' }}>
+          Generative Weave Engine
         </div>
-        <div style={{ fontSize: 10.5, color: 'rgba(199,199,255,0.6)', marginTop: 2 }}>
-          ~{estimate.toLocaleString()} unique weave combinations via research-based logic
+        <div style={{ fontSize: 10.5, color: '#86868B', marginTop: 1 }}>
+          ~{estimate.toLocaleString()} unique combinations ready to generate
         </div>
       </div>
       <button onClick={onStart} style={{
-        height: 33, padding: '0 16px', fontSize: 12, fontWeight: 800,
-        border: 'none', borderRadius: 9,
-        background: 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+        height: 30, padding: '0 14px', fontSize: 11.5, fontWeight: 700,
+        border: 'none', borderRadius: 8,
+        background: 'linear-gradient(135deg, #06C49A 0%, #FF6B35 100%)',
         color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
-        boxShadow: '0 4px 14px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
         whiteSpace: 'nowrap', letterSpacing: '-0.01em',
         transition: 'all 0.18s ease',
+        boxShadow: '0 2px 8px rgba(6,196,154,0.25)',
       }}>⚡ Generate</button>
     </div>
   )
@@ -979,87 +978,25 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
 
           <div style={{ flex: 1 }} />
 
-          {/* ── Collection links — Apple frosted-glass segmented nav ── */}
+          {/* Collection filter — simplified, brand-colored */}
           <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 2,
-            padding: '3px',
-            background: 'rgba(118,118,128,0.12)',
-            borderRadius: 10,
-            border: '0.5px solid rgba(0,0,0,0.07)',
+            display: 'inline-flex', alignItems: 'center', gap: 3,
+            padding: 3, background: 'rgba(0,0,0,0.05)', borderRadius: 10,
           }}>
-            {([
-              {
-                id: 'all' as CollectionFilter,
-                label: 'All',
-                icon: (
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                    <rect x="1" y="1" width="4.5" height="4.5" rx="1.2" fill="currentColor"/>
-                    <rect x="7.5" y="1" width="4.5" height="4.5" rx="1.2" fill="currentColor" opacity="0.55"/>
-                    <rect x="1" y="7.5" width="4.5" height="4.5" rx="1.2" fill="currentColor" opacity="0.55"/>
-                    <rect x="7.5" y="7.5" width="4.5" height="4.5" rx="1.2" fill="currentColor" opacity="0.3"/>
-                  </svg>
-                ),
-              },
-              {
-                id: 'premium' as CollectionFilter,
-                label: 'Premium',
-                icon: (
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                    <path d="M6.5 1L8.09 4.22L11.67 4.76L9.09 7.28L9.68 10.84L6.5 9.17L3.32 10.84L3.91 7.28L1.33 4.76L4.91 4.22L6.5 1Z"
-                      fill="currentColor" stroke="none"/>
-                  </svg>
-                ),
-              },
-              {
-                id: 'apple' as CollectionFilter,
-                label: 'Apple',
-                icon: (
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                    <rect x="1.5" y="3" width="10" height="1.8" rx="0.9" fill="currentColor"/>
-                    <rect x="1.5" y="5.6" width="7" height="1.8" rx="0.9" fill="currentColor" opacity="0.55"/>
-                    <rect x="1.5" y="8.2" width="5" height="1.8" rx="0.9" fill="currentColor" opacity="0.3"/>
-                  </svg>
-                ),
-              },
-            ] as const).map(({ id, label, icon }) => {
-              const active = collectionFilter === id
+            {([{ id: 'all', label: 'All' }, { id: 'premium', label: '⭐ Top Picks' }] as const).map(({ id, label }) => {
+              const active = collectionFilter === (id as CollectionFilter)
               return (
-                <button
-                  key={id}
-                  onClick={() => { setCollectionFilter(id); setPage(1) }}
+                <button key={id}
+                  onClick={() => { setCollectionFilter(id as CollectionFilter); setPage(1) }}
                   style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 5,
-                    padding: '5px 12px',
-                    fontSize: 12.5,
-                    fontWeight: active ? 600 : 400,
-                    letterSpacing: '-0.012em',
-                    color: active ? '#1D1D1F' : '#86868B',
-                    background: active ? '#ffffff' : 'transparent',
-                    border: 'none',
-                    borderRadius: 7,
-                    cursor: 'pointer',
+                    padding: '4px 12px', fontSize: 12, fontWeight: active ? 700 : 500,
+                    border: 'none', borderRadius: 7, cursor: 'pointer',
+                    background: active ? '#06C49A' : 'transparent',
+                    color: active ? '#fff' : '#86868B',
+                    transition: 'all 0.15s',
                     whiteSpace: 'nowrap' as const,
-                    transition: 'color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease',
-                    boxShadow: active
-                      ? '0 1px 4px rgba(0,0,0,0.13), 0 0.5px 1.5px rgba(0,0,0,0.09), inset 0 0.5px 0 rgba(255,255,255,1)'
-                      : 'none',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif',
-                    userSelect: 'none' as const,
                   }}
-                >
-                  <span style={{
-                    lineHeight: 0, display: 'inline-flex', alignItems: 'center',
-                    color: active
-                      ? (id === 'premium' ? '#F59E0B' : id === 'apple' ? '#007AFF' : '#1D1D1F')
-                      : '#AEAEB2',
-                    transition: 'color 0.18s ease',
-                  }}>
-                    {icon}
-                  </span>
-                  {label}
-                </button>
+                >{label}</button>
               )
             })}
           </div>
@@ -1117,44 +1054,21 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
           </button>
 
           {/* Random */}
-          <button 
-            onClick={handleRandom} 
-            className="random-btn-premium"
+          <button
+            onClick={handleRandom}
             style={{
-              height: 32, padding: '0 16px', fontSize: 12.5, fontWeight: 800, border: 'none', borderRadius: 9,
-              background: 'linear-gradient(135deg, #6366F1 0%, #A855F7 100%)',
+              height: 32, padding: '0 14px', fontSize: 12, fontWeight: 700, border: 'none', borderRadius: 9,
+              background: 'linear-gradient(135deg, #FF6B35 0%, #06C49A 100%)',
               color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: 6,
-              boxShadow: '0 4px 12px rgba(99,102,241,0.3)',
-              transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              position: 'relative',
-              overflow: 'hidden',
+              display: 'flex', alignItems: 'center', gap: 5,
+              boxShadow: '0 2px 10px rgba(255,107,53,0.25)',
+              transition: 'all 0.18s ease',
+              whiteSpace: 'nowrap' as const,
             }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 5px 16px rgba(255,107,53,0.35)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ''; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 10px rgba(255,107,53,0.25)' }}
           >
-            <style>{`
-              .random-btn-premium:hover {
-                transform: translateY(-2px) scale(1.05);
-                box-shadow: 0 6px 20px rgba(99,102,241,0.45);
-                filter: brightness(1.1);
-              }
-              .random-btn-premium:active {
-                transform: translateY(0) scale(0.98);
-              }
-              .random-btn-premium::after {
-                content: '';
-                position: absolute;
-                top: -50%; left: -50%; width: 200%; height: 200%;
-                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-                transform: rotate(45deg);
-                animation: shine-btn 3s infinite;
-              }
-              @keyframes shine-btn {
-                0% { transform: translateX(-100%) rotate(45deg); }
-                20%, 100% { transform: translateX(100%) rotate(45deg); }
-              }
-            `}</style>
-            <span style={{ fontSize: 14 }}>🪄</span>
-            <span>Inspire Me</span>
+            🪄 Inspire Me
           </button>
 
           {anyFilter && (
@@ -1227,13 +1141,13 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
                 <label key={f} style={{
                   display: 'flex', alignItems: 'center', gap: 5,
                   fontSize: 11, padding: '3px 5px', borderRadius: 6, cursor: 'pointer',
-                  background: on ? 'rgba(79,70,229,0.08)' : 'transparent',
+                  background: on ? 'rgba(6,196,154,0.10)' : 'transparent',
                 }}>
                   <input type="radio" name="fabric" checked={on}
                     onChange={() => { setFabricFilter(on ? '' : f); setPage(1) }}
-                    style={{ width: 11, height: 11, accentColor: '#4F46E5', cursor: 'pointer', flexShrink: 0 }}
+                    style={{ width: 11, height: 11, accentColor: '#06C49A', cursor: 'pointer', flexShrink: 0 }}
                   />
-                  <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1E293B' }}>{f}</span>
+                  <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1D1D1F' }}>{f}</span>
                   <span style={{ fontSize: 9.5, color: '#94A3B8' }}>{cnt}</span>
                 </label>
               )
