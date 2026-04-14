@@ -134,7 +134,7 @@ export default function DemoPage() {
             onClick={() => import('@/components/outputs/PDFExport').then(m => m.downloadPDF())}
             style={{
               height: 32, padding: '0 12px',
-              background: 'linear-gradient(135deg, #1E90FF 0%, #3B82F6 60%, #06D6AA 100%)',
+              background: '#1E90FF',
               color: '#fff', border: 'none',
               borderRadius: 8, cursor: 'pointer',
               fontSize: 12, fontWeight: 600,
