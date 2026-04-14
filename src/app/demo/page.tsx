@@ -97,11 +97,12 @@ export default function DemoPage() {
             />
             <div>
               <div style={{
-                fontSize: 15, fontWeight: 800,
+                fontSize: 19, fontWeight: 800,
                 letterSpacing: '-0.04em', lineHeight: 1.1,
-                color: '#1E90FF',
               }}>
-                FabricAI Studio
+                <span style={{ color: '#1D1D1F' }}>Fabric</span>
+                <span style={{ color: '#1E90FF' }}>AI</span>
+                <span style={{ color: '#1D1D1F' }}> Studio</span>
               </div>
               <div style={{
                 fontSize: 8, fontWeight: 600,
