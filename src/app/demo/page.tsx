@@ -15,15 +15,17 @@ import BorderForm from '@/components/design/BorderForm'
 import MachineExportPanel from '@/components/outputs/MachineExport'
 import SimulationAssistantUI from '@/components/analysis/SimulationAssistant'
 import DraftAnalysisTool from '@/components/analysis/DraftAnalysisTool'
+import WeftSequencePlan from '@/components/design/WeftSequencePlan'
 
-type DemoTab = 'Identity' | 'Warp' | 'Weft' | 'Loom' | 'Border' | 'AI Analysis' | 'Export'
+type DemoTab = 'Identity' | 'Warp' | 'Weft' | 'Loom' | 'Border' | 'Weft Sequence' | 'AI Analysis' | 'Export'
 
 const NAV_TABS: { id: DemoTab; label: string; icon: string }[] = [
-  { id: 'Identity', label: 'Identity', icon: '🪡' },
-  { id: 'Warp',     label: 'Warp',     icon: '↕' },
-  { id: 'Weft',     label: 'Weft',     icon: '↔' },
-  { id: 'Loom',     label: 'Loom',     icon: '⚙' },
-  { id: 'Border',   label: 'Border',   icon: '◻' },
+  { id: 'Identity',      label: 'Identity',       icon: '🪡' },
+  { id: 'Warp',          label: 'Warp',           icon: '↕' },
+  { id: 'Weft',          label: 'Weft',           icon: '↔' },
+  { id: 'Loom',          label: 'Loom',           icon: '⚙' },
+  { id: 'Border',        label: 'Border',         icon: '◻' },
+  { id: 'Weft Sequence', label: 'Weft Seq',       icon: '🧵' },
 ]
 
 export default function DemoPage() {
@@ -222,13 +224,14 @@ export default function DemoPage() {
 
           {/* Sidebar Content */}
           <div style={{ flex: 1, overflowY: 'auto', padding: '16px 14px' }}>
-            {activeTab === 'Identity'    && <IdentityForm />}
-            {activeTab === 'Warp'        && <WarpSystemForm />}
-            {activeTab === 'Weft'        && <WeftForm />}
-            {activeTab === 'Loom'        && <LoomForm />}
-            {activeTab === 'Border'      && <BorderForm />}
-            {activeTab === 'AI Analysis' && <SimulationAssistantUI />}
-            {activeTab === 'Export'      && <MachineExportPanel />}
+            {activeTab === 'Identity'       && <IdentityForm />}
+            {activeTab === 'Warp'           && <WarpSystemForm />}
+            {activeTab === 'Weft'           && <WeftForm />}
+            {activeTab === 'Loom'           && <LoomForm />}
+            {activeTab === 'Border'         && <BorderForm />}
+            {activeTab === 'Weft Sequence'  && <WeftSequencePlan />}
+            {activeTab === 'AI Analysis'    && <SimulationAssistantUI />}
+            {activeTab === 'Export'         && <MachineExportPanel />}
           </div>
         </div>
 
