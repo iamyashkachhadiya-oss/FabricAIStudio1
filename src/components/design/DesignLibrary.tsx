@@ -653,12 +653,12 @@ function GenerationBanner({
           <div style={{ fontSize: 10.5, color: '#059669', marginTop: 1.5 }}>All loaded · use filters to explore</div>
         </div>
         <button onClick={onStart} style={{
-          height: 29, padding: '0 13px', fontSize: 11, fontWeight: 700,
+          height: 29, padding: '0 13px', fontSize: 11, fontWeight: 600,
           border: '0.5px solid rgba(16,185,129,0.35)', borderRadius: 8,
           background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(8px)',
           color: '#047857', cursor: 'pointer', fontFamily: 'inherit',
           letterSpacing: '-0.01em',
-        }}>↺ Regenerate</button>
+        }}>Regenerate</button>
       </div>
     )
   }
@@ -686,11 +686,11 @@ function GenerationBanner({
             </div>
           </div>
           <button onClick={onCancel} style={{
-            height: 26, padding: '0 11px', fontSize: 10.5, fontWeight: 700,
+            height: 26, padding: '0 11px', fontSize: 10.5, fontWeight: 600,
             border: '0.5px solid rgba(99,102,241,0.3)', borderRadius: 7,
             background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(8px)',
             color: '#4F46E5', cursor: 'pointer', fontFamily: 'inherit',
-          }}>✕ Stop</button>
+          }}>Stop</button>
         </div>
         <div style={{ height: 4, background: 'rgba(99,102,241,0.12)', borderRadius: 99, overflow: 'hidden' }}>
           <div style={{
@@ -709,16 +709,19 @@ function GenerationBanner({
   return (
     <div style={{
       background: '#F8FFF9',
-      border: '1px solid rgba(6,196,154,0.20)', borderRadius: 12,
+      border: '1px solid rgba(30,144,255,0.20)', borderRadius: 12,
       padding: '11px 16px', display: 'flex', alignItems: 'center', gap: 12,
       marginBottom: 10, flexShrink: 0,
     }}>
       <div style={{
         width: 32, height: 32, borderRadius: 9, flexShrink: 0,
-        background: 'linear-gradient(135deg, #06C49A, #FF6B35)',
+        background: 'linear-gradient(135deg, #1E90FF, #FF6B35)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 16,
-      }}>🧵</div>
+      }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round">
+          <path d="M3 6h18M3 12h12M3 18h8"/>
+        </svg>
+      </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: '#1D1D1F', letterSpacing: '-0.01em' }}>
           Generative Weave Engine
@@ -730,12 +733,12 @@ function GenerationBanner({
       <button onClick={onStart} style={{
         height: 30, padding: '0 14px', fontSize: 11.5, fontWeight: 700,
         border: 'none', borderRadius: 8,
-        background: 'linear-gradient(135deg, #06C49A 0%, #FF6B35 100%)',
+        background: 'linear-gradient(135deg, #1E90FF 0%, #FF6B35 100%)',
         color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
         whiteSpace: 'nowrap', letterSpacing: '-0.01em',
         transition: 'all 0.18s ease',
-        boxShadow: '0 2px 8px rgba(6,196,154,0.25)',
-      }}>⚡ Generate</button>
+        boxShadow: '0 2px 8px rgba(30,144,255,0.25)',
+      }}>Generate</button>
     </div>
   )
 }
@@ -936,13 +939,13 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
   const toggleBookmark = (id: string) =>
     setBookmarks(prev => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s })
 
-  const CATEGORIES: { key: GenCategory; label: string; color: string; icon: string }[] = [
-    { key: 'all',         label: 'All',             color: '#1E293B', icon: '◈' },
-    { key: 'base_weaves', label: 'Base Weaves',      color: '#4F46E5', icon: '⊞' },
-    { key: 'presets',     label: 'Industry Presets', color: '#0891B2', icon: '⚙' },
-    { key: 'dobby',       label: 'Dobby',            color: '#7C3AED', icon: '⬡' },
-    { key: 'specialty',   label: 'Jacquard & Pile',  color: '#DC2626', icon: '✦' },
-    { key: 'modifiers',   label: 'Surface Motifs',   color: '#D97706', icon: '✿' },
+  const CATEGORIES: { key: GenCategory; label: string; color: string }[] = [
+    { key: 'all',         label: 'All',             color: '#1E293B' },
+    { key: 'base_weaves', label: 'Base Weaves',      color: '#1E90FF' },
+    { key: 'presets',     label: 'Industry Presets', color: '#0891B2' },
+    { key: 'dobby',       label: 'Dobby',            color: '#7C3AED' },
+    { key: 'specialty',   label: 'Jacquard & Pile',  color: '#DC2626' },
+    { key: 'modifiers',   label: 'Surface Motifs',   color: '#D97706' },
   ]
 
   return (
@@ -983,7 +986,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             display: 'inline-flex', alignItems: 'center', gap: 3,
             padding: 3, background: 'rgba(0,0,0,0.05)', borderRadius: 10,
           }}>
-            {([{ id: 'all', label: 'All' }, { id: 'premium', label: '⭐ Top Picks' }] as const).map(({ id, label }) => {
+            {([{ id: 'all', label: 'All' }, { id: 'premium', label: 'Top Picks' }] as const).map(({ id, label }) => {
               const active = collectionFilter === (id as CollectionFilter)
               return (
                 <button key={id}
@@ -991,7 +994,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
                   style={{
                     padding: '4px 12px', fontSize: 12, fontWeight: active ? 700 : 500,
                     border: 'none', borderRadius: 7, cursor: 'pointer',
-                    background: active ? '#06C49A' : 'transparent',
+                    background: active ? '#1E90FF' : 'transparent',
                     color: active ? '#fff' : '#86868B',
                     transition: 'all 0.15s',
                     whiteSpace: 'nowrap' as const,
@@ -1040,12 +1043,14 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
 
           {/* Bookmarks */}
           <button onClick={() => { setShowBookmarked(!showBookmarked); setPage(1) }} style={{
-            height: 30, padding: '0 10px', fontSize: 12, fontWeight: 700, borderRadius: 8, border: 'none',
+            height: 30, padding: '0 10px', fontSize: 12, fontWeight: 600, borderRadius: 8, border: 'none',
             background: showBookmarked ? '#FEF9C3' : 'rgba(0,0,0,0.05)',
             color: showBookmarked ? '#B45309' : '#64748B', cursor: 'pointer', fontFamily: 'inherit',
             display: 'flex', alignItems: 'center', gap: 4,
           }}>
-            {showBookmarked ? '★' : '☆'}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill={showBookmarked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
             {bookmarks.size > 0 && (
               <span style={{ background: '#D97706', color: '#fff', fontSize: 9, fontWeight: 700, padding: '1px 5px', borderRadius: 99 }}>
                 {bookmarks.size}
@@ -1053,14 +1058,13 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             )}
           </button>
 
-          {/* Random */}
           <button
             onClick={handleRandom}
             style={{
-              height: 32, padding: '0 14px', fontSize: 12, fontWeight: 700, border: 'none', borderRadius: 9,
-              background: 'linear-gradient(135deg, #FF6B35 0%, #06C49A 100%)',
+              height: 32, padding: '0 14px', fontSize: 12, fontWeight: 600, border: 'none', borderRadius: 9,
+              background: 'linear-gradient(135deg, #FF6B35 0%, #1E90FF 100%)',
               color: '#fff', cursor: 'pointer', fontFamily: 'inherit',
-              display: 'flex', alignItems: 'center', gap: 5,
+              display: 'flex', alignItems: 'center', gap: 6,
               boxShadow: '0 2px 10px rgba(255,107,53,0.25)',
               transition: 'all 0.18s ease',
               whiteSpace: 'nowrap' as const,
@@ -1068,20 +1072,34 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 5px 16px rgba(255,107,53,0.35)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ''; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 10px rgba(255,107,53,0.25)' }}
           >
-            🪄 Inspire Me
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/>
+            </svg>
+            Inspire Me
           </button>
 
           {anyFilter && (
             <button onClick={clearAll} style={{
-              height: 30, padding: '0 10px', fontSize: 12, fontWeight: 700, borderRadius: 8, border: 'none',
+              height: 30, padding: '0 10px', fontSize: 12, fontWeight: 600, borderRadius: 8, border: 'none',
               background: '#FEF2F2', color: '#DC2626', cursor: 'pointer', fontFamily: 'inherit',
-            }}>✕ Clear</button>
+              display: 'flex', alignItems: 'center', gap: 5,
+            }}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Clear
+            </button>
           )}
         </div>
 
         {/* Row 2: Search */}
         <div style={{ position: 'relative' }}>
-          <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', fontSize: 13, pointerEvents: 'none' }}>🔍</span>
+          <span style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', display: 'flex', alignItems: 'center', color: '#86868B' }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
           <input
             type="text" value={search} placeholder="Search name, weave type, tag, or code…"
             onChange={e => { setSearch(e.target.value); setPage(1) }}
@@ -1105,12 +1123,12 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
               {CATEGORIES.map(cat => (
                 <button key={cat.key} onClick={() => { setCategory(cat.key); setPage(1) }} style={{
-                  padding: '4px 12px', fontSize: 11, fontWeight: 700, border: 'none', borderRadius: 99,
-                  background: category === cat.key ? cat.color : '#F1F5F9',
+                  padding: '4px 12px', fontSize: 11, fontWeight: 600, border: 'none', borderRadius: 99,
+                  background: category === cat.key ? cat.color : 'rgba(0,0,0,0.05)',
                   color: category === cat.key ? '#fff' : '#64748B',
                   cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
+                  letterSpacing: '-0.01em',
                 }}>
-                  <span style={{ marginRight: 4 }}>{cat.icon}</span>
                   {cat.label}
                 </button>
               ))}
@@ -1141,11 +1159,11 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
                 <label key={f} style={{
                   display: 'flex', alignItems: 'center', gap: 5,
                   fontSize: 11, padding: '3px 5px', borderRadius: 6, cursor: 'pointer',
-                  background: on ? 'rgba(6,196,154,0.10)' : 'transparent',
+                  background: on ? 'rgba(30,144,255,0.10)' : 'transparent',
                 }}>
                   <input type="radio" name="fabric" checked={on}
                     onChange={() => { setFabricFilter(on ? '' : f); setPage(1) }}
-                    style={{ width: 11, height: 11, accentColor: '#06C49A', cursor: 'pointer', flexShrink: 0 }}
+                    style={{ width: 11, height: 11, accentColor: '#1E90FF', cursor: 'pointer', flexShrink: 0 }}
                   />
                   <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#1D1D1F' }}>{f}</span>
                   <span style={{ fontSize: 9.5, color: '#94A3B8' }}>{cnt}</span>
@@ -1193,16 +1211,19 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
         }}>
           {showSimilarTo && (
             <div style={{
-              background: '#F5F3FF', border: '1px solid #DDD6FE', borderRadius: 10,
+              background: 'rgba(30,144,255,0.08)', border: '1px solid rgba(30,144,255,0.2)', borderRadius: 10,
               padding: '8px 14px', display: 'flex', alignItems: 'center', gap: 8,
-              fontSize: 12, color: '#5B21B6', fontWeight: 700,
+              fontSize: 12, color: '#047857', fontWeight: 600,
             }}>
-              ✦ Showing similar designs
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <circle cx="11" cy="11" r="8"/><path d="M11 8v3l2 2"/>
+              </svg>
+              Showing similar designs
               <button onClick={() => { setShowSimilarTo(null); setPage(1) }} style={{
-                marginLeft: 'auto', background: 'rgba(91,33,182,0.08)', border: 'none',
-                borderRadius: 6, cursor: 'pointer', color: '#5B21B6', fontSize: 12,
-                fontWeight: 700, padding: '2px 10px', fontFamily: 'inherit',
-              }}>✕ Show All</button>
+                marginLeft: 'auto', background: 'rgba(30,144,255,0.10)', border: 'none',
+                borderRadius: 6, cursor: 'pointer', color: '#047857', fontSize: 12,
+                fontWeight: 600, padding: '2px 10px', fontFamily: 'inherit',
+              }}>Show All</button>
             </div>
           )}
 
@@ -1240,18 +1261,20 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
               background: '#fff', borderRadius: 14,
               border: '1px dashed rgba(0,0,0,0.12)',
             }}>
-              <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#111', marginBottom: 6 }}>No designs found</div>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#AEAEB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: 12 }}>
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#111', marginBottom: 6 }}>No designs found</div>
               <div style={{ fontSize: 12, color: '#64748B', marginBottom: 16 }}>Try adjusting filters or generate a random design.</div>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={clearAll} style={{
-                  padding: '8px 20px', fontSize: 13, fontWeight: 700, borderRadius: 9,
-                  background: '#4F46E5', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                  padding: '8px 20px', fontSize: 13, fontWeight: 600, borderRadius: 9,
+                  background: '#1E90FF', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                 }}>Clear Filters</button>
                 <button onClick={handleRandom} style={{
-                  padding: '8px 20px', fontSize: 13, fontWeight: 700, borderRadius: 9,
+                  padding: '8px 20px', fontSize: 13, fontWeight: 600, borderRadius: 9,
                   background: '#F1F5F9', color: '#1E293B', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                }}>✨ Random</button>
+                }}>Random</button>
               </div>
             </div>
           )}
