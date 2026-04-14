@@ -241,8 +241,8 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: 12 }}>
-          <div style={{ flex: '0 0 340px', minWidth: 240 }}>
+      <div className="flex flex-col lg:flex-row gap-4">
+          <div className="w-full lg:w-[340px] shrink-0">
             <label style={{ marginBottom: 6, display: 'block', fontSize: 12, fontWeight: 500, color: 'var(--text-2)' }}>
               Peg Plan — Text Format
             </label>
