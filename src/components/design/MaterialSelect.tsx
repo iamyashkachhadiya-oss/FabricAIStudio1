@@ -55,7 +55,7 @@ export default function MaterialSelect({ id, value, onChange, showBadge = true }
             {mat.category}
           </span>
           <span style={{ fontSize: 10, color: catColor ? catColor.text : 'var(--text-3)', lineHeight: 1.5 }}>
-            Shrink: {mat.shrink_min_pct}% · Drape: {mat.drape_base} · Stiff: {mat.stiff_base} · Tenacity: {mat.tenacity_base} N/cm
+            Shrink: {mat.shrink_base}% · Drape: {mat.drape_base} · Stiff: {mat.stiff_base} · Tenacity: {mat.tenacity_base} N/cm
             {mat.felting && <strong style={{ color: '#a32d2d' }}> · ⚠ Felting Risk</strong>}
             {mat.note && <><br /><span style={{ opacity: 0.8 }}>{mat.note}</span></>}
           </span>
