@@ -18,23 +18,23 @@ function Stepper({ label, value, onChange }: { label: string; value: number; onC
     <div>
       <ALabel>{label}</ALabel>
       <div style={{
-        display: 'flex', height: 40,
-        border: '1px solid rgba(0,0,0,0.12)',
-        borderRadius: 10, overflow: 'hidden',
+        display: 'flex', height: 44, // Prompt 13: 44px touch targets
+        border: '1px solid var(--border)',
+        borderRadius: 12, overflow: 'hidden',
         background: '#FAFAFA',
       }}>
         <button
           onClick={() => onChange(Math.max(0, value - 1))}
-          style={{ width: 40, background: 'rgba(0,0,0,0.04)', border: 'none', borderRight: '1px solid rgba(0,0,0,0.07)', cursor: 'pointer', fontSize: 16, color: 'var(--text-2)', transition: 'background 0.1s' }}
+          style={{ width: 44, background: 'rgba(0,0,0,0.04)', border: 'none', borderRight: '1px solid var(--border-light)', cursor: 'pointer', fontSize: 18, color: 'var(--text-2)', transition: 'background 0.1s' }}
           onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.04)')}
         >−</button>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 600, color: 'var(--text-1)' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 700, color: 'var(--text-1)' }}>
           {value}
         </div>
         <button
           onClick={() => onChange(value + 1)}
-          style={{ width: 40, background: 'rgba(0,0,0,0.04)', border: 'none', borderLeft: '1px solid rgba(0,0,0,0.07)', cursor: 'pointer', fontSize: 16, color: 'var(--text-2)', transition: 'background 0.1s' }}
+          style={{ width: 44, background: 'rgba(0,0,0,0.04)', border: 'none', borderLeft: '1px solid var(--border-light)', cursor: 'pointer', fontSize: 18, color: 'var(--text-2)', transition: 'background 0.1s' }}
           onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.08)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.04)')}
         >+</button>
@@ -46,7 +46,7 @@ function Stepper({ label, value, onChange }: { label: string; value: number; onC
 function WarpYarnCard({ yarn, index, expanded, onToggle }: {
   yarn: WarpYarn; index: number; expanded: boolean; onToggle: () => void
 }) {
-  const { updateWarpYarn, recalculate } = useDesignStore()
+  const { updateWarpYarn, recalculate, shaftCount } = useDesignStore()
   const [showPicker, setShowPicker] = useState(false)
 
   const handleUpdate = (updates: Partial<WarpYarn>) => {
@@ -172,10 +172,34 @@ function WarpYarnCard({ yarn, index, expanded, onToggle }: {
             />
           </div>
 
-          {/* Drawing-in */}
+          {/* Drawing-in Validation (Prompt 8) */}
           <div>
-            <ALabel>Drawing-In Sequence</ALabel>
-            <input type="text" defaultValue={seqPositions.join(', ')} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+              <ALabel>Drawing-In Sequence</ALabel>
+              <div style={{
+                fontSize: 10, fontWeight: 700,
+                color: seqPositions.some(p => p > shaftCount) ? 'var(--red)' : 'var(--clr-live)',
+                background: seqPositions.some(p => p > shaftCount) ? 'rgba(239,68,68,0.1)' : 'rgba(34,197,94,0.1)',
+                padding: '1px 6px', borderRadius: 4,
+              }}>
+                {seqPositions.some(p => p > shaftCount) ? '⚠ Invalid shaft index' : '✓ Valid'}
+              </div>
+            </div>
+            <input
+              type="text"
+              readOnly
+              value={seqPositions.join(', ')}
+              style={{
+                background: seqPositions.some(p => p > shaftCount) ? 'rgba(239,68,68,0.04)' : '#FAFAFA',
+                borderColor: seqPositions.some(p => p > shaftCount) ? 'var(--red)' : 'var(--border)',
+                cursor: 'default',
+              }}
+            />
+            {seqPositions.some(p => p > shaftCount) && (
+              <div style={{ marginTop: 6, fontSize: 11, color: 'var(--red)', lineHeight: 1.4 }}>
+                Warp cannot be threaded to shaft {Math.max(...seqPositions)} because only {shaftCount} shafts are available. Increase Shafts in Peg Plan.
+              </div>
+            )}
           </div>
         </div>
       )}

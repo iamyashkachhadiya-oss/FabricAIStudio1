@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
 
 @import "tailwindcss";
 
@@ -15,11 +15,29 @@
   --grad-end:    #06D6AA;            /* logo teal */
   --gradient:    linear-gradient(135deg, #FF6B35 0%, #FF4D7E 50%, #06D6AA 100%);
 
-  /* ── Primary Accent — Ruby Pink ─────────────────────────── */
+  /* ── Primary Accent — Ruby Pink (Compile CTA only) ────────── */
   --accent:        #E0115F;
   --accent-hover:  #C00E52;
   --accent-light:  rgba(224, 17, 95, 0.10);
   --accent-ring:   rgba(224, 17, 95, 0.22);
+
+  /* ── Semantic Color Roles ────────────────────────────────── */
+  --clr-action:    #E0115F;  /* Primary CTA — Compile only */
+  --clr-export:    #0F766E;  /* Export PDF button */
+  --clr-export-h:  #0D6B65;  /* Export hover */
+  --clr-live:      #22C55E;  /* LIVE status dot */
+  --clr-demo:      #8E8E93;  /* DEMO mode badge */
+  --clr-warn:      #EA580C;  /* Cramming / tension warn */
+  --clr-select:    #6366F1;  /* Yarn/card selection border */
+  --clr-disabled:  #C7C7CC;  /* Disabled controls */
+  --clr-danger:    #DC2626;  /* Destructive actions */
+
+  /* ── Fonts ──────────────────────────────────────────────── */
+  --font-heading:  'DM Serif Display', Georgia, serif;
+
+  /* ── Warm surfaces ───────────────────────────────────────── */
+  --sidebar-bg:     #FDFCFB;  /* warm off-white sidebar */
+  --surface-warm:   #FAF9F8;
 
   /* ── Secondary Accent — coral/orange (energy) ────────────── */
   --accent2:       #FF6B35;
@@ -58,7 +76,7 @@
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 
   /* ── Input ───────────────────────────────────────────────── */
-  --input-h: 40px;
+  --input-h: 38px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -148,6 +166,59 @@ label {
   margin-bottom: 14px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--border-light);
+}
+
+/* ─── Heading font utility ──────────────────────────────────── */
+.font-heading { font-family: var(--font-heading); }
+
+/* ─── Demo badge — muted status pill, NOT a CTA ─────────────── */
+.demo-badge {
+  padding: 3px 9px;
+  font-size: 9px; font-weight: 700;
+  color: var(--clr-demo);
+  background: transparent;
+  border: 1px solid #C7C7CC;
+  border-radius: 99px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: default;
+  user-select: none;
+}
+
+/* ─── Export button — teal (secondary CTA) ───────────────────── */
+.btn-export {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--clr-export);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  letter-spacing: -0.01em;
+  box-shadow: 0 2px 10px rgba(15,118,110,0.25);
+  white-space: nowrap;
+}
+.btn-export:hover {
+  background: var(--clr-export-h);
+  box-shadow: 0 4px 16px rgba(15,118,110,0.35);
+  transform: translateY(-1px);
+}
+.btn-export:disabled {
+  background: transparent;
+  color: var(--clr-disabled);
+  border: 1px solid var(--clr-disabled);
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 /* ─── Buttons ────────────────────────────────────────────────── */
@@ -265,7 +336,7 @@ label {
   background: var(--surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
-  padding: 16px;
+  padding: 14px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s ease;
   overflow: visible;
@@ -273,14 +344,55 @@ label {
 }
 
 @media (min-width: 640px) {
-  .card { padding: 20px; }
+  .card { padding: 16px; }
 }
 
 @media (min-width: 768px) {
-  .card { padding: 24px; }
+  .card { padding: 18px; }
 }
 
 .card:hover { box-shadow: var(--shadow-md); }
+
+/* ─── Sidebar Form Content — compact density for 252px sidebar ──────────── */
+/* These override the inline styles in LoomForm / WarpSystemForm / etc       */
+
+.sidebar-form-content h2 {
+  font-size: 14px !important;
+  letter-spacing: -0.025em !important;
+  margin-bottom: 2px !important;
+}
+
+.sidebar-form-content > * > p,
+.sidebar-form-content h2 + p {
+  font-size: 11px !important;
+}
+
+/* Section title dividers (used as ParamGroup heading) */
+.sidebar-form-content [style*="textTransform: 'uppercase'"],
+.sidebar-form-content [style*="text-transform: uppercase"] {
+  font-size: 10px !important;
+}
+
+/* Form labels inside sidebar */
+.sidebar-form-content label {
+  font-size: 11px !important;
+  margin-bottom: 4px !important;
+}
+
+/* Inputs and selects — compact but not cramped */
+.sidebar-form-content input:not([type='range']):not([type='checkbox']):not([type='color']),
+.sidebar-form-content select,
+.sidebar-form-content textarea {
+  height: 34px !important;
+  font-size: 12px !important;
+  padding: 0 9px !important;
+}
+
+/* Reduce ParamGroup bottom gaps */
+.sidebar-form-content [style*="marginBottom: 20"] {
+  margin-bottom: 14px !important;
+}
+
 
 /* ─── Metric Cards ───────────────────────────────────────────── */
 
@@ -397,7 +509,7 @@ input[type="range"]:focus::-webkit-slider-thumb {
   background: rgba(0,0,0,0.15);
   border-radius: 99px;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(6,196,154,0.35); }
+::-webkit-scrollbar-thumb:hover { background: rgba(224,17,95,0.30); }
 
 /* ─── Collapsible ────────────────────────────────────────────── */
 
@@ -413,6 +525,30 @@ input[type="range"]:focus::-webkit-slider-thumb {
 
 .collapsible-header:hover { color: var(--accent); }
 
+/* ─── Stepper ───────────────────────────────────────────────── */
+.stepper-dot {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.stepper-dot.complete {
+  background: var(--accent); color: #fff; border: none;
+}
+.stepper-dot.active {
+  background: transparent; color: var(--accent);
+  border: 2.5px solid var(--accent);
+}
+.stepper-dot.idle {
+  background: transparent; color: #AEAEB2;
+  border: 1.5px solid #D1D1D6;
+}
+.stepper-line {
+  flex: 1; height: 1.5px; margin-bottom: 12px;
+  transition: background 0.3s ease;
+}
+
 /* ─── Animations ─────────────────────────────────────────────── */
 
 @keyframes pulse-dot {
@@ -421,6 +557,18 @@ input[type="range"]:focus::-webkit-slider-thumb {
 }
 
 .pulse-indicator { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes compile-weave {
+  0%   { opacity: 0.3; transform: scale(0.8); }
+  50%  { opacity: 1;   transform: scale(1.05); }
+  100% { opacity: 0.3; transform: scale(0.8); }
+}
+.compile-weave-cell { animation: compile-weave 0.8s ease-in-out infinite alternate; }
 
 @keyframes modal-in {
   0%   { opacity: 0; transform: scale(0.94) translateY(10px); }
@@ -431,6 +579,26 @@ input[type="range"]:focus::-webkit-slider-thumb {
 @keyframes card-in {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px) translateX(-50%); }
+  to   { opacity: 1; transform: translateY(0)    translateX(-50%); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes notchDropIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);    }
 }
 
 /* ─── Mobile Utilities ───────────────────────────────────────── */

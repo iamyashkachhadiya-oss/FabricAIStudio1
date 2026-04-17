@@ -456,62 +456,139 @@ function FabricLayoutBar({ leftEnabled, rightEnabled, leftZone, rightZone, total
   totalBodyEnds: number
   crossBorders: CrossBorder[]
 }) {
-  const leftEnds = leftEnabled ? leftZone.widthEnds : 0
+  const leftEnds  = leftEnabled  ? leftZone.widthEnds  : 0
   const rightEnds = rightEnabled ? rightZone.widthEnds : 0
   const total = leftEnds + totalBodyEnds + rightEnds
   if (total === 0) return null
 
   const leftPct  = (leftEnds  / total) * 100
+  const bodyPct  = (totalBodyEnds / total) * 100
   const rightPct = (rightEnds / total) * 100
 
   return (
     <div style={{ marginBottom: 16 }}>
-      <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 6,
-        fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-        Warp Layout Preview
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        marginBottom: 8,
+      }}>
+        <div style={{ fontSize: 10, color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+          Warp Layout Preview
+        </div>
+        <div style={{ fontSize: 9, color: 'var(--text-4)', fontFamily: 'var(--font-mono)' }}>
+          {total.toLocaleString()} total ends
+        </div>
       </div>
-      <div style={{ display: 'flex', height: 34, borderRadius: 9, overflow: 'hidden',
-        border: '1px solid var(--border-light)' }}>
+
+      {/* Main proportional bar — 64px tall (Prompt 9) */}
+      <div style={{ display: 'flex', height: 64, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-xs)' }}>
+        {/* Left border section */}
         {leftEnabled && leftPct > 0 && (
-          <div title={`Left Border: ${leftZone.widthEnds} ends`}
-            style={{ width: `${leftPct}%`, background: '#EFF6FF',
+          <div
+            title={`Left Border: ${leftZone.widthEnds} ends (${leftPct.toFixed(1)}%)`}
+            style={{
+              width: `${leftPct}%`, minWidth: leftPct < 8 ? 24 : undefined,
+              background: 'linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%)',
               borderRight: '2px solid #E0115F',
-              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, color: '#E0115F',
-              writingMode: leftPct < 8 ? 'vertical-rl' : 'initial', whiteSpace: 'nowrap' }}>
-              {leftPct < 8 ? 'L' : `L ${leftZone.widthEnds}`}
-            </div>
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center', gap: 2,
+              flexShrink: 0,
+            }}
+          >
+            {leftPct >= 8 ? (
+              <>
+                <div style={{ fontSize: 10, fontWeight: 800, color: '#1D4ED8', letterSpacing: '-0.01em' }}>
+                  {leftZone.widthEnds}
+                </div>
+                <div style={{ fontSize: 7, fontWeight: 600, color: '#3B82F6', textTransform: 'uppercase', letterSpacing: '0.06em' }}>L ends</div>
+              </>
+            ) : (
+              <div style={{ fontSize: 8, fontWeight: 800, color: '#E0115F', writingMode: 'vertical-rl' }}>L</div>
+            )}
           </div>
         )}
-        <div title={`Body: ${totalBodyEnds} ends`}
-          style={{ flex: 1,
-            background: 'repeating-linear-gradient(45deg, #F0F0F5, #F0F0F5 3px, #fff 3px, #fff 7px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-3)',
-            background: 'rgba(255,255,255,0.85)', padding: '2px 7px', borderRadius: 4 }}>
-            Body {totalBodyEnds}e
+
+        {/* Body section */}
+        <div
+          title={`Body: ${totalBodyEnds} ends (${bodyPct.toFixed(1)}%)`}
+          style={{
+            flex: 1,
+            background: 'repeating-linear-gradient(45deg, #F1F1F6, #F1F1F6 3px, #FAFAFA 3px, #FAFAFA 8px)',
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: 3,
+            position: 'relative',
+          }}
+        >
+          <div style={{
+            background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(4px)',
+            padding: '4px 10px', borderRadius: 6,
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
+          }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--text-1)', letterSpacing: '-0.02em' }}>
+              {totalBodyEnds.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 8, fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Body ends
+            </div>
+          </div>
+          <div style={{ position: 'absolute', bottom: 4, right: 6, fontSize: 8, color: 'var(--text-4)', fontWeight: 500 }}>
+            {bodyPct.toFixed(0)}%
           </div>
         </div>
+
+        {/* Right border section */}
         {rightEnabled && rightPct > 0 && (
-          <div title={`Right Border: ${rightZone.widthEnds} ends`}
-            style={{ width: `${rightPct}%`, background: '#FFF7ED',
+          <div
+            title={`Right Border: ${rightZone.widthEnds} ends (${rightPct.toFixed(1)}%)`}
+            style={{
+              width: `${rightPct}%`, minWidth: rightPct < 8 ? 24 : undefined,
+              background: 'linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%)',
               borderLeft: '2px solid #EA580C',
-              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, color: '#EA580C',
-              writingMode: rightPct < 8 ? 'vertical-rl' : 'initial', whiteSpace: 'nowrap' }}>
-              {rightPct < 8 ? 'R' : `R ${rightZone.widthEnds}`}
-            </div>
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center', gap: 2,
+              flexShrink: 0,
+            }}
+          >
+            {rightPct >= 8 ? (
+              <>
+                <div style={{ fontSize: 10, fontWeight: 800, color: '#C2410C', letterSpacing: '-0.01em' }}>
+                  {rightZone.widthEnds}
+                </div>
+                <div style={{ fontSize: 7, fontWeight: 600, color: '#EA580C', textTransform: 'uppercase', letterSpacing: '0.06em' }}>R ends</div>
+              </>
+            ) : (
+              <div style={{ fontSize: 8, fontWeight: 800, color: '#EA580C', writingMode: 'vertical-rl' }}>R</div>
+            )}
           </div>
         )}
       </div>
 
+      {/* Percentage legend */}
+      <div style={{ display: 'flex', gap: 10, marginTop: 6, flexWrap: 'wrap' }}>
+        {leftEnabled && leftPct > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <div style={{ width: 8, height: 8, borderRadius: 2, background: '#3B82F6', flexShrink: 0 }} />
+            <span style={{ fontSize: 9, color: 'var(--text-3)', fontWeight: 500 }}>Left {leftPct.toFixed(1)}% · {leftEnds} ends</span>
+          </div>
+        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ width: 8, height: 8, borderRadius: 2, background: '#AEAEB2', flexShrink: 0 }} />
+          <span style={{ fontSize: 9, color: 'var(--text-3)', fontWeight: 500 }}>Body {bodyPct.toFixed(1)}% · {totalBodyEnds} ends</span>
+        </div>
+        {rightEnabled && rightPct > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <div style={{ width: 8, height: 8, borderRadius: 2, background: '#EA580C', flexShrink: 0 }} />
+            <span style={{ fontSize: 9, color: 'var(--text-3)', fontWeight: 500 }}>Right {rightPct.toFixed(1)}% · {rightEnds} ends</span>
+          </div>
+        )}
+      </div>
+
+      {/* Cross border weft timeline */}
       {crossBorders.length > 0 && (
-        <div style={{ marginTop: 8 }}>
+        <div style={{ marginTop: 10 }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: '#E0115F', marginBottom: 4 }}>
             Cross Borders (weft direction)
           </div>
-          <div style={{ display: 'flex', height: 14, background: '#F0F0F5',
-            borderRadius: 4, overflow: 'hidden', position: 'relative' }}>
+          <div style={{ display: 'flex', height: 16, background: '#F0F0F5', borderRadius: 5, overflow: 'hidden', position: 'relative' }}>
             {crossBorders.map((cb, i) => {
               const tot = crossBorders.reduce((s, c) => s + c.lengthPicks, 0) + 200
               return (

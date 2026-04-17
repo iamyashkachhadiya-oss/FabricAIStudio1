@@ -108,7 +108,10 @@ function extractShafts(line: string, shaftCount: number): number[] {
 
   // Check for "N-->" arrow format
   const arrowMatch = trimLine.match(/\d+\s*-->\s*(.+)/)
-  const shaftStr = arrowMatch ? arrowMatch[1] : trimLine
+  let shaftStr = arrowMatch ? arrowMatch[1] : trimLine
+
+  // Strip anything in parentheses (e.g. color labels) so numbers inside them aren't parsed as shafts
+  shaftStr = shaftStr.replace(/\s*\(.*?\)/g, '')
 
   return shaftStr
     .split(/[,\s]+/)
@@ -116,27 +119,57 @@ function extractShafts(line: string, shaftCount: number): number[] {
     .filter(n => !isNaN(n) && n >= 1 && n <= shaftCount)
 }
 
+interface Yarn {
+  id: string
+  label: string
+  colour_hex: string
+}
+
 /**
  * Convert binary matrix back to peg plan text
  * @param matrix - 2D binary matrix [picks × shafts]
- * @returns Peg plan text in "N-->shaft,shaft,..." format
+ * @param rowYarnMap - Optional. Map of row index to yarn ID.
+ * @param cellYarnMap - Optional. Map of `${row}_${col}` to yarn ID.
+ * @param weftYarns - Optional. Array of all available weft yarns.
+ * @returns Peg plan text in "N-->shaft,shaft,..." format, with separate rows for multiple colors per pick
  */
-export function matrixToText(matrix: number[][]): string {
+export function matrixToText(
+  matrix: number[][],
+  rowYarnMap?: Record<number, string>,
+  cellYarnMap?: Record<string, string>,
+  weftYarns?: Yarn[]
+): string {
   if (!matrix.length) return ''
 
   const lines: string[] = []
 
   for (let i = 0; i < matrix.length; i++) {
     const row = matrix[i]
-    const raisedShafts: number[] = []
+    const yarnGroups: Record<string, number[]> = {}
+    const defaultYarn = (rowYarnMap && rowYarnMap[i]) || (weftYarns && weftYarns.length > 0 ? weftYarns[0].id : 'default')
+    let hasRaised = false
 
     for (let j = 0; j < row.length; j++) {
       if (row[j] === 1) {
-        raisedShafts.push(j + 1) // Convert 0-indexed back to 1-indexed
+        hasRaised = true
+        const cellYarn = (cellYarnMap && cellYarnMap[`${i}_${j}`]) || defaultYarn
+        if (!yarnGroups[cellYarn]) {
+          yarnGroups[cellYarn] = []
+        }
+        yarnGroups[cellYarn].push(j + 1) // Convert 0-indexed back to 1-indexed
       }
     }
 
-    lines.push(`${i + 1}-->${raisedShafts.join(',')}`)
+    if (!hasRaised) {
+      lines.push(`${i + 1}-->`)
+    } else {
+      for (const [yarnId, raisedShafts] of Object.entries(yarnGroups)) {
+        const yarn = weftYarns?.find(y => y.id === yarnId)
+        // Set label only if multiple colors are possible/provided.
+        const labelStr = yarn && weftYarns && weftYarns.length > 1 ? ` (${yarn.label || 'Yarn'})` : ''
+        lines.push(`${i + 1}-->${raisedShafts.join(',')}${labelStr}`)
+      }
+    }
   }
 
   return lines.join('\n')

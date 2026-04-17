@@ -81,27 +81,30 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
       newMatrix.push(new Array(shaftCount).fill(0))
     }
 
-    setMatrix(newMatrix)
-    const newText = matrixToText(newMatrix)
-    setText(newText)
-    onChange(newText, newMatrix)
+    // Assign color maps first so matrixToText knows about the color change
+    let newRowYarnMap = { ...rowYarnMap }
+    let newCellYarnMap = { ...cellYarnMap }
 
-    // Assign color
     if (selectedYarnId) {
       if (paintMode === 'row') {
-        const newMap = { ...rowYarnMap, [row]: selectedYarnId }
-        setRowYarnMap(newMap)
-        setRowYarnMapStore(newMap)
+        newRowYarnMap = { ...rowYarnMap, [row]: selectedYarnId }
+        setRowYarnMap(newRowYarnMap)
+        setRowYarnMapStore(newRowYarnMap)
       } else {
         const key = `${row}_${col}`
-        const newMap = { ...cellYarnMap, [key]: selectedYarnId }
-        setCellYarnMap(newMap)
-        setCellYarnMapStore(newMap)
+        newCellYarnMap = { ...cellYarnMap, [key]: selectedYarnId }
+        setCellYarnMap(newCellYarnMap)
+        setCellYarnMapStore(newCellYarnMap)
       }
     }
 
+    setMatrix(newMatrix)
+    const newText = matrixToText(newMatrix, newRowYarnMap, newCellYarnMap, weftYarns)
+    setText(newText)
+    onChange(newText, newMatrix)
+
     isUpdatingFromGrid.current = false
-  }, [matrix, shaftCount, onChange, selectedYarnId, rowYarnMap, setRowYarnMapStore, paintMode, cellYarnMap, setCellYarnMapStore])
+  }, [matrix, shaftCount, onChange, selectedYarnId, rowYarnMap, setRowYarnMapStore, paintMode, cellYarnMap, setCellYarnMapStore, weftYarns])
 
   const handleClear = () => {
     setText('')
@@ -121,7 +124,7 @@ export default function PegPlanEditor({ shaftCount, onChange, initialText = '' }
       newMatrix.push(row)
     }
     setMatrix(newMatrix)
-    const newText = matrixToText(newMatrix)
+    const newText = matrixToText(newMatrix, rowYarnMap, cellYarnMap, weftYarns)
     setText(newText)
     onChange(newText, newMatrix)
   }

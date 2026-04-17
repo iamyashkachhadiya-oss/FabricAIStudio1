@@ -11,6 +11,7 @@ import {
 } from '@/lib/weave/engine'
 import { COLOR_SWATCHES } from '@/lib/weave/variations'
 import type { FabricCategory } from '@/lib/weave/presets'
+import DesignTree from './DesignTree'
 import {
   generateAllDesigns, estimateDesignCount, totalEstimatedDesigns,
   type GenerationProgress,
@@ -59,39 +60,44 @@ function staticToGen(d: SDesign, idx: number): GeneratedDesign {
 }
 
 // ─── PegGrid ─────────────────────────────────────────────────────────────────
-function PegGrid({ matrix, size, warpColor, weftColor }: {
+function PegGrid({ matrix, size }: {
   matrix: number[][]
   size: 'card' | 'modal'
-  warpColor?: string
-  weftColor?: string
 }) {
   const rows = matrix.length
   const cols = matrix[0]?.length || 0
   if (!rows || !cols) return null
 
-  const onClr = warpColor || '#3730A3'
-  const offClr = weftColor || '#EEF2FF'
+  const onClr = '#1D1D1F' // Apple soft black
+  const offClr = '#F7F7F9' // Very soft gray for empty cells
   const maxPx = size === 'card' ? 200 : 300
-  const cellPx = Math.max(3, Math.min(Math.floor(maxPx / Math.max(rows, cols)), size === 'card' ? 18 : 22))
+  const cellPx = Math.max(4, Math.min(Math.floor(maxPx / Math.max(rows, cols)), size === 'card' ? 18 : 22))
   const w = cols * cellPx
   const h = rows * cellPx
 
   return (
-    <svg width={w} height={h} style={{ display: 'block', imageRendering: 'pixelated', overflow: 'visible' }}>
-      {matrix.map((row, ri) =>
-        row.map((c, ci) => (
-          <rect
-            key={`${ri}-${ci}`}
-            x={ci * cellPx} y={ri * cellPx}
-            width={cellPx - 1} height={cellPx - 1}
-            rx={size === 'modal' && cellPx > 8 ? 2 : 0}
-            fill={c ? onClr : offClr}
-            stroke={c ? 'rgba(0,0,0,0.08)' : 'none'}
-            strokeWidth={0.5}
-          />
-        ))
-      )}
-    </svg>
+    <div style={{
+      background: '#FFFFFF', padding: size === 'card' ? 6 : 10,
+      borderRadius: Math.min(10, cellPx),
+      boxShadow: '0 2px 10px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)',
+      display: 'inline-flex', justifyContent: 'center', alignItems: 'center'
+    }}>
+      <svg width={w} height={h} style={{ display: 'block', overflow: 'visible' }}>
+        {matrix.map((row, ri) =>
+          row.map((c, ci) => (
+            <rect
+              key={`${ri}-${ci}`}
+              x={ci * cellPx} y={ri * cellPx}
+              width={cellPx - 0.5} height={cellPx - 0.5}
+              rx={cellPx > 6 ? 1.5 : 0}
+              fill={c ? onClr : offClr}
+              stroke={'rgba(0,0,0,0.03)'}
+              strokeWidth={0.5}
+            />
+          ))
+        )}
+      </svg>
+    </div>
   )
 }
 
@@ -185,10 +191,7 @@ function DesignCard({ design, bookmarked, onOpen, onBookmark, index }: {
         )}
 
         <div style={{ position: 'relative', zIndex: 1, filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.05))' }}>
-          <PegGrid matrix={design.matrix} size="card"
-            warpColor={sw.warp}
-            weftColor='rgba(0,0,0,0.04)'
-          />
+          <PegGrid matrix={design.matrix} size="card" />
         </div>
 
         {/* Bookmark */}
@@ -450,7 +453,7 @@ function DesignModal({ design, onClose, onLoad, onSimilar, bookmarked, onBookmar
               display: 'flex', alignItems: 'center', justifyContent: 'center', overflowX: 'auto',
               boxShadow: 'inset 0 1px 4px rgba(0,0,0,0.02)',
             }}>
-              {view === 'visual' && <PegGrid matrix={design.matrix} size="modal" warpColor={sw.warp} weftColor='rgba(0,0,0,0.06)' />}
+              {view === 'visual' && <PegGrid matrix={design.matrix} size="modal" />}
               {view === 'shaft' && (
                 <pre style={{ margin: 0, fontSize: 10, fontFamily: 'var(--font-mono)', color: '#48484a', lineHeight: 1.9, whiteSpace: 'pre' }}>
                   {shaftText}
@@ -778,6 +781,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
   // ── UI ──
   const [selected, setSelected] = useState<GeneratedDesign | null>(null)
   const [bookmarks, setBookmarks] = useState<Set<string>>(new Set())
+  const [showTree, setShowTree] = useState(false)
   const [page, setPage] = useState(1)
   const PAGE = 24
 
@@ -1058,6 +1062,22 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
             )}
           </button>
 
+          {/* Tree Toggle */}
+          <button onClick={() => setShowTree(!showTree)} style={{
+            height: 30, padding: '0 10px', fontSize: 12, fontWeight: 600, borderRadius: 8, border: 'none',
+            background: showTree ? '#E0115F' : 'rgba(0,0,0,0.05)',
+            color: showTree ? '#fff' : '#64748B', cursor: 'pointer', fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', gap: 4,
+          }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            Tree
+          </button>
+
           <button
             onClick={handleRandom}
             style={{
@@ -1139,6 +1159,16 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
 
       {/* ── Body ── */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
+        {showTree && (
+           <DesignTree 
+              onClose={() => setShowTree(false)}
+              onSelectDesign={(name, node) => {
+                 if (!node.software) {
+                    setSearch(name) // filter the library by name
+                 }
+              }}
+           />
+        )}
 
         {/* Sidebar */}
         <div style={{

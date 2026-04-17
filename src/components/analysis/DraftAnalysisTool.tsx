@@ -1,10 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { useDesignStore } from '@/lib/store/designStore'
 
 export default function DraftAnalysisTool() {
   const store = useDesignStore()
   const { draftSequence, setDraftSequence, shaftCount } = store
+  const [seqOpen, setSeqOpen] = useState(false)  // Prompt 12: progressive disclosure
 
   const ends = draftSequence.length || shaftCount
   const shafts = shaftCount
@@ -36,11 +38,11 @@ export default function DraftAnalysisTool() {
   return (
     <div style={{ color: 'var(--text-1)', fontFamily: 'var(--font-body)' }}>
 
-      {/* Header */}
+      {/* Header — renamed to Threading Draft (Prompt 12) */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
         <div>
           <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.01em', marginBottom: 2 }}>
-            Draft Matrix
+            Threading Draft
           </h3>
           <div style={{ fontSize: 12, color: 'var(--text-3)' }}>Click cells to assign shaft threading</div>
         </div>
@@ -116,31 +118,51 @@ export default function DraftAnalysisTool() {
           </div>
         </div>
 
-        {/* Draft Sequence Text */}
+        {/* Draft Sequence Array — collapsed by default (Prompt 12) */}
         <div className="w-full lg:w-[256px] shrink-0" style={{
           border: '1px solid var(--border-light)',
-          borderRadius: 12, padding: 14,
+          borderRadius: 12,
           background: 'var(--bg)',
+          overflow: 'hidden',
         }}>
+          {/* Collapsible header */}
+          <button
+            onClick={() => setSeqOpen(o => !o)}
+            style={{
+              width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '12px 14px', border: 'none', background: 'none', cursor: 'pointer',
+            }}
+            aria-expanded={seqOpen}
+          >
+            <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-3)', letterSpacing: '0.07em', textTransform: 'uppercase' }}>
+              Sequence Data
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 9, color: 'var(--text-4)', fontWeight: 500 }}>{draftSequence.length} ends</span>
+              <span style={{ display: 'inline-block', transition: 'transform 0.2s ease', transform: seqOpen ? 'rotate(180deg)' : 'rotate(0deg)', fontSize: 10, color: 'var(--text-3)' }}>▾</span>
+            </div>
+          </button>
+
+          {/* Expandable content */}
           <div style={{
-            fontSize: 10, fontWeight: 600, color: 'var(--text-3)',
-            letterSpacing: '0.07em', marginBottom: 12, textTransform: 'uppercase',
+            overflow: 'hidden',
+            maxHeight: seqOpen ? 240 : 0,
+            opacity: seqOpen ? 1 : 0,
+            transition: 'max-height 0.25s ease, opacity 0.2s ease',
           }}>
-            Draft Sequence Array
-          </div>
-          <div style={{
-            background: 'var(--surface)',
-            border: '1px solid var(--border-light)',
-            borderRadius: 10, padding: '12px 14px',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 12, color: 'var(--text-1)',
-            lineHeight: 1.65,
-          }}>
-            {draftSequence.map((sh, end) => (
-              <div key={end} style={{ color: end % 2 === 0 ? 'var(--text-1)' : 'var(--text-2)' }}>
-                Warp {end + 1} &rarr; Shaft {sh}
-              </div>
-            ))}
+            <div style={{
+              background: 'var(--surface)', borderTop: '1px solid var(--border-light)',
+              padding: '12px 14px',
+              fontFamily: 'var(--font-mono)', fontSize: 12,
+              color: 'var(--text-1)', lineHeight: 1.65,
+              maxHeight: 200, overflowY: 'auto',
+            }}>
+              {draftSequence.map((sh, end) => (
+                <div key={end} style={{ color: end % 2 === 0 ? 'var(--text-1)' : 'var(--text-2)' }}>
+                  Warp {end + 1} &rarr; Shaft {sh}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

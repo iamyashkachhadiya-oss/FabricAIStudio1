@@ -39,13 +39,16 @@ export default function WeftSequencePlan() {
     const rows = pegPlanMatrix.length
     if (rows === 0) return []
 
-    return Array.from({ length: rows }, (_, r) => {
-      const yarnId = rowYarnMap[r] ?? yarns[0]?.id ?? ''
-      const yarn = yarns.find(y => y.id === yarnId)
+    const flattenedPicks: any[] = []
+    let sequentialPick = 1
+
+    for (let r = 0; r < rows; r++) {
+      const baseYarnId = rowYarnMap[r] ?? yarns[0]?.id ?? ''
 
       // Collect all unique yarns across cells in this row (reveals cramming)
       const uniqueYarns = new Set<string>()
-      if (yarnId) uniqueYarns.add(yarnId)
+      if (baseYarnId) uniqueYarns.add(baseYarnId)
+      
       const cols = pegPlanMatrix[0]?.length ?? 0
       for (let c = 0; c < cols; c++) {
         const cellKey = `${r}_${c}`
@@ -54,21 +57,21 @@ export default function WeftSequencePlan() {
 
       const isCramming = uniqueYarns.size > 1
 
-      // Extra yarns (cell-level overrides beyond the row yarn)
-      const extraYarns = Array.from(uniqueYarns)
-        .filter(id => id !== yarnId)
-        .map(id => yarns.find(y => y.id === id))
-        .filter(Boolean) as typeof yarns
+      // Add a distinct pick row for each yarn in the set
+      Array.from(uniqueYarns).forEach(yarnId => {
+        const yarn = yarns.find(y => y.id === yarnId)
+        flattenedPicks.push({
+          pick: sequentialPick++,
+          rowIdx: r,
+          yarn,
+          yarnId,
+          nozzle: yarn?.nozzle_config?.sequence?.[0] ?? 1,
+          isCramming,
+        })
+      })
+    }
 
-      return {
-        pick: r + 1,
-        yarn,
-        yarnId,
-        nozzle: yarn?.nozzle_config?.sequence?.[0] ?? 1,
-        isCramming,
-        extraYarns,
-      }
-    })
+    return flattenedPicks
   }, [pegPlanMatrix, rowYarnMap, cellYarnMap, yarns])
 
   // Per-yarn pick count for the donut summary bar
@@ -81,7 +84,7 @@ export default function WeftSequencePlan() {
   }, [picks])
 
   const totalPicks = picks.length
-  const crammingCount = picks.filter(p => p.isCramming).length
+  const uniqueCrammedRows = new Set(picks.filter(p => p.isCramming).map(p => p.rowIdx)).size
 
   const loomPPI = loom?.target_ppi ?? 60
   const clothLength = 5.5 // metres — fixed reference for "total repeats" estimate
@@ -107,9 +110,9 @@ export default function WeftSequencePlan() {
           </div>
           <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>
             Repeat: {totalPicks} picks &nbsp;·&nbsp; Est. {totalRepeats} repeats / {clothLength} m fabric
-            {crammingCount > 0 && (
+            {uniqueCrammedRows > 0 && (
               <span style={{ marginLeft: 8, color: '#EA580C', fontWeight: 600 }}>
-                · {crammingCount} WC row{crammingCount > 1 ? 's' : ''}
+                · {uniqueCrammedRows} WC row{uniqueCrammedRows > 1 ? 's' : ''}
               </span>
             )}
           </div>
@@ -172,11 +175,6 @@ export default function WeftSequencePlan() {
                   {/* Yarn label */}
                   <td style={{ padding: '7px 12px', color: 'var(--text-1)', fontWeight: 500, maxWidth: 160, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     {p.yarn?.label ?? '—'}
-                    {p.isCramming && p.extraYarns.length > 0 && (
-                      <span style={{ marginLeft: 6, fontSize: 10, color: 'var(--text-4)' }}>
-                        + {p.extraYarns.map(y => y.label).join(', ')}
-                      </span>
-                    )}
                   </td>
 
                   {/* Nozzle */}
@@ -227,7 +225,7 @@ export default function WeftSequencePlan() {
                         letterSpacing: '0.03em',
                         border: '1px solid rgba(234,88,12,0.2)',
                       }}>
-                        WC · Cramming
+                        WC · Row {p.rowIdx + 1}
                       </span>
                     ) : (
                       <span style={{
