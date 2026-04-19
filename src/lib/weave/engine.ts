@@ -53,7 +53,7 @@ export interface GeneratedDesign {
   applications?: string[]
   tags?:        string[]
   // Source
-  source:       'preset' | 'generated' | 'random' | 'user'
+  source:       'preset' | 'generated' | 'random' | 'user' | 'admin'
   preset_id?:   string
 }
 
