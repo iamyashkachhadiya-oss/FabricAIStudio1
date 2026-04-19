@@ -78,9 +78,9 @@ export default function DesignPage({ params }: { params: Promise<{ id: string }>
           </button>
           <div style={{ width: 1, height: 20, background: 'var(--border)' }} />
           <img
-            src="/fabricai-logo.png"
-            alt="FabricAI"
-            style={{ width: 28, height: 28, display: 'block', objectFit: 'contain' }}
+            src="/logo.png"
+            alt="FabricaAI Logo"
+            style={{ width: 28, height: 28, display: 'block', objectFit: 'cover', borderRadius: 6 }}
           />
           <div>
             <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-1)' }}>

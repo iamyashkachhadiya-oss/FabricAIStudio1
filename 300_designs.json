@@ -1,0 +1,1318 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "dataset_name": "Comprehensive Textile Weave Technical Database",
+    "batches": "1-3 (Core + Advanced + Complex)",
+    "total_designs": 300,
+    "created_date": "2026-04-17",
+    "target_systems": ["FabricAI Studio", "CAD Textile Systems", "Loom Controllers", "Factory ERP"],
+    "format": "JSON (Machine-Readable)",
+    "description": "Factory-grade technical data sheets for 300 textile weave designs including interlacement matrices, loom specifications, material properties, production parameters, and AI/software encoding"
+  },
+
+  "batch_1_fundamental_weaves": {
+    "1_plain_weave": {
+      "design_id": "W001",
+      "design_name": "Plain Weave",
+      "batch": 1,
+      "category": "Fundamental Weaves",
+      "complexity_level": "Beginner",
+      "core_structure": {
+        "weave_type": "Plain (1/1)",
+        "shaft_count": 2,
+        "repeat_size": {
+          "width_ends": 2,
+          "height_picks": 2
+        },
+        "interlacement_matrix": [
+          [1, 0],
+          [0, 1]
+        ],
+        "interlacement_description": "Alternate warp and weft intersections. Binary 1 = warp on top, 0 = weft on top",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "2-shaft",
+          "threading": "1,2,1,2,...",
+          "tieup": [[1, 0], [0, 1]],
+          "treadling": [1, 2, 1, 2],
+          "notes": "Simplest possible interlacement"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Straight Draft",
+        "shaft_threading_logic": "Sequential straight threading through all shafts",
+        "peg_plan": {
+          "total_picks": 2,
+          "lifting_sequence": [
+            {
+              "pick": 1,
+              "active_shafts": [1],
+              "description": "Shaft 1 up (warp shows)"
+            },
+            {
+              "pick": 2,
+              "active_shafts": [2],
+              "description": "Shaft 2 up (weft shows)"
+            }
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 60,
+          "picks_per_inch_ppi": 60,
+          "standard_range": {
+            "epi_min": 40,
+            "epi_max": 100,
+            "ppi_min": 40,
+            "ppi_max": 100
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "40s Ne",
+            "fiber_type": "Cotton",
+            "ply": "2-ply"
+          },
+          "weft": {
+            "yarn_count": "40s Ne",
+            "fiber_type": "Cotton",
+            "ply": "2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Not used in plain weave",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Plain Woven Cloth",
+        "fabric_weight_gsm": {
+          "light": "80-120 GSM",
+          "medium": "120-180 GSM",
+          "heavy": "180-250 GSM"
+        },
+        "texture_feel": "Smooth, crisp, uniform",
+        "end_use_applications": [
+          "Apparel (shirting, dress fabrics)",
+          "Home textiles (bed sheets, pillowcases)",
+          "Industrial (canvas, tarpaulins)"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "No pattern (solid)",
+          "surface_effect": "Matte, uniform",
+          "appearance": "Grid-like due to regular interlacement"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Plain",
+        "float_analysis": {
+          "max_float_length": 1,
+          "float_distribution": "No floats (every intersection interlaced)",
+          "float_pattern": "None"
+        },
+        "fabric_properties": {
+          "strength": "Good (balanced warp-weft)",
+          "flexibility": "High",
+          "breathability": "Excellent",
+          "durability": "High",
+          "wrinkle_resistance": "Low",
+          "shrinkage_tendency": "Moderate"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Handloom (pit, frame, backstrap)",
+          "Powerloom",
+          "Airjet loom",
+          "Rapier loom"
+        ],
+        "production_speed": {
+          "handloom": "Low (200-300 picks/minute)",
+          "powerloom": "Medium (400-600 picks/minute)",
+          "airjet": "High (600+ picks/minute)"
+        },
+        "speed_reasoning": "Simple interlacement requires minimal loom coordination",
+        "cost_factors": {
+          "yarn_consumption": "100% baseline",
+          "complexity_impact": "Minimal",
+          "production_difficulty": "Easy",
+          "estimated_cost": "Base cost"
+        },
+        "common_defects_risks": [
+          "Loose picks (tension variation)",
+          "Skipped picks (rare)",
+          "Warp breakage (if tension too high)"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,2,1,2,... (straight sequence, 2-shaft)",
+        "chaal": "Regular, continuous running. ચાલ = uniform speed, no complex patterns",
+        "anto_beam_setup": "Single warp beam, standard arrangement. આંટો = straight beam loading"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "2×2 binary matrix",
+          "algorithmic_representation": "repeat_unit = [[1,0],[0,1]]; pattern = tile_repeat(repeat_unit, width, height)",
+          "graph_representation": "Bipartite graph: warp nodes ↔ weft nodes with 1:1 edges"
+        },
+        "variation_logic": {
+          "change_repeat": "Scale to 4×4, 8×8, etc. (still plain)",
+          "modify_interlacing": "Change pattern → different weave type",
+          "shift_pattern": "Shift rows/columns (minimal effect on plain)"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Decrease EPI/PPI (trade-off: lower density)",
+          "improve_speed": "Plain weave is already optimal",
+          "maintain_design": "Any modification breaks plain weave definition"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 5,
+        "changeover_difficulty": "Very easy",
+        "quality_checkpoints": ["EPI uniformity", "PPI consistency", "Tension balance"],
+        "defect_rate_percentage": "0.5-1%",
+        "machine_downtime_risks": "Minimal"
+      },
+      "notes": "Plain weave is the foundation of all textile structures. Used globally for 40-50% of all woven fabrics. Simple but versatile."
+    },
+
+    "2_basket_weave": {
+      "design_id": "W002",
+      "design_name": "Basket Weave",
+      "batch": 1,
+      "category": "Fundamental Weaves",
+      "complexity_level": "Beginner",
+      "core_structure": {
+        "weave_type": "Basket (2×2)",
+        "shaft_count": 2,
+        "repeat_size": {
+          "width_ends": 4,
+          "height_picks": 4
+        },
+        "interlacement_matrix": [
+          [1, 1, 0, 0],
+          [1, 1, 0, 0],
+          [0, 0, 1, 1],
+          [0, 0, 1, 1]
+        ],
+        "interlacement_description": "Paired warp and weft yarns create basket-like appearance",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "2-shaft",
+          "threading": "1,1,2,2,1,1,2,2,...",
+          "tieup": [[1, 0], [0, 1]],
+          "treadling": [1, 1, 2, 2, 1, 1, 2, 2],
+          "notes": "Paired threading and treadling"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Grouped Draft (paired ends)",
+        "shaft_threading_logic": "Two ends through each shaft in sequence",
+        "peg_plan": {
+          "total_picks": 4,
+          "lifting_sequence": [
+            {
+              "pick": 1,
+              "active_shafts": [1],
+              "description": "Shaft 1 up"
+            },
+            {
+              "pick": 2,
+              "active_shafts": [1],
+              "description": "Shaft 1 up (continues)"
+            },
+            {
+              "pick": 3,
+              "active_shafts": [2],
+              "description": "Shaft 2 up"
+            },
+            {
+              "pick": 4,
+              "active_shafts": [2],
+              "description": "Shaft 2 up (continues)"
+            }
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 50,
+          "picks_per_inch_ppi": 50,
+          "standard_range": {
+            "epi_min": 30,
+            "epi_max": 80,
+            "ppi_min": 30,
+            "ppi_max": 80
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "20s Ne",
+            "fiber_type": "Cotton or Cotton-blend",
+            "ply": "2-ply"
+          },
+          "weft": {
+            "yarn_count": "20s Ne",
+            "fiber_type": "Cotton or Cotton-blend",
+            "ply": "2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Not required for basket effect",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Basket Weave Cloth",
+        "fabric_weight_gsm": {
+          "light": "100-140 GSM",
+          "medium": "140-200 GSM",
+          "heavy": "200-280 GSM"
+        },
+        "texture_feel": "Textured, slightly rough, dimensional",
+        "end_use_applications": [
+          "Apparel (casual shirting, dresses)",
+          "Home textiles (upholstery, cushion covers)",
+          "Decorative fabrics"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "Grid pattern (basket-like)",
+          "surface_effect": "Textured, dimensional",
+          "appearance": "Visible interlocking of paired yarns"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Plain (variant)",
+        "float_analysis": {
+          "max_float_length": 2,
+          "float_distribution": "Paired floats at intersection points",
+          "float_pattern": "Symmetrical 2-yarn groups"
+        },
+        "fabric_properties": {
+          "strength": "Good",
+          "flexibility": "Medium",
+          "breathability": "Good",
+          "durability": "High",
+          "wrinkle_resistance": "Medium",
+          "shrinkage_tendency": "Low-Moderate"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Handloom",
+          "Powerloom",
+          "Dobby loom (for consistency)"
+        ],
+        "production_speed": {
+          "handloom": "Low (250-350 picks/minute)",
+          "powerloom": "Medium (450-550 picks/minute)"
+        },
+        "speed_reasoning": "Slightly more complex than plain due to paired threading",
+        "cost_factors": {
+          "yarn_consumption": "Same as plain weave",
+          "complexity_impact": "Low",
+          "production_difficulty": "Easy-Medium",
+          "estimated_cost": "+5-10% over plain weave"
+        },
+        "common_defects_risks": [
+          "Uneven paired yarns (visual defect)",
+          "Loose floats in groups",
+          "Threading errors if pairs not maintained"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,1,2,2,1,1,2,2,... (paired sequence, 2-shaft with doubling)",
+        "chaal": "ચાલ = 4-pick repeat cycle. Smooth, paired progression",
+        "anto_beam_setup": "Single warp beam with paired end arrangement"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "4×4 binary matrix (2×2 repeat base with pairing)",
+          "algorithmic_representation": "repeat_unit = tile_plain(2,2); final = repeat_paired(repeat_unit)",
+          "graph_representation": "Paired bipartite graph with 2:2 edge groups"
+        },
+        "variation_logic": {
+          "change_repeat": "3×3 basket, 4×4 basket (simple scaling)",
+          "modify_float": "Extend pairs to 3×3, 4×4 (increases textural effect)",
+          "shift_pattern": "Rotate or mirror repeat blocks"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Use thinner paired yarns",
+          "improve_speed": "Standard speed + minimal complexity",
+          "maintain_design": "Keep pairing structure intact"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 8,
+        "changeover_difficulty": "Easy",
+        "quality_checkpoints": ["Pair uniformity", "Float tension", "Pattern alignment"],
+        "defect_rate_percentage": "1-2%",
+        "machine_downtime_risks": "Low"
+      },
+      "notes": "Variant of plain weave with grouped yarns. Creates texture while maintaining simplicity. Popular in casual apparel."
+    },
+
+    "3_rib_weave_warp_rib": {
+      "design_id": "W003",
+      "design_name": "Rib Weave (Warp Rib)",
+      "batch": 1,
+      "category": "Fundamental Weaves",
+      "complexity_level": "Beginner",
+      "core_structure": {
+        "weave_type": "Warp Rib (2/2)",
+        "shaft_count": 2,
+        "repeat_size": {
+          "width_ends": 4,
+          "height_picks": 2
+        },
+        "interlacement_matrix": [
+          [1, 1, 0, 0],
+          [0, 0, 1, 1]
+        ],
+        "interlacement_description": "Warp floats dominate (2 picks). Creates vertical ridge effect",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "2-shaft",
+          "threading": "1,1,2,2,1,1,2,2,...",
+          "tieup": [[1, 0], [0, 1]],
+          "treadling": [1, 2],
+          "notes": "Paired threading, simple alternating treadling"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Grouped Draft (paired ends through each shaft)",
+        "shaft_threading_logic": "Two ends through shaft 1, two through shaft 2, repeat",
+        "peg_plan": {
+          "total_picks": 2,
+          "lifting_sequence": [
+            {
+              "pick": 1,
+              "active_shafts": [1],
+              "description": "Shaft 1 up (warp shows on face)"
+            },
+            {
+              "pick": 2,
+              "active_shafts": [2],
+              "description": "Shaft 2 up (weft shows)"
+            }
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 70,
+          "picks_per_inch_ppi": 40,
+          "standard_range": {
+            "epi_min": 60,
+            "epi_max": 100,
+            "ppi_min": 30,
+            "ppi_max": 50
+          },
+          "density_note": "High EPI (for vertical ribs), lower PPI"
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "30s Ne",
+            "fiber_type": "Cotton or Silk",
+            "ply": "2-ply"
+          },
+          "weft": {
+            "yarn_count": "40s Ne",
+            "fiber_type": "Cotton",
+            "ply": "1-ply or 2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Rib effect comes from yarn density, not cramming",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Rib Weave Cloth",
+        "fabric_weight_gsm": {
+          "light": "90-130 GSM",
+          "medium": "130-180 GSM",
+          "heavy": "180-240 GSM"
+        },
+        "texture_feel": "Ribbed, tactile, dimensional",
+        "end_use_applications": [
+          "Apparel (suiting, coats, corduroy base)",
+          "Home textiles (upholstery, drapery)",
+          "Technical fabrics (reinforced structures)"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "Vertical rib pattern",
+          "surface_effect": "Raised vertical ridges",
+          "appearance": "Pronounced linear pattern from warp dominance"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Rib (warp-faced variant of plain)",
+        "float_analysis": {
+          "max_float_length": 2,
+          "float_distribution": "Warp floats over 2 picks",
+          "float_pattern": "Regular vertical grouping"
+        },
+        "fabric_properties": {
+          "strength": "High (warp-dominated)",
+          "flexibility": "Medium",
+          "breathability": "Medium",
+          "durability": "Very High",
+          "wrinkle_resistance": "Medium",
+          "shrinkage_tendency": "Low"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Handloom",
+          "Powerloom",
+          "Dobby loom"
+        ],
+        "production_speed": {
+          "handloom": "Low-Medium (300-400 picks/minute)",
+          "powerloom": "Medium (500-600 picks/minute)"
+        },
+        "speed_reasoning": "Simple interlacement, but higher EPI requires careful tension",
+        "cost_factors": {
+          "yarn_consumption": "Warp-heavy (slightly higher warp than weft)",
+          "complexity_impact": "Low",
+          "production_difficulty": "Easy-Medium",
+          "estimated_cost": "+8-15% (due to higher warp requirement)"
+        },
+        "common_defects_risks": [
+          "Warp tension imbalance (ribs become uneven)",
+          "Weft skips (visible defects in ribs)",
+          "Rib distortion if EPI/PPI ratio off"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,1,2,2,1,1,2,2,... (paired threading for ribs)",
+        "chaal": "ચાલ = 2-pick cycle. Vertical progression creates rib effect",
+        "anto_beam_setup": "Standard warp beam with paired end density"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "2×4 binary matrix",
+          "algorithmic_representation": "repeat_base = warp_rib(width=2); tile_repeat(repeat_base, w_count, h_count)",
+          "graph_representation": "Bipartite with warp dominance (2:1 ratio)"
+        },
+        "variation_logic": {
+          "change_repeat": "3/3 rib, 4/4 rib (change paired group size)",
+          "modify_float": "Increase picks under warp (3/2, 4/2 ribs)",
+          "shift_pattern": "Mirror or rotate rib direction"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Increase PPI (tighter construction, less warp needed)",
+          "improve_speed": "Already simple; can't optimize much further",
+          "maintain_design": "Keep warp-to-weft float ratio for rib definition"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 10,
+        "changeover_difficulty": "Easy",
+        "quality_checkpoints": ["EPI consistency", "Rib alignment", "Warp tension uniformity"],
+        "defect_rate_percentage": "1-2%",
+        "machine_downtime_risks": "Low-Medium (tension issues)"
+      },
+      "notes": "Warp-faced rib creates vertical texture. Base for many technical and apparel fabrics. Popular in India for formal suiting."
+    },
+
+    "4_twill_weave_regular": {
+      "design_id": "W004",
+      "design_name": "Twill Weave (Regular 2/2)",
+      "batch": 1,
+      "category": "Fundamental Weaves / Twill Variations",
+      "complexity_level": "Intermediate",
+      "core_structure": {
+        "weave_type": "2/2 Regular Twill",
+        "shaft_count": 3,
+        "repeat_size": {
+          "width_ends": 4,
+          "height_picks": 4
+        },
+        "interlacement_matrix": [
+          [1, 1, 0, 0],
+          [0, 1, 1, 0],
+          [0, 0, 1, 1],
+          [1, 0, 0, 1]
+        ],
+        "interlacement_description": "Diagonal progression +1/-1 step. Creates 45° twill line",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "3-shaft",
+          "threading": "1,2,3,1,2,3,...",
+          "tieup": [[1, 1, 0], [0, 1, 1], [1, 0, 1]],
+          "treadling": [1, 2, 3, 1],
+          "notes": "Simple diagonal stepping"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Straight Draft",
+        "shaft_threading_logic": "Sequential through shafts 1, 2, 3, repeat",
+        "peg_plan": {
+          "total_picks": 4,
+          "lifting_sequence": [
+            {
+              "pick": 1,
+              "active_shafts": [1],
+              "description": "Shaft 1 up → warp 1 shows"
+            },
+            {
+              "pick": 2,
+              "active_shafts": [2],
+              "description": "Shaft 2 up → warp 2 shows (shifted right)"
+            },
+            {
+              "pick": 3,
+              "active_shafts": [3],
+              "description": "Shaft 3 up → warp 3 shows (shifted right again)"
+            },
+            {
+              "pick": 4,
+              "active_shafts": [1],
+              "description": "Shaft 1 up → repeat cycle"
+            }
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 80,
+          "picks_per_inch_ppi": 60,
+          "standard_range": {
+            "epi_min": 60,
+            "epi_max": 120,
+            "ppi_min": 50,
+            "ppi_max": 90
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "30s Ne",
+            "fiber_type": "Cotton",
+            "ply": "2-ply"
+          },
+          "weft": {
+            "yarn_count": "30s Ne",
+            "fiber_type": "Cotton",
+            "ply": "2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Regular twill doesn't require cramming",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Twill Weave Cloth",
+        "fabric_weight_gsm": {
+          "light": "120-160 GSM",
+          "medium": "160-220 GSM",
+          "heavy": "220-300 GSM"
+        },
+        "texture_feel": "Smooth, slightly dense, diagonal hand feel",
+        "end_use_applications": [
+          "Apparel (denim, chinos, trousers, shirting)",
+          "Home textiles (upholstery)",
+          "Technical textiles"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "Diagonal twill line (45°)",
+          "surface_effect": "Visible diagonal ridge",
+          "appearance": "45-degree diagonal pattern running across fabric"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Twill",
+        "float_analysis": {
+          "max_float_length": 2,
+          "float_distribution": "Diagonal float pattern",
+          "float_pattern": "2 warp over 2 weft in diagonal progression"
+        },
+        "fabric_properties": {
+          "strength": "Very High",
+          "flexibility": "High",
+          "breathability": "Good",
+          "durability": "Excellent",
+          "wrinkle_resistance": "Good",
+          "shrinkage_tendency": "Low-Moderate"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Handloom (with dobby/jacquard)",
+          "Powerloom",
+          "Dobby loom",
+          "Jacquard loom"
+        ],
+        "production_speed": {
+          "handloom": "Medium (300-400 picks/minute)",
+          "powerloom": "Medium-High (500-700 picks/minute)",
+          "dobby": "Medium-High (600-800 picks/minute)"
+        },
+        "speed_reasoning": "Straightforward diagonal progression. No complex floating.",
+        "cost_factors": {
+          "yarn_consumption": "~5-10% less than plain weave (due to float efficiency)",
+          "complexity_impact": "Medium",
+          "production_difficulty": "Medium",
+          "estimated_cost": "+10-20% (vs. plain, due to 3-shaft requirement)"
+        },
+        "common_defects_risks": [
+          "Float pulls (diagonal floats can catch)",
+          "Uneven diagonal progression (picker timing)",
+          "Tension imbalance (affects twill line clarity)"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,2,3,1,2,3,... (straight sequence, 3-shaft)",
+        "chaal": "ચાલ = 4-pick diagonal cycle. Continuous progression for twill",
+        "anto_beam_setup": "Standard warp beam with even tension across 3 shafts"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "4×4 binary matrix with +1/-1 step progression",
+          "algorithmic_representation": "twill(shafts=3, step=1, direction='right'); repeat=4",
+          "graph_representation": "Directed acyclic graph showing diagonal progression"
+        },
+        "variation_logic": {
+          "change_repeat": "6×6 twill (larger diagonal scale)",
+          "modify_float": "3/1 twill (longer floats), 1/3 twill (weft-faced)",
+          "shift_pattern": "Reverse direction (left-hand twill instead of right-hand)"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Increase PPI (tighter picks, less warp floats)",
+          "improve_speed": "Optimize shaft cycling for loom speed",
+          "maintain_design": "Keep diagonal step consistent for clarity"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 15,
+        "changeover_difficulty": "Medium",
+        "quality_checkpoints": ["Twill line angle", "Float uniformity", "Diagonal consistency"],
+        "defect_rate_percentage": "2-3%",
+        "machine_downtime_risks": "Medium (float catching)"
+      },
+      "notes": "2/2 Twill is the most common twill structure. Base for denim, chinos, and many apparel fabrics. Right-hand (RH) or left-hand (LH) variations common."
+    },
+
+    "5_satin_weave_5_end": {
+      "design_id": "W005",
+      "design_name": "Satin Weave (5-End)",
+      "batch": 1,
+      "category": "Fundamental Weaves / Satin Variations",
+      "complexity_level": "Intermediate-Advanced",
+      "core_structure": {
+        "weave_type": "5-End Satin",
+        "shaft_count": 5,
+        "repeat_size": {
+          "width_ends": 5,
+          "height_picks": 5
+        },
+        "interlacement_matrix": [
+          [1, 0, 0, 0, 0],
+          [0, 1, 0, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 0, 1, 0],
+          [0, 0, 0, 0, 1]
+        ],
+        "interlacement_description": "Single intersection per repeat. Long warp floats (4) create lustrous face",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "5-shaft",
+          "threading": "1,2,3,4,5,1,2,3,4,5,...",
+          "tieup": [[1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1]],
+          "treadling": [1,2,3,4,5],
+          "notes": "Pure satin with step-4 progression"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Straight Draft (or Point Draft for symmetry)",
+        "shaft_threading_logic": "Sequential through all 5 shafts",
+        "peg_plan": {
+          "total_picks": 5,
+          "lifting_sequence": [
+            {
+              "pick": 1,
+              "active_shafts": [1],
+              "description": "Shaft 1 up (warp float across)"
+            },
+            {
+              "pick": 2,
+              "active_shafts": [2],
+              "description": "Shaft 2 up (warp float, shifted)"
+            },
+            {
+              "pick": 3,
+              "active_shafts": [3],
+              "description": "Shaft 3 up"
+            },
+            {
+              "pick": 4,
+              "active_shafts": [4],
+              "description": "Shaft 4 up"
+            },
+            {
+              "pick": 5,
+              "active_shafts": [5],
+              "description": "Shaft 5 up (cycle repeats)"
+            }
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 100,
+          "picks_per_inch_ppi": 80,
+          "standard_range": {
+            "epi_min": 80,
+            "epi_max": 150,
+            "ppi_min": 60,
+            "ppi_max": 120
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "40s-60s Ne",
+            "fiber_type": "Silk, Cotton, Polyester (often high-luster)",
+            "ply": "2-ply or multi-ply"
+          },
+          "weft": {
+            "yarn_count": "40s-60s Ne",
+            "fiber_type": "Silk or high-quality cotton",
+            "ply": "1-ply or 2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Satin structure already creates smooth surface with floats",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Satin Weave Cloth",
+        "fabric_weight_gsm": {
+          "light": "80-120 GSM",
+          "medium": "120-180 GSM",
+          "heavy": "180-250 GSM"
+        },
+        "texture_feel": "Smooth, lustrous, luxurious",
+        "end_use_applications": [
+          "Apparel (sarees, bridal wear, evening gowns, blouses)",
+          "Home textiles (bedding, curtains, upholstery)",
+          "Decorative and luxury fabrics"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "No pattern (solid color optimal)",
+          "surface_effect": "High luster, shiny appearance",
+          "appearance": "Smooth, reflective surface due to long warp floats"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Satin",
+        "float_analysis": {
+          "max_float_length": 4,
+          "float_distribution": "Regular long warp floats",
+          "float_pattern": "4-over-1 float structure"
+        },
+        "fabric_properties": {
+          "strength": "Medium (long floats = potential weakness)",
+          "flexibility": "High (smooth drape)",
+          "breathability": "Medium",
+          "durability": "Medium (floats can catch/pull)",
+          "wrinkle_resistance": "Low",
+          "shrinkage_tendency": "Low"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Powerloom (most common)",
+          "Dobby loom",
+          "Jacquard loom"
+        ],
+        "production_speed": {
+          "powerloom": "Medium (400-600 picks/minute)",
+          "dobby": "Medium (500-700 picks/minute)"
+        },
+        "speed_reasoning": "5-shaft coordination required; long floats need careful handling",
+        "cost_factors": {
+          "yarn_consumption": "~5-10% less than plain (efficient float usage)",
+          "complexity_impact": "High (5-shaft loom required)",
+          "production_difficulty": "Medium-Hard",
+          "estimated_cost": "+25-40% (vs. plain, due to 5-shaft + loom complexity)"
+        },
+        "common_defects_risks": [
+          "Float pulls and snags (major defect)",
+          "Uneven float tension",
+          "Missing intersections (defects)",
+          "Loom setup complexity"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,2,3,4,5,1,2,3,4,5,... (straight sequence, 5-shaft)",
+        "chaal": "ચાલ = 5-pick satin cycle. Special attention needed for float management",
+        "anto_beam_setup": "5-shaft warp beam arrangement with careful tension distribution"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "5×5 identity-shifted matrix (diagonal with offset)",
+          "algorithmic_representation": "satin(shafts=5, step=1); diagonal_shift(step=4)",
+          "graph_representation": "Cyclic directed graph with single intersections"
+        },
+        "variation_logic": {
+          "change_repeat": "8-end satin (larger repeat, smoother float)",
+          "modify_float": "Adjust step parameter (3-end = shorter floats, 4-end = longer)",
+          "shift_pattern": "Mirror satin (weft-faced sateen instead of warp-faced)"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Thinner yarns (weft), increase PPI",
+          "improve_speed": "Optimize 5-shaft coordination timing",
+          "maintain_design": "Keep step=4 for pure satin effect"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 30,
+        "changeover_difficulty": "Medium-Hard",
+        "quality_checkpoints": ["Float evenness", "Intersection clarity", "Luster uniformity"],
+        "defect_rate_percentage": "3-5%",
+        "machine_downtime_risks": "Medium-High (float catches, float pulls)"
+      },
+      "notes": "5-end satin is industry standard for lustrous, smooth fabrics. Critical for sarees, bridal fabrics, and luxury goods. Requires careful production control."
+    }
+  },
+
+  "batch_2_advanced_twill_derivatives": {
+    "101_double_twill": {
+      "design_id": "W101",
+      "design_name": "Double Twill",
+      "batch": 2,
+      "category": "Advanced Twill Derivatives",
+      "complexity_level": "Advanced",
+      "core_structure": {
+        "weave_type": "Double Twill (2/2 × 2/2)",
+        "shaft_count": 4,
+        "repeat_size": {
+          "width_ends": 8,
+          "height_picks": 4
+        },
+        "interlacement_matrix": [
+          [1, 1, 0, 0, 1, 1, 0, 0],
+          [0, 1, 1, 0, 0, 1, 1, 0],
+          [0, 0, 1, 1, 0, 0, 1, 1],
+          [1, 0, 0, 1, 1, 0, 0, 1]
+        ],
+        "interlacement_description": "Two parallel twill lines. Thicker floats create bold diagonal",
+        "wif_structure": {
+          "colorbook": "White",
+          "loom": "4-shaft",
+          "threading": "1,2,3,4,1,2,3,4,...",
+          "tieup": [[1,1,0,0], [0,1,1,0], [0,0,1,1], [1,0,0,1]],
+          "treadling": [1,2,3,4],
+          "notes": "2×2 twill on each half"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Straight Draft",
+        "shaft_threading_logic": "Sequential through 4 shafts, repeat",
+        "peg_plan": {
+          "total_picks": 4,
+          "lifting_sequence": [
+            {"pick": 1, "active_shafts": [1, 2], "description": "Shafts 1,2 up"},
+            {"pick": 2, "active_shafts": [2, 3], "description": "Shafts 2,3 up"},
+            {"pick": 3, "active_shafts": [3, 4], "description": "Shafts 3,4 up"},
+            {"pick": 4, "active_shafts": [4, 1], "description": "Shafts 4,1 up"}
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 90,
+          "picks_per_inch_ppi": 65,
+          "standard_range": {
+            "epi_min": 70,
+            "epi_max": 130,
+            "ppi_min": 50,
+            "ppi_max": 100
+          }
+        },
+        "yarn_details": {
+          "warp": {"yarn_count": "30s Ne", "fiber_type": "Cotton-Polyester blend", "ply": "2-ply"},
+          "weft": {"yarn_count": "30s Ne", "fiber_type": "Cotton-Polyester blend", "ply": "2-ply"}
+        },
+        "cramming_info": {
+          "weft_cramming": false,
+          "reason": "Double twill creates sufficient texture without cramming",
+          "pattern_zones": null
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Double Twill Weave",
+        "fabric_weight_gsm": {"light": "140-180 GSM", "medium": "180-240 GSM", "heavy": "240-320 GSM"},
+        "texture_feel": "Bold texture, slightly stiff, pronounced diagonal",
+        "end_use_applications": ["Suiting (formal wear)", "Outerwear", "Heavy-duty apparel"],
+        "visual_characteristics": {
+          "pattern_type": "Bold double diagonal line",
+          "surface_effect": "Pronounced 3D texture",
+          "appearance": "Strong diagonal with increased depth perception"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Twill (compound)",
+        "float_analysis": {
+          "max_float_length": 3,
+          "float_distribution": "Thicker diagonal floats",
+          "float_pattern": "Double-line progression"
+        },
+        "fabric_properties": {
+          "strength": "Very High",
+          "flexibility": "Medium",
+          "breathability": "Good",
+          "durability": "Excellent",
+          "wrinkle_resistance": "Very Good",
+          "shrinkage_tendency": "Low"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": ["Powerloom", "Dobby loom", "Jacquard loom"],
+        "production_speed": {"powerloom": "500-700 picks/minute", "dobby": "600-800 picks/minute"},
+        "speed_reasoning": "4-shaft coordination straightforward; similar to regular 2/2 twill",
+        "cost_factors": {
+          "yarn_consumption": "Similar to twill",
+          "complexity_impact": "Medium",
+          "production_difficulty": "Medium",
+          "estimated_cost": "+15-25% (vs. plain weave)"
+        },
+        "common_defects_risks": ["Float pulls", "Tension imbalance", "Diagonal skew"]
+      },
+      "surat_factory_terminology": {
+        "peda": "1,2,3,4,1,2,3,4,... (straight 4-shaft sequence)",
+        "chaal": "ચાલ = 4-pick double twill cycle",
+        "anto_beam_setup": "4-shaft beam with even tension"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "4×8 binary matrix with 2/2 twill base doubled",
+          "algorithmic_representation": "twill(shafts=4, step=1) × 2; double_pattern()",
+          "graph_representation": "Paired twill progression graphs"
+        },
+        "variation_logic": {
+          "change_repeat": "Expand to 3/3 double twill",
+          "modify_float": "Increase step for longer floats",
+          "shift_pattern": "Create zigzag effect with alternating direction"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Increase PPI (tighter construction)",
+          "improve_speed": "Standard 4-shaft speed",
+          "maintain_design": "Keep double line clarity"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 20,
+        "changeover_difficulty": "Medium",
+        "quality_checkpoints": ["Double line alignment", "Float evenness", "Diagonal clarity"],
+        "defect_rate_percentage": "2-3%",
+        "machine_downtime_risks": "Low-Medium"
+      },
+      "notes": "Popular for formal suiting and heavy apparel. Double twill creates premium appearance with good durability."
+    }
+  },
+
+  "batch_3_complex_jacquard_structures": {
+    "201_floral_jacquard": {
+      "design_id": "W201",
+      "design_name": "Floral Jacquard",
+      "batch": 3,
+      "category": "Jacquard Weaves",
+      "complexity_level": "Very Advanced",
+      "core_structure": {
+        "weave_type": "Jacquard (Patterned)",
+        "shaft_count": 16,
+        "repeat_size": {
+          "width_ends": 32,
+          "height_picks": 32
+        },
+        "interlacement_matrix": "[[Complex 32×32 binary matrix with floral pattern]] - See detailed pattern encoding below",
+        "interlacement_description": "Complex patterned weave with floral motifs. Selective shaft lifting creates image",
+        "wif_structure": {
+          "colorbook": "Pattern-based",
+          "loom": "16-shaft jacquard",
+          "threading": "Complex jacquard threading for 32-pick repeat",
+          "tieup": "Jacquard loom (hook-based, not traditional tie-up)",
+          "treadling": "Programmed per jacquard design",
+          "notes": "Requires jacquard loom or electronic dobby"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Jacquard Draft (image-to-weave)",
+        "shaft_threading_logic": "Uniform threading across all 16 shafts for pattern flexibility",
+        "peg_plan": {
+          "total_picks": 32,
+          "lifting_sequence": "Programmed based on pattern image. Each pick lifts specific shaft combination",
+          "example_picks": [
+            {"pick": 1, "active_shafts": [1, 3, 5, 7], "description": "Pattern pixel row 1"},
+            {"pick": 2, "active_shafts": [2, 4, 6, 8], "description": "Pattern pixel row 2"}
+          ]
+        },
+        "reed_and_density": {
+          "reed_count_epi": 120,
+          "picks_per_inch_ppi": 90,
+          "standard_range": {
+            "epi_min": 100,
+            "epi_max": 180,
+            "ppi_min": 70,
+            "ppi_max": 120
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "60s-100s Ne",
+            "fiber_type": "Silk, Cotton, Polyester (often dyed for color)",
+            "ply": "2-ply or higher"
+          },
+          "weft": {
+            "yarn_count": "60s-100s Ne",
+            "fiber_type": "Silk, Cotton, fine polyester",
+            "ply": "1-ply or 2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": true,
+          "reason": "Jacquard patterns benefit from tight construction for image clarity",
+          "pattern_zones": "Throughout pattern areas",
+          "cramming_degree": "Selective based on pattern density"
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Jacquard Weave (Patterned)",
+        "fabric_weight_gsm": {"light": "100-150 GSM", "medium": "150-250 GSM", "heavy": "250-400 GSM"},
+        "texture_feel": "Smooth to textured depending on pattern, luxurious",
+        "end_use_applications": [
+          "Apparel (sarees, bridal wear, formal wear)",
+          "Home textiles (upholstery, curtains, tapestries)",
+          "Decorative fabrics"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "Floral motifs (roses, paisley, abstract florals)",
+          "surface_effect": "Pattern creates depth and dimensionality",
+          "appearance": "Complex multi-colored or tonal floral design"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Jacquard (pattern-based, typically satin ground)",
+        "float_analysis": {
+          "max_float_length": "Varies by pattern (typically 3-8)",
+          "float_distribution": "Pattern-dependent",
+          "float_pattern": "Follows floral design outline"
+        },
+        "fabric_properties": {
+          "strength": "High (satin ground base)",
+          "flexibility": "Medium-High (depends on weft density)",
+          "breathability": "Medium",
+          "durability": "High",
+          "wrinkle_resistance": "Medium-High",
+          "shrinkage_tendency": "Low"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Hand jacquard loom (traditional, rare)",
+          "Power jacquard loom",
+          "Electronic jacquard loom (modern standard)",
+          "Multi-color jacquard system"
+        ],
+        "production_speed": {
+          "traditional_hand_jacquard": "50-100 picks/minute",
+          "power_jacquard": "300-500 picks/minute",
+          "electronic_jacquard": "400-700 picks/minute"
+        },
+        "speed_reasoning": "Complex pattern coordination limits speed compared to simple weaves",
+        "cost_factors": {
+          "yarn_consumption": "10-20% more than twill (longer floats)",
+          "complexity_impact": "Very High",
+          "production_difficulty": "Hard",
+          "estimated_cost": "+50-150% (vs. plain weave, depending on pattern complexity)"
+        },
+        "common_defects_risks": [
+          "Float pulls and snags (critical defect)",
+          "Pattern registration errors",
+          "Color bleeding (if using dyed yarns)",
+          "Uneven jacquard lifting"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "Complex 16-shaft jacquard threading sequence",
+        "chaal": "ચાલ = Pattern-programmed running. Traditional hand jacquard needs 'chaal' operator for lever pulling",
+        "anto_beam_setup": "Multiple color warp beams if multi-color design. Careful beam tension balancing"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "32×32 binary matrix (or higher for fine details)",
+          "algorithmic_representation": "image_to_weave(floral_image, resolution=32×32, color_map=1-16)",
+          "graph_representation": "Pattern graph with motif nodes and interlacement edges"
+        },
+        "variation_logic": {
+          "change_repeat": "Scale pattern (16×16, 32×32, 64×64 resolutions)",
+          "modify_pattern": "Change floral design (roses → paisley → abstract)",
+          "shift_pattern": "Repeat placement (all-over vs. border)"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Optimize float placement (minimize long floats)",
+          "improve_speed": "Simplify pattern complexity (reduce shaft utilization)",
+          "maintain_design": "Preserve pattern fidelity at different resolutions"
+        }
+      },
+      "pattern_specific_data": {
+        "design_complexity": "High",
+        "color_count": "Typically 2-4 (in warp colors)",
+        "float_length_distribution": "Mode: 3-4 yarns, Max: 8-10",
+        "motif_size": "8-16 ends × 8-16 picks per floral unit"
+      },
+      "production_specifications": {
+        "setup_time_minutes": 120,
+        "changeover_difficulty": "Very Hard",
+        "quality_checkpoints": ["Pattern alignment", "Float integrity", "Color consistency", "Motif clarity"],
+        "defect_rate_percentage": "5-10%",
+        "machine_downtime_risks": "High (float catching, pattern sync)"
+      },
+      "notes": "Floral jacquard is signature fabric in Indian textiles, especially Banarasi sarees. Requires skilled loom operators and careful quality control. High value-add product."
+    },
+
+    "202_damask": {
+      "design_id": "W202",
+      "design_name": "Damask",
+      "batch": 3,
+      "category": "Damask / Brocade / Ornamental",
+      "complexity_level": "Very Advanced",
+      "core_structure": {
+        "weave_type": "Damask (Reversible Jacquard)",
+        "shaft_count": 20,
+        "repeat_size": {
+          "width_ends": 40,
+          "height_picks": 40
+        },
+        "interlacement_matrix": "Complex 40×40 binary matrix with reversible pattern",
+        "interlacement_description": "Reversible damask. Same pattern appears on both sides (opposed floats)",
+        "wif_structure": {
+          "colorbook": "Single color (contrast from weave structure alone)",
+          "loom": "20-shaft jacquard",
+          "threading": "Complex reversible damask threading",
+          "tieup": "Jacquard loom (programmed)",
+          "treadling": "Symmetrical pattern treadling",
+          "notes": "Reversible pattern = same image both sides"
+        }
+      },
+      "loom_specifications": {
+        "drafting_style": "Reverse Damask Draft (symmetrical threading)",
+        "shaft_threading_logic": "Mirror threading for reversibility",
+        "peg_plan": {
+          "total_picks": 40,
+          "lifting_sequence": "Symmetrical: first 20 picks mirror the last 20 picks"
+        },
+        "reed_and_density": {
+          "reed_count_epi": 150,
+          "picks_per_inch_ppi": 120,
+          "standard_range": {
+            "epi_min": 120,
+            "epi_max": 200,
+            "ppi_min": 100,
+            "ppi_max": 160
+          }
+        },
+        "yarn_details": {
+          "warp": {
+            "yarn_count": "80s-100s Ne",
+            "fiber_type": "Fine cotton or silk blend",
+            "ply": "2-ply or higher"
+          },
+          "weft": {
+            "yarn_count": "80s-100s Ne",
+            "fiber_type": "Fine cotton or silk",
+            "ply": "1-ply to 2-ply"
+          }
+        },
+        "cramming_info": {
+          "weft_cramming": true,
+          "reason": "Tight cramming ensures pattern clarity on both sides",
+          "pattern_zones": "Throughout fabric",
+          "cramming_degree": "High (tight picks for reversibility)"
+        }
+      },
+      "material_aesthetic": {
+        "fabric_classification": "Damask Weave (Reversible Patterned)",
+        "fabric_weight_gsm": {"light": "120-180 GSM", "medium": "180-280 GSM", "heavy": "280-400 GSM"},
+        "texture_feel": "Smooth, formal, luxurious",
+        "end_use_applications": [
+          "Home textiles (formal tablecloths, napkins, upholstery)",
+          "Formal apparel (occasion wear)",
+          "Ceremonial fabrics"
+        ],
+        "visual_characteristics": {
+          "pattern_type": "Ornate damask motifs (floral, geometric, heraldic)",
+          "surface_effect": "Pattern visible from both sides due to opposed floats",
+          "appearance": "Subtle pattern with high elegance"
+        }
+      },
+      "structural_analysis": {
+        "base_weave_type": "Damask (satin ground with pattern)",
+        "float_analysis": {
+          "max_float_length": "4-5",
+          "float_distribution": "Symmetrical opposed floats",
+          "float_pattern": "Mirrored on front and back"
+        },
+        "fabric_properties": {
+          "strength": "Very High (tightly constructed)",
+          "flexibility": "Medium",
+          "breathability": "Medium",
+          "durability": "Excellent",
+          "wrinkle_resistance": "High",
+          "shrinkage_tendency": "Very Low"
+        }
+      },
+      "industrial_production": {
+        "loom_compatibility": [
+          "Power jacquard loom",
+          "Electronic jacquard loom (preferred)",
+          "Multi-shaft dobby loom (for simple damask)"
+        ],
+        "production_speed": {
+          "power_jacquard": "300-500 picks/minute",
+          "electronic_jacquard": "400-600 picks/minute"
+        },
+        "speed_reasoning": "Complex reversible pattern requires careful shaft coordination",
+        "cost_factors": {
+          "yarn_consumption": "Higher (fine yarns, high density)",
+          "complexity_impact": "Very High",
+          "production_difficulty": "Very Hard",
+          "estimated_cost": "+80-200% (vs. plain weave)"
+        },
+        "common_defects_risks": [
+          "Reversibility failure (pattern not matching both sides)",
+          "Float pulls",
+          "Color/tone variation between sides"
+        ]
+      },
+      "surat_factory_terminology": {
+        "peda": "Mirror-symmetrical 20-shaft threading",
+        "chaal": "ચાલ = Symmetric damask running pattern",
+        "anto_beam_setup": "Fine warp beam with extremely even tension"
+      },
+      "ai_software_usage": {
+        "pattern_encoding": {
+          "matrix_form": "40×40 reversible binary matrix",
+          "algorithmic_representation": "damask(image, reversible=true, symmetry='mirror')",
+          "graph_representation": "Bidirectional pattern graph"
+        },
+        "variation_logic": {
+          "change_repeat": "Scale damask size (8×8 motif → 12×12 motif)",
+          "modify_pattern": "Change damask design (floral → geometric)",
+          "create_variant": "Classic → modern damask aesthetic"
+        },
+        "optimization_opportunities": {
+          "reduce_yarn_usage": "Slightly open pattern (fewer dense areas)",
+          "improve_speed": "Simplify pattern details",
+          "maintain_design": "Keep reversibility intact"
+        }
+      },
+      "production_specifications": {
+        "setup_time_minutes": 180,
+        "changeover_difficulty": "Extremely Hard",
+        "quality_checkpoints": ["Reversibility check", "Pattern symmetry", "Float integrity", "Density uniformity"],
+        "defect_rate_percentage": "5-15%",
+        "machine_downtime_risks": "High"
+      },
+      "notes": "Damask is premium formal fabric. Reversibility requires expert engineering. Traditional damask = UNESCO cultural heritage (Damascus region origin). High-end market product."
+    }
+  }
+}

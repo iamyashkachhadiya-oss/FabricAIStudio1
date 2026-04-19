@@ -351,75 +351,81 @@ export const useDesignStore = create<DesignState>((set, get) => ({
   },
 
   recalculate: () => {
-    const s = get()
-    const { loom, warp, weftSystem, warpSystem, pegPlanMatrix, draftSequence, rowYarnMap, cellYarnMap, borderEnds } = s
-    if (!loom || !warp || !weftSystem) return
-    const calcOutputs = runAllCalculations(loom, warp, weftSystem, pegPlanMatrix, rowYarnMap, cellYarnMap, draftSequence)
-
-    // ── Apply border constraint to body calculations ──────────────────────
-    // Border ends eat into the total cloth width; body only has the remainder.
-    if (borderEnds > 0) {
-      const bodyEnds = Math.max(0, calcOutputs.total_warp_ends - borderEnds)
-      calcOutputs.total_warp_ends = bodyEnds
-
-      // Recalculate warp weight for the reduced body end count
-      const warpDenier = warp.count_system === 'denier'
-        ? warp.count_value
-        : 5315 / warp.count_value
-      const crimpFactor  = (100 + loom.warp_crimp_pct) / 100
-      const wastageFactor = (100 + loom.wastage_pct) / 100
-      calcOutputs.warp_weight_per_100m_g = Math.round(
-        (bodyEnds * warpDenier * 100) / 9000 * crimpFactor * wastageFactor * 100
-      ) / 100
-
-      // Recalculate warp cost contribution
-      const warpPrice = warp.price_per_kg || 0
-      const warpCostPerMeter = (calcOutputs.warp_weight_per_100m_g * warpPrice) / 100000
-      const weftCostPerMeter = calcOutputs.cost_per_meter - (calcOutputs.cost_per_meter * calcOutputs.warp_cost_pct / 100)
-      calcOutputs.cost_per_meter = Math.round((warpCostPerMeter + weftCostPerMeter) * 100) / 100
-      const total = warpCostPerMeter + weftCostPerMeter
-      calcOutputs.warp_cost_pct = total > 0 ? Math.round((warpCostPerMeter / total) * 100) : 0
-      calcOutputs.weft_cost_pct = total > 0 ? Math.round((weftCostPerMeter  / total) * 100) : 0
+    if ((get() as any)._recalcTimer) {
+      clearTimeout((get() as any)._recalcTimer)
     }
-    
-    // Automatically calculate Weave Matrix from Peg Plan and Draft Sequence
-    let weaveMatrix: number[][] = pegPlanMatrix
-    if (pegPlanMatrix && pegPlanMatrix.length > 0 && draftSequence && draftSequence.length > 0) {
-      weaveMatrix = pegPlanMatrix.map(pick => 
-        draftSequence.map(shaft => pick[shaft - 1] || 0)
-      )
-    }
-    
-    // Run fabric simulation engine
-    const activeWarpYarns = warpSystem.yarns.filter(y => y.is_active)
-    const warpMaterials = activeWarpYarns.length > 0 
-      ? activeWarpYarns.map(y => y.material)
-      : [warp.material]
-    
-    const warpNe = activeWarpYarns.length > 0
-      ? activeWarpYarns.reduce((sum, y) => {
-          const ne = y.count_system === 'ne' ? y.count_value : denierToNe(y.count_value)
-          return sum + ne
-        }, 0) / activeWarpYarns.length
-      : (warp.count_system === 'ne' ? warp.count_value : denierToNe(warp.count_value))
-    
-    const densityPicksPerCm = Math.round(loom.target_ppi / 2.54)
-    
-    try {
-      const simOutputs = runFabricSimulation({
-        warpMaterials,
-        warpNe,
-        weftSystem,
-        weaveType: loom.weave_type || 'plain',
-        densityPicksPerCm,
-        loomTensionCN: loom.loom_tension_cN || 180,
-        loom,
-      })
-      calcOutputs.simulation = simOutputs
-    } catch (e) {
-      console.error('Simulation engine error:', e)
-    }
-    set({ calcOutputs, weaveMatrix, isDirty: true })
+    const timer = setTimeout(() => {
+      const s = get()
+      const { loom, warp, weftSystem, warpSystem, pegPlanMatrix, draftSequence, rowYarnMap, cellYarnMap, borderEnds } = s
+      if (!loom || !warp || !weftSystem) return
+      const calcOutputs = runAllCalculations(loom, warp, weftSystem, pegPlanMatrix, rowYarnMap, cellYarnMap, draftSequence)
+
+      // ── Apply border constraint to body calculations ──────────────────────
+      // Border ends eat into the total cloth width; body only has the remainder.
+      if (borderEnds > 0) {
+        const bodyEnds = Math.max(0, calcOutputs.total_warp_ends - borderEnds)
+        calcOutputs.total_warp_ends = bodyEnds
+
+        // Recalculate warp weight for the reduced body end count
+        const warpDenier = warp.count_system === 'denier'
+          ? warp.count_value
+          : 5315 / warp.count_value
+        const crimpFactor  = (100 + loom.warp_crimp_pct) / 100
+        const wastageFactor = (100 + loom.wastage_pct) / 100
+        calcOutputs.warp_weight_per_100m_g = Math.round(
+          (bodyEnds * warpDenier * 100) / 9000 * crimpFactor * wastageFactor * 100
+        ) / 100
+
+        // Recalculate warp cost contribution
+        const warpPrice = warp.price_per_kg || 0
+        const warpCostPerMeter = (calcOutputs.warp_weight_per_100m_g * warpPrice) / 100000
+        const weftCostPerMeter = calcOutputs.cost_per_meter - (calcOutputs.cost_per_meter * calcOutputs.warp_cost_pct / 100)
+        calcOutputs.cost_per_meter = Math.round((warpCostPerMeter + weftCostPerMeter) * 100) / 100
+        const total = warpCostPerMeter + weftCostPerMeter
+        calcOutputs.warp_cost_pct = total > 0 ? Math.round((warpCostPerMeter / total) * 100) : 0
+        calcOutputs.weft_cost_pct = total > 0 ? Math.round((weftCostPerMeter  / total) * 100) : 0
+      }
+      
+      // Automatically calculate Weave Matrix from Peg Plan and Draft Sequence
+      let weaveMatrix: number[][] = pegPlanMatrix
+      if (pegPlanMatrix && pegPlanMatrix.length > 0 && draftSequence && draftSequence.length > 0) {
+        weaveMatrix = pegPlanMatrix.map(pick => 
+          draftSequence.map(shaft => pick[shaft - 1] || 0)
+        )
+      }
+      
+      // Run fabric simulation engine
+      const activeWarpYarns = warpSystem.yarns.filter(y => y.is_active)
+      const warpMaterials = activeWarpYarns.length > 0 
+        ? activeWarpYarns.map(y => y.material)
+        : [warp.material]
+      
+      const warpNe = activeWarpYarns.length > 0
+        ? activeWarpYarns.reduce((sum, y) => {
+            const ne = y.count_system === 'ne' ? y.count_value : denierToNe(y.count_value)
+            return sum + ne
+          }, 0) / activeWarpYarns.length
+        : (warp.count_system === 'ne' ? warp.count_value : denierToNe(warp.count_value))
+      
+      const densityPicksPerCm = Math.round(loom.target_ppi / 2.54)
+      
+      try {
+        const simOutputs = runFabricSimulation({
+          warpMaterials,
+          warpNe,
+          weftSystem,
+          weaveType: loom.weave_type || 'plain',
+          densityPicksPerCm,
+          loomTensionCN: loom.loom_tension_cN || 180,
+          loom,
+        })
+        calcOutputs.simulation = simOutputs
+      } catch (e) {
+        console.error('Simulation engine error:', e)
+      }
+      set({ calcOutputs, weaveMatrix, isDirty: true, _recalcTimer: undefined })
+    }, 150)
+    set({ _recalcTimer: timer as unknown as NodeJS.Timeout })
   },
 
 

@@ -69,18 +69,18 @@ export default function AuthPage() {
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <img
-            src="/fabricai-logo.png"
-            alt="FabricAI"
-            style={{ width: 56, height: 56, display: 'inline-block', objectFit: 'contain', marginBottom: 16 }}
+            src="/logo.png"
+            alt="FabricaAI Logo"
+            style={{ width: 56, height: 56, display: 'inline-block', objectFit: 'cover', marginBottom: 16, borderRadius: 12 }}
           />
           <h1 style={{
             fontSize: 24, fontWeight: 700, color: 'var(--primary)',
             letterSpacing: '-0.02em',
           }}>
-            FabricAI Studio
+            FabricaAI Studio
           </h1>
           <p style={{ fontSize: 14, color: 'var(--text-2)', marginTop: 4 }}>
-            Textile Design & Production Specification
+            Next-Gen Textile Design & Production
           </p>
         </div>
 
@@ -205,7 +205,7 @@ export default function AuthPage() {
           color: 'var(--text-3)',
           marginTop: 24,
         }}>
-          Solerix Technologies · FabricAI Studio v1.0
+          Solerix Technologies · FabricaAI Studio v1.0
         </p>
       </div>
     </div>

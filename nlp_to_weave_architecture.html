@@ -1,0 +1,420 @@
+
+<style>
+.pipe-stage { cursor:pointer; transition: opacity .15s; }
+.pipe-stage:hover { opacity:.85; }
+.tab-btn { background:none; border:0.5px solid var(--color-border-secondary); border-radius:var(--border-radius-md); padding:5px 14px; font-size:12px; color:var(--color-text-secondary); cursor:pointer; transition:background .15s,color .15s; }
+.tab-btn.active { background:var(--color-background-info); color:var(--color-text-info); border-color:var(--color-border-info,transparent); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.grid-cell { cursor:pointer; transition:fill .1s; }
+.grid-cell.on { fill:#7F77DD; }
+.grid-cell.off { fill:var(--color-background-secondary,#f1efe8); }
+.detail-card { background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:12px 14px; margin:8px 0; border:0.5px solid var(--color-border-tertiary); font-size:13px; line-height:1.6; color:var(--color-text-secondary); }
+.tag { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; margin:2px; }
+.tag-ai { background:var(--color-background-info); color:var(--color-text-info); }
+.tag-det { background:var(--color-background-success); color:var(--color-text-success); }
+.tag-warn { background:var(--color-background-warning); color:var(--color-text-warning); }
+.json-block { background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:12px; font-family:var(--font-mono); font-size:11px; line-height:1.6; color:var(--color-text-secondary); white-space:pre; overflow-x:auto; border:0.5px solid var(--color-border-tertiary); }
+.kw { color:var(--color-text-info); }
+.str { color:var(--color-text-success); }
+.num { color:var(--color-text-warning); }
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px">NLP to weave plan system: interactive architecture and peg plan visualizer</h2>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding-top:4px">
+  <button class="tab-btn active" onclick="showTab('arch')">Architecture</button>
+  <button class="tab-btn" onclick="showTab('peg')">Peg plan editor</button>
+  <button class="tab-btn" onclick="showTab('json')">Output JSON</button>
+  <button class="tab-btn" onclick="showTab('algo')">Algorithms</button>
+</div>
+
+<div id="tab-arch" class="tab-panel active">
+<svg width="100%" viewBox="0 0 680 420" role="img">
+<title>Five-stage NLP-to-weave pipeline</title>
+<desc>Left-to-right pipeline: User Input → LLM Layer → Intent JSON → Weave Engine (with three sub-modules) → Output Pack</desc>
+<defs>
+<marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- Stage 1: User Input -->
+<g class="pipe-stage" onclick="showDetail('input')">
+<rect x="20" y="80" width="100" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="70" y="103" text-anchor="middle" font-size="12" font-weight="500" fill="#085041">User input</text>
+<text x="70" y="120" text-anchor="middle" font-size="11" fill="#0F6E56">Natural language</text>
+</g>
+
+<!-- Arrow 1→2 -->
+<line x1="122" y1="108" x2="148" y2="108" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#arr2)"/>
+
+<!-- Stage 2: LLM Layer -->
+<g class="pipe-stage" onclick="showDetail('llm')">
+<rect x="150" y="60" width="120" height="96" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="210" y="83" text-anchor="middle" font-size="12" font-weight="500" fill="#0C447C">LLM layer</text>
+<text x="210" y="100" text-anchor="middle" font-size="10" fill="#185FA5">Intent extraction</text>
+<text x="210" y="114" text-anchor="middle" font-size="10" fill="#185FA5">Motif classification</text>
+<text x="210" y="128" text-anchor="middle" font-size="10" fill="#185FA5">Constraint parsing</text>
+<text x="210" y="142" text-anchor="middle" font-size="10" fill="#185FA5">Structured JSON out</text>
+</g>
+
+<!-- Arrow 2→3 -->
+<line x1="272" y1="108" x2="298" y2="108" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#arr2)"/>
+
+<!-- Stage 3: Intent JSON -->
+<g class="pipe-stage" onclick="showDetail('intent')">
+<rect x="300" y="74" width="96" height="68" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="348" y="97" text-anchor="middle" font-size="12" font-weight="500" fill="#633806">Intent JSON</text>
+<text x="348" y="113" text-anchor="middle" font-size="10" fill="#854F0B">Motif + structure</text>
+<text x="348" y="127" text-anchor="middle" font-size="10" fill="#854F0B">Validated schema</text>
+</g>
+
+<!-- Arrow 3→4 -->
+<line x1="398" y1="108" x2="424" y2="108" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#arr2)"/>
+
+<!-- Stage 4: Weave Engine (large box with sub-modules) -->
+<g class="pipe-stage" onclick="showDetail('engine')">
+<rect x="426" y="44" width="148" height="128" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="500" y="67" text-anchor="middle" font-size="12" font-weight="500" fill="#3C3489">Weave engine</text>
+<rect x="438" y="76" width="124" height="24" rx="4" fill="#AFA9EC" stroke="none"/>
+<text x="500" y="92" text-anchor="middle" font-size="10" fill="#26215C">Matrix generator</text>
+<rect x="438" y="106" width="124" height="24" rx="4" fill="#AFA9EC" stroke="none"/>
+<text x="500" y="122" text-anchor="middle" font-size="10" fill="#26215C">Draft computer</text>
+<rect x="438" y="136" width="124" height="24" rx="4" fill="#AFA9EC" stroke="none"/>
+<text x="500" y="152" text-anchor="middle" font-size="10" fill="#26215C">Loom validator</text>
+</g>
+
+<!-- Arrow 4→5 -->
+<line x1="576" y1="108" x2="602" y2="108" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#arr2)"/>
+
+<!-- Stage 5: Output Pack -->
+<g class="pipe-stage" onclick="showDetail('output')">
+<rect x="604" y="60" width="66" height="96" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+<text x="637" y="83" text-anchor="middle" font-size="12" font-weight="500" fill="#712B13">Output</text>
+<text x="637" y="99" text-anchor="middle" font-size="10" fill="#993C1D">Peg plan</text>
+<text x="637" y="113" text-anchor="middle" font-size="10" fill="#993C1D">Draft plan</text>
+<text x="637" y="127" text-anchor="middle" font-size="10" fill="#993C1D">Lift plan</text>
+<text x="637" y="141" text-anchor="middle" font-size="10" fill="#993C1D">CAM file</text>
+</g>
+
+<!-- Sub-system label: AI boundary -->
+<rect x="148" y="36" width="124" height="12" rx="4" fill="#E6F1FB" stroke="none"/>
+<text x="210" y="46" text-anchor="middle" font-size="10" fill="#185FA5">AI layer (LLM)</text>
+<rect x="424" y="28" width="152" height="12" rx="4" fill="#EEEDFE" stroke="none"/>
+<text x="500" y="38" text-anchor="middle" font-size="10" fill="#3C3489">Deterministic engine</text>
+
+<!-- Bottom: data flow labels -->
+<text x="70" y="172" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)">Text string</text>
+<text x="210" y="185" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)">Prompt + few-shot</text>
+<text x="348" y="172" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)">Validated JSON</text>
+<text x="500" y="200" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)">Binary matrices</text>
+<text x="637" y="185" text-anchor="middle" font-size="10" fill="var(--color-text-secondary)">WIF / JSON</text>
+
+<!-- SECOND ROW: weave structure types -->
+<text x="40" y="240" font-size="12" font-weight="500" fill="var(--color-text-primary)">Weave structure families</text>
+
+<g class="pipe-stage" onclick="showDetail('plain')">
+<rect x="20" y="254" width="88" height="52" rx="6" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+<text x="64" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#27500A">Plain weave</text>
+<text x="64" y="290" text-anchor="middle" font-size="10" fill="#3B6D11">2 shafts min</text>
+</g>
+<g class="pipe-stage" onclick="showDetail('twill')">
+<rect x="120" y="254" width="88" height="52" rx="6" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text x="164" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#0C447C">Twill</text>
+<text x="164" y="290" text-anchor="middle" font-size="10" fill="#185FA5">3–4+ shafts</text>
+</g>
+<g class="pipe-stage" onclick="showDetail('satin')">
+<rect x="220" y="254" width="88" height="52" rx="6" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+<text x="264" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#633806">Satin</text>
+<text x="264" y="290" text-anchor="middle" font-size="10" fill="#854F0B">5+ shafts</text>
+</g>
+<g class="pipe-stage" onclick="showDetail('dobby')">
+<rect x="320" y="254" width="88" height="52" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="364" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">Dobby</text>
+<text x="364" y="290" text-anchor="middle" font-size="10" fill="#534AB7">≤32 shafts</text>
+</g>
+<g class="pipe-stage" onclick="showDetail('jacquard')">
+<rect x="420" y="254" width="96" height="52" rx="6" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+<text x="468" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#712B13">Jacquard</text>
+<text x="468" y="290" text-anchor="middle" font-size="10" fill="#993C1D">Individual thread</text>
+</g>
+<g class="pipe-stage" onclick="showDetail('jacquard')">
+<rect x="528" y="254" width="112" height="52" rx="6" fill="#FBEAD0" stroke="#854F0B" stroke-width="0.5"/>
+<text x="584" y="275" text-anchor="middle" font-size="11" font-weight="500" fill="#633806">Digital dobby</text>
+<text x="584" y="290" text-anchor="middle" font-size="10" fill="#854F0B">CAM/electronic</text>
+</g>
+
+<!-- Click hint -->
+<text x="340" y="360" text-anchor="middle" font-size="11" fill="var(--color-text-secondary)">Click any stage or structure for details</text>
+</svg>
+
+<div id="detail-box" class="detail-card" style="display:none"></div>
+</div>
+
+<div id="tab-peg" class="tab-panel">
+<div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px">Interactive 16×8 peg plan — click cells to toggle warp lift. Load a preset or draw freehand.</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+  <button class="tab-btn" onclick="loadPreset('plain')">Plain weave</button>
+  <button class="tab-btn" onclick="loadPreset('twill3')">3/1 Twill</button>
+  <button class="tab-btn" onclick="loadPreset('diamond')">Diamond</button>
+  <button class="tab-btn" onclick="loadPreset('hound')">Houndstooth</button>
+  <button class="tab-btn" onclick="clearGrid()">Clear</button>
+</div>
+<svg id="peg-svg" width="100%" viewBox="0 0 520 230" role="img">
+<title>Interactive peg plan grid</title>
+<desc>16 columns (warp threads) by 8 rows (picks/shafts), click to toggle lift</desc>
+<text x="0" y="14" font-size="11" fill="var(--color-text-secondary)" font-family="var(--font-mono)">Shaft</text>
+<text x="80" y="14" font-size="11" fill="var(--color-text-secondary)" font-family="var(--font-mono)">← Warp ends (1–16) →</text>
+</svg>
+<div id="peg-stats" style="font-size:12px;color:var(--color-text-secondary);margin-top:8px;font-family:var(--font-mono)"></div>
+<button class="tab-btn" style="margin-top:10px" onclick="sendPrompt('Explain how this peg plan translates to a draft plan and tie-up matrix')">Explain draft conversion ↗</button>
+</div>
+
+<div id="tab-json" class="tab-panel">
+<div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:10px">Canonical output schema — every field the system produces for a weave plan.</div>
+<div class="json-block" id="json-display"></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+  <button class="tab-btn" onclick="showJson('elephant')">Elephant motif</button>
+  <button class="tab-btn" onclick="showJson('border')">Border repeat</button>
+  <button class="tab-btn" onclick="showJson('plain')">Plain weave</button>
+  <button class="tab-btn" onclick="sendPrompt('How do I convert this JSON output into a WIF file for loom software?')">Export to WIF ↗</button>
+</div>
+</div>
+
+<div id="tab-algo" class="tab-panel">
+<div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:12px">Core algorithms in the deterministic engine.</div>
+<div id="algo-cards"></div>
+</div>
+
+<script>
+const ROWS=8, COLS=16;
+let grid = Array.from({length:ROWS},()=>Array(COLS).fill(0));
+
+function showTab(t) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', ['arch','peg','json','algo'][i]===t));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  if(t==='peg') renderPegGrid();
+  if(t==='json') showJson('elephant');
+  if(t==='algo') renderAlgos();
+}
+
+const details = {
+  input: {title:'User input stage', text:'Accepts free-form natural language. Examples: "Create an elephant motif woven fabric with repeating border" or "4-shaft twill in blue cotton, 120 EPI". Pre-processing strips filler words, normalises units (EPI/EPCM), and extracts quoted colour names before passing to the LLM.', tags:['AI','Input validation']},
+  llm: {title:'LLM layer', text:'A fine-tuned or few-shot prompted LLM (GPT-4o / Claude Sonnet) parses intent into a structured IntentJSON. It classifies: motif type (geometric, figurative, abstract), weave family (plain/twill/satin/dobby/jacquard), repeat symmetry (mirror, rotational, border), colour palette, and hard constraints (shaft count, sett, thread type). The LLM never generates matrices — only metadata.', tags:['AI','Claude Sonnet','GPT-4o','Few-shot prompting']},
+  intent: {title:'Intent JSON schema', text:'Intermediate validated schema. Fields: motif_type, weave_family, shaft_count, repeat_width, repeat_height, symmetry[], colour_map{}, constraints[], notes. This is deterministically validated against a JSON Schema before passing to the engine. Invalid fields trigger re-prompting.', tags:['Validation','JSON Schema','Bridge layer']},
+  engine: {title:'Deterministic weave engine', text:'Three sub-modules: (1) Matrix Generator converts motif pixels + weave structure rules into a raw binary peg plan. (2) Draft Computer derives shaft assignments and treadle tie-up from the peg plan using partition logic. (3) Loom Validator checks shaft limits, float lengths, selvedge integrity, and sett feasibility. All purely algorithmic — no AI.', tags:['Deterministic','Python','Matrix ops','NumPy']},
+  output: {title:'Output pack', text:'Final deliverable bundle: peg_plan (2D binary matrix), draft_plan (threading × treadle), lift_plan (per-pick shaft states), tie_up (treadle-to-shaft mapping), WIF file, preview PNG, and machine-specific export (TC2 JSON, Murano DAT, AVL format). All outputs cross-validated before delivery.', tags:['WIF export','CAM','TC2','PNG preview']},
+  plain: {title:'Plain weave', text:'Every warp thread interleaves with every weft. Minimum 2 shafts. Tie-up is identity matrix. Peg plan: alternating 1010…/0101… rows. Float length: 1 (maximum interlacing, highest strength). Dobby-compatible from 2 shafts.'},
+  twill: {title:'Twill weave', text:'Diagonal float progression. N/M twill notation: N threads up, M threads down per repeat. 3/1 twill needs 4 shafts minimum. Produces diagonal texture. Draft: progressive shaft offset. Float lengths up to N or M. Warp-faced or weft-faced depending on ratio.'},
+  satin: {title:'Satin weave', text:'Maximum float lengths with minimal interlacements. Shaft count = float length (5-shaft, 8-shaft satin). Step number must be coprime with shaft count. Produces smooth reflective surface. High float = fragile structure. Needs careful loom validation for float limits.'},
+  dobby: {title:'Dobby loom', text:'Shaft-controlled loom with programmable peg chain or electronic dobby. Max 32 shafts in modern machines (8–24 typical). Full design repeat determined by shaft count × treadle sequence length. Best for geometric, stripe, and structured repeat patterns. Cannot do pixel-level motifs.'},
+  jacquard: {title:'Jacquard loom', text:'Individual warp thread control via hooks and needles. Capacity: 400–2400 hooks typical (up to 10,000 in industrial). Design encoded as a full binary bitmap, one bit per warp thread per pick. Enables any motif including photographic imagery. TC2 digital looms accept image files directly. No shaft limit.'}
+};
+
+function showDetail(key) {
+  const d=details[key]; if(!d) return;
+  const box=document.getElementById('detail-box');
+  const tags=(d.tags||[]).map(t=>`<span class="tag tag-ai">${t}</span>`).join('');
+  box.style.display='block';
+  box.innerHTML=`<strong style="font-size:13px;color:var(--color-text-primary)">${d.title}</strong><br><span style="font-size:12px">${d.text}</span>${tags?'<div style="margin-top:6px">'+tags+'</div>':''}`;
+}
+
+function renderPegGrid() {
+  const svg=document.getElementById('peg-svg');
+  const cs=28, rs=24, ox=48, oy=22;
+  let html='<text x="0" y="14" font-size="11" fill="var(--color-text-secondary)" font-family="var(--font-mono)">Shaft</text>';
+  html+=`<text x="${ox+4}" y="14" font-size="11" fill="var(--color-text-secondary)" font-family="var(--font-mono)">← Warp ends (1–${COLS}) →</text>`;
+  for(let r=0;r<ROWS;r++){
+    html+=`<text x="30" y="${oy+r*rs+rs/2+4}" font-size="10" fill="var(--color-text-secondary)" font-family="var(--font-mono)" text-anchor="end">${r+1}</text>`;
+    for(let c=0;c<COLS;c++){
+      const x=ox+c*cs, y=oy+r*rs;
+      const cls=grid[r][c]?'on':'off';
+      html+=`<rect class="grid-cell ${cls}" x="${x+1}" y="${y+1}" width="${cs-2}" height="${rs-2}" rx="3" onclick="toggleCell(${r},${c})"/>`;
+      if(grid[r][c]){
+        html+=`<text x="${x+cs/2}" y="${y+rs/2+4}" text-anchor="middle" font-size="9" fill="white" font-family="var(--font-mono)" style="pointer-events:none">1</text>`;
+      }
+    }
+  }
+  for(let c=0;c<COLS;c++){
+    html+=`<text x="${ox+c*cs+cs/2}" y="${oy+ROWS*rs+14}" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="var(--font-mono)">${c+1}</text>`;
+  }
+  svg.innerHTML=html;
+  updateStats();
+}
+
+function toggleCell(r,c){
+  grid[r][c]=grid[r][c]?0:1;
+  renderPegGrid();
+}
+
+function updateStats(){
+  const total=ROWS*COLS;
+  const ones=grid.flat().reduce((a,b)=>a+b,0);
+  const pct=Math.round(ones/total*100);
+  const shaftsUsed=grid.filter(row=>row.some(v=>v)).length;
+  document.getElementById('peg-stats').textContent=
+    `Lifts: ${ones}/${total} (${pct}% warp-faced)  |  Active shafts: ${shaftsUsed}/${ROWS}  |  Approx float: ${computeFloat()}`;
+}
+
+function computeFloat(){
+  let max=0;
+  for(let r=0;r<ROWS;r++){
+    let run=0;
+    for(let c=0;c<COLS;c++){
+      if(grid[r][c]){run++; max=Math.max(max,run);}
+      else run=0;
+    }
+  }
+  return max+'px max';
+}
+
+const presets = {
+  plain: ()=>Array.from({length:ROWS},(_, r)=>Array.from({length:COLS},(_,c)=>(r+c)%2)),
+  twill3: ()=>Array.from({length:ROWS},(_, r)=>Array.from({length:COLS},(_,c)=>{const v=(c+r)%4; return v<3?1:0;})),
+  diamond: ()=>Array.from({length:ROWS},(_, r)=>Array.from({length:COLS},(_,c)=>{
+    const cr=r%8, cc=c%8;
+    const d=Math.abs(cr-4)+Math.abs(cc-4); return d<=3?1:0;
+  })),
+  hound: ()=>{
+    const p=[[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+             [1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],
+             [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],
+             [0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],
+             [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+             [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+             [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+             [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]];
+    return p;
+  }
+};
+
+function loadPreset(name){grid=presets[name](); renderPegGrid();}
+function clearGrid(){grid=Array.from({length:ROWS},()=>Array(COLS).fill(0)); renderPegGrid();}
+
+const jsonExamples = {
+  elephant: `{
+  <span class="kw">"design_name"</span>: <span class="str">"elephant_motif_border_v1"</span>,
+  <span class="kw">"motif"</span>: {
+    <span class="kw">"type"</span>: <span class="str">"figurative"</span>,
+    <span class="kw">"subject"</span>: <span class="str">"elephant_silhouette"</span>,
+    <span class="kw">"source"</span>: <span class="str">"vector_svg"</span>,
+    <span class="kw">"rasterized_grid"</span>: <span class="str">"64x64"</span>
+  },
+  <span class="kw">"repeat_unit"</span>: {
+    <span class="kw">"width"</span>: <span class="num">64</span>,
+    <span class="kw">"height"</span>: <span class="num">64</span>,
+    <span class="kw">"symmetry"</span>: [<span class="str">"mirror_x"</span>, <span class="str">"translation"</span>],
+    <span class="kw">"border_type"</span>: <span class="str">"running_vine"</span>
+  },
+  <span class="kw">"peg_plan"</span>: <span class="str">"[[0,1,0,1,...],[1,0,1,0,...],...]"</span>,
+  <span class="kw">"draft_plan"</span>: {
+    <span class="kw">"threading"</span>: [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">3</span>,<span class="num">2</span>,<span class="num">1</span>],
+    <span class="kw">"treadles"</span>: <span class="num">8</span>,
+    <span class="kw">"tie_up"</span>: [[<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>],[<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>]]
+  },
+  <span class="kw">"lift_plan"</span>: {
+    <span class="kw">"picks"</span>: <span class="num">64</span>,
+    <span class="kw">"sequence"</span>: <span class="str">"[[2,4],[1,3],[2,4],...]"</span>
+  },
+  <span class="kw">"weave_type"</span>: <span class="str">"jacquard"</span>,
+  <span class="kw">"loom_type"</span>: <span class="str">"TC2_digital_jacquard"</span>,
+  <span class="kw">"sett"</span>: { <span class="kw">"epi"</span>: <span class="num">120</span>, <span class="kw">"ppi"</span>: <span class="num">100</span> },
+  <span class="kw">"constraints"</span>: [
+    <span class="str">"max_float_length: 5"</span>,
+    <span class="str">"min_interlacement: 0.3"</span>
+  ],
+  <span class="kw">"validation"</span>: { <span class="kw">"passed"</span>: <span class="kw">true</span>, <span class="kw">"warnings"</span>: [] },
+  <span class="kw">"notes"</span>: <span class="str">"64-hook repeat. Border uses 12-pick running vine. Mirror applied on X axis."</span>
+}`,
+  border: `{
+  <span class="kw">"design_name"</span>: <span class="str">"geometric_border_repeat"</span>,
+  <span class="kw">"motif"</span>: { <span class="kw">"type"</span>: <span class="str">"geometric"</span>, <span class="kw">"subject"</span>: <span class="str">"chevron_zigzag"</span> },
+  <span class="kw">"repeat_unit"</span>: {
+    <span class="kw">"width"</span>: <span class="num">16</span>, <span class="kw">"height"</span>: <span class="num">8</span>,
+    <span class="kw">"symmetry"</span>: [<span class="str">"translation"</span>, <span class="str">"glide_reflection"</span>],
+    <span class="kw">"tiling"</span>: <span class="str">"p1_translation_only"</span>
+  },
+  <span class="kw">"peg_plan"</span>: [[<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>],[<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>]],
+  <span class="kw">"weave_type"</span>: <span class="str">"dobby"</span>,
+  <span class="kw">"loom_type"</span>: <span class="str">"electronic_dobby_16shaft"</span>,
+  <span class="kw">"constraints"</span>: [<span class="str">"shaft_count: 16"</span>, <span class="str">"max_float: 3"</span>],
+  <span class="kw">"validation"</span>: { <span class="kw">"passed"</span>: <span class="kw">true</span>, <span class="kw">"warnings"</span>: [<span class="str">"selvedge_check_required"</span>] }
+}`,
+  plain: `{
+  <span class="kw">"design_name"</span>: <span class="str">"plain_weave_2shaft"</span>,
+  <span class="kw">"motif"</span>: { <span class="kw">"type"</span>: <span class="str">"structural"</span>, <span class="kw">"subject"</span>: <span class="str">"tabby"</span> },
+  <span class="kw">"peg_plan"</span>: [[<span class="num">1</span>,<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>],[<span class="num">0</span>,<span class="num">1</span>,<span class="num">0</span>,<span class="num">1</span>]],
+  <span class="kw">"draft_plan"</span>: {
+    <span class="kw">"threading"</span>: [<span class="num">1</span>,<span class="num">2</span>,<span class="num">1</span>,<span class="num">2</span>],
+    <span class="kw">"treadles"</span>: <span class="num">2</span>,
+    <span class="kw">"tie_up"</span>: [[<span class="num">1</span>,<span class="num">0</span>],[<span class="num">0</span>,<span class="num">1</span>]]
+  },
+  <span class="kw">"lift_plan"</span>: { <span class="kw">"sequence"</span>: [[<span class="num">1</span>],[<span class="num">2</span>],[<span class="num">1</span>],[<span class="num">2</span>]] },
+  <span class="kw">"weave_type"</span>: <span class="str">"plain"</span>,
+  <span class="kw">"loom_type"</span>: <span class="str">"any_2shaft_minimum"</span>,
+  <span class="kw">"sett"</span>: { <span class="kw">"epi"</span>: <span class="num">20</span>, <span class="kw">"ppi"</span>: <span class="num">20</span> },
+  <span class="kw">"validation"</span>: { <span class="kw">"passed"</span>: <span class="kw">true</span>, <span class="kw">"warnings"</span>: [] }
+}`
+};
+
+function showJson(key){
+  document.getElementById('json-display').innerHTML=jsonExamples[key];
+}
+
+function renderAlgos(){
+  const algos=[
+    {title:'Image → peg plan (rasterization pipeline)', tag:'Image input', steps:[
+      'Load SVG/PNG motif via PIL or OpenCV',
+      'Convert to grayscale → threshold at 128 → binary bitmap',
+      'Resize to nearest power-of-2 (jacquard) or shaft multiple (dobby)',
+      'Apply dithering (Floyd-Steinberg) for smooth gradients',
+      'Map pixel[r][c] = 1 → warp raised at end c, pick r'
+    ]},
+    {title:'Draft plan derivation from peg plan', tag:'Matrix algebra', steps:[
+      'Build equivalence classes: group warp ends with identical column patterns',
+      'Each unique column pattern → one shaft (shaft count = |unique patterns|)',
+      'threading[c] = shaft_id for column pattern at end c',
+      'Group picks (rows) with identical row patterns → treadles',
+      'tie_up[t][s] = 1 if treadle t lifts shaft s',
+      'lift_plan[pick] = treadle_id for row pattern at pick'
+    ]},
+    {title:'Repeat unit generation + symmetry tiling', tag:'Symmetry groups', steps:[
+      'Start from base repeat unit R (width W × height H)',
+      'Mirror X: R_mx[r][c] = R[r][W-1-c] → append horizontally',
+      'Mirror Y: R_my[r][c] = R[H-1-r][c] → append vertically',
+      '180° rotation: R_rot = np.rot90(R, 2)',
+      'p4 symmetry (4-fold): tile 2×2 with R, R_mx, R_my, R_rot',
+      'Border: create frame mask, apply running repeat around perimeter'
+    ]},
+    {title:'Loom feasibility validation', tag:'Constraint solver', steps:[
+      'CHECK shaft_count ≤ loom.max_shafts (dobby: 32, shaft: 24)',
+      'CHECK max_float_length ≤ threshold (default: 5 for apparel, 12 for upholstery)',
+      'CHECK interlacement_ratio ≥ 0.25 (structural integrity)',
+      'CHECK selvedge: ends 1 and N must alternate up/down every 2 picks',
+      'WARN if repeat_width > hook_count for jacquard loom',
+      'ERROR if threading requires more shafts than physically present'
+    ]},
+    {title:'Colour → structure mapping', tag:'Multi-layer', steps:[
+      'Parse colour palette from LLM output: {background: #FFF, motif: #000, accent: #F00}',
+      'Map colours to weave layers: plain background + inlay motif + supplementary weft',
+      'Build compound peg plan: stack layers, resolve conflicts by priority',
+      'Apply colour-and-weave effect: same structure, alternating thread colours'
+    ]}
+  ];
+  let html='';
+  algos.forEach(a=>{
+    html+=`<div class="detail-card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <strong style="font-size:12px;color:var(--color-text-primary)">${a.title}</strong>
+      <span class="tag tag-det">${a.tag}</span>
+    </div>
+    <ol style="margin:0;padding-left:16px;font-size:12px;line-height:1.9">
+    ${a.steps.map(s=>`<li style="font-family:var(--font-mono);font-size:11px">${s}</li>`).join('')}
+    </ol>
+    </div>`;
+  });
+  document.getElementById('algo-cards').innerHTML=html;
+}
+</script>

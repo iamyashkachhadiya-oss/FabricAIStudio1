@@ -12,11 +12,8 @@ const WHITE  = '#FFFFFF'
 
 // ── SVG Logo (small, used in every header) ────────────────────────────────────
 const LOGO_SVG = `<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;">
-  <path d="M4 16 Q8 4 16 4 Q24 4 28 16" stroke="${RUBY}" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-  <path d="M28 16 Q24 28 16 28 Q8 28 4 16" stroke="${INK}" stroke-width="2.8" fill="none" stroke-linecap="round" opacity="0.65"/>
-  <circle cx="16" cy="16" r="3.2" fill="${RUBY}"/>
-  <circle cx="8"  cy="9"  r="1.6" fill="${RUBY}" opacity="0.55"/>
-  <circle cx="24" cy="23" r="1.6" fill="${INK}"  opacity="0.3"/>
+  <rect x="2" y="2" width="28" height="28" rx="8" fill="${RUBY}" />
+  <path d="M16 4 Q16 16 28 16 Q16 16 16 28 Q16 16 4 16 Q16 16 16 4" fill="white" />
 </svg>`
 
 // ── Color helpers ─────────────────────────────────────────────────────────────
@@ -85,7 +82,7 @@ function pageWrap(content:string):string {
 // ── Page footer ───────────────────────────────────────────────────────────────
 function footer(designNum:string, page:string):string {
   return `<div style="position:absolute;bottom:10px;left:16px;right:16px;border-top:1px solid ${BORDER};padding-top:5px;display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:7.5px;color:${MUTED};">FabricAI Studio — Solerix Technologies · Confidential</span>
+    <span style="font-size:7.5px;color:${MUTED};">FabricaAI Studio — Solerix Technologies · Confidential</span>
     <span style="font-size:7.5px;color:${MUTED};">${designNum} · ${page}</span>
   </div>`
 }

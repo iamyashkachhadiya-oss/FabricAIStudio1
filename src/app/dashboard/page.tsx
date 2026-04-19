@@ -110,12 +110,12 @@ export default function DashboardPage() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <img
-            src="/fabricai-logo.png"
-            alt="FabricAI"
-            style={{ width: 36, height: 36, display: 'block', objectFit: 'contain' }}
+            src="/logo.png"
+            alt="FabricaAI Logo"
+            style={{ width: 36, height: 36, display: 'block', objectFit: 'cover', borderRadius: 8 }}
           />
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricAI Studio</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricaAI Studio</div>
             <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{factoryName || 'Your Factory'}</div>
           </div>
         </div>

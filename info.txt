@@ -1,0 +1,504 @@
+This is a genuinely fascinating engineering challenge — bridging natural language, textile domain knowledge, and deterministic matrix computation. Here is the complete blueprint.
+
+---
+
+## Part 1 — System Architecture Overview---
+
+## Part 2 — Textile Domain Knowledge
+
+### The four fundamental weaving plans and their mathematical relationships
+
+Every woven structure is fully described by four inter-derived matrices. Understanding how they relate to each other mathematically is the core insight that makes automation possible.
+
+**Peg plan** (also called the drawdown) is the master binary matrix P of shape `[picks × ends]`. `P[i][j] = 1` means warp end j is raised above weft pick i, producing a warp float. `P[i][j] = 0` means the warp passes below the weft, producing a weft float. The entire visual texture of the fabric is directly encoded here. This is the final ground truth the machine executes.
+
+**Threading draft** assigns each warp end to exactly one shaft. Formally it is a function `T: ends → {1..S}` where S is the shaft count. In matrix form, `D[s][j] = 1` if end j is on shaft s. The critical constraint is that two ends assigned to the same shaft must have identical lift sequences for the entire weave. This means the threading constrains design complexity: a 4-shaft loom cannot produce a peg plan with more than 4 distinct column patterns.
+
+**Tie-up** is a binary matrix `U[t][s]` where t is a treadle index and s is a shaft index. `U[t][s] = 1` means pressing treadle t lifts shaft s.
+
+**Lift plan** is the sequence of treadle presses per pick: `L[i] = t` means pick i uses treadle t.
+
+The critical algebraic relationship is: `P = L × U × D` (matrix product over Boolean algebra). Given any one of these four planes, you can derive the others — which means the deterministic engine only needs to compute one and propagate. The derivation direction for this system is `peg_plan → threading → tie_up → lift_plan`, using column equivalence classes.
+
+### Dobby vs Jacquard — the fundamental architectural difference
+
+A **dobby loom** is shaft-controlled. Every warp end threaded through shaft k moves identically on every pick that shaft k is raised. The design resolution is therefore `S × T` where S = shaft count and T = treadle count. Modern electronic dobbys have 16–32 shafts. Maximum design repeat width = S (warp-wise), unlimited in weft direction. This is the key dobby constraint: no two warp ends can have independent lift sequences unless they are on different shafts. This limits dobby to geometric, striped, and structured patterns.
+
+A **jacquard loom** replaces shafts with individual hooks (one per warp end). The machine reads a binary image row by row, one row per pick. Every warp end is independently controllable. Design resolution = hook count × picks, typically 400–2400 hooks wide. The TC2 digital jacquard accepts any 24-bit RGB image and converts it directly to lift sequences. This enables photographic, figurative, and complex motif weaving. The elephant motif in the user's example requires jacquard.
+
+The system must determine which machine to target based on the design's column complexity: count distinct column patterns in P. If count ≤ 32, dobby-compatible. If count > 32, requires jacquard.
+
+---
+
+## Part 3 — The TEXT → SHAPE → GRID → PEG PLAN Algorithm
+
+### Stage 1: Intent extraction (LLM layer)
+
+The LLM receives a structured system prompt that enforces JSON output. This is not a general chat — it is a constrained structured generation task.
+
+```
+SYSTEM PROMPT:
+You are a textile design parser. Given a design description, output ONLY valid JSON
+matching this schema. Never add prose. Extract:
+- motif_type: "geometric" | "figurative" | "abstract" | "structural"  
+- motif_subject: string (e.g. "elephant", "diamond", "chevron")
+- weave_family: "plain" | "twill" | "satin" | "dobby_pattern" | "jacquard"
+- shaft_count_hint: integer (minimum shafts user implies, default null)
+- repeat_symmetry: array of "mirror_x" | "mirror_y" | "rotation_180" | "translation"
+- colour_palette: {role: hex_or_name}
+- border: {present: bool, type: string}
+- thread_material: string
+- scale_hint: "fine" | "medium" | "coarse" (determines EPI range)
+- hard_constraints: array of strings
+```
+
+Few-shot examples are prepended for the 20 most common design patterns. The LLM is never asked to generate matrices, compute binary values, or make loom decisions. It only produces intent metadata.
+
+### Stage 2: Motif rasterization (shape → grid)
+
+For figurative motifs (elephant, peacock, paisley), the pipeline is:
+
+```python
+import numpy as np
+from PIL import Image
+import cv2
+
+def motif_to_binary_grid(source, target_width, target_height, method='threshold'):
+    # source: path to SVG/PNG, or auto-fetch from motif library
+    img = Image.open(source).convert('L')  # grayscale
+    img = img.resize((target_width, target_height), Image.LANCZOS)
+    arr = np.array(img)
+    
+    if method == 'threshold':
+        binary = (arr < 128).astype(np.uint8)
+    elif method == 'floyd_steinberg':
+        # Floyd-Steinberg dithering for gradients
+        binary = floyd_steinberg_dither(arr)
+    elif method == 'ordered':
+        # Bayer matrix ordered dithering - better for textiles
+        bayer = get_bayer_matrix(8)
+        binary = (arr > bayer[np.arange(target_height)%8][:,np.arange(target_width)%8] * 255).astype(np.uint8)
+    
+    return binary  # shape: [target_height × target_width]
+```
+
+For geometric motifs (chevron, diamond, houndstooth), the engine uses parametric generation — direct mathematical construction of the binary array without image input.
+
+For the elephant specifically: the system queries a curated motif library (SVG database indexed by semantic tags). The SVG is rasterized at the target hook count × pick count. For TC2 jacquard at 120 EPI with a 30cm repeat, that is 30×120 = 3600 ends wide. The motif grid is therefore 3600 columns wide, resized to fit exactly.
+
+### Stage 3: Weave structure overlay
+
+The motif grid defines *where* the design appears. The weave structure defines *how* threads interleave everywhere. These are combined using logical operations:
+
+```python
+def apply_weave_structure(motif_grid, weave_matrix, background_weave):
+    """
+    motif_grid: binary [H × W], 1 = design pixel present
+    weave_matrix: base weave tile [rh × rw] for the motif region
+    background_weave: base weave tile for the non-motif region
+    Returns: full peg plan [H × W]
+    """
+    H, W = motif_grid.shape
+    rh, rw = weave_matrix.shape
+    
+    # Tile weave structure to full fabric size
+    motif_tiled = np.tile(weave_matrix, (H//rh + 1, W//rw + 1))[:H, :W]
+    bg_tiled = np.tile(background_weave, (H//rh + 1, W//rw + 1))[:H, :W]
+    
+    # Compose: use motif weave where motif=1, background weave elsewhere
+    peg_plan = np.where(motif_grid == 1, motif_tiled, bg_tiled)
+    
+    # Common configuration: warp-faced (1) for motif, weft-faced (0) for background
+    # This creates a inlay/tapestry effect with visual contrast
+    return peg_plan.astype(np.uint8)
+```
+
+### Stage 4: Repeat unit generation with symmetry
+
+```python
+def generate_repeat(base_unit, symmetry_ops):
+    """
+    base_unit: numpy array [H × W]
+    symmetry_ops: list from ["mirror_x", "mirror_y", "rotation_180", "translation"]
+    Returns: repeated tile suitable for tiling
+    """
+    result = base_unit.copy()
+    
+    if 'mirror_x' in symmetry_ops:
+        result = np.hstack([result, np.fliplr(result)])
+    if 'mirror_y' in symmetry_ops:
+        result = np.vstack([result, np.flipud(result)])
+    if 'rotation_180' in symmetry_ops:
+        quadrant = result.copy()
+        result = np.block([[quadrant, np.rot90(quadrant, 2)],
+                          [np.rot90(quadrant, 2), quadrant]])
+    
+    return result
+
+def add_border(peg_plan, border_type, border_width_picks, border_width_ends):
+    """
+    Adds a woven border frame around a central motif.
+    border_type: "plain", "twill", "running_vine", "geometric_chain"
+    """
+    H, W = peg_plan.shape
+    border_tile = get_border_tile(border_type)  # pre-computed border weave
+    
+    # Top border
+    top = generate_border_strip(border_tile, border_width_picks, W)
+    # Bottom border
+    bottom = np.flipud(top)
+    # Left border
+    left = generate_border_strip(border_tile, H - 2*border_width_picks, border_width_ends)
+    # Right border  
+    right = np.fliplr(left)
+    
+    # Composite
+    center_h = H - 2*border_width_picks
+    center_w = W - 2*border_width_ends
+    center = peg_plan[border_width_picks:-border_width_picks,
+                      border_width_ends:-border_width_ends]
+    
+    middle = np.hstack([left, center, right])
+    return np.vstack([top, middle, bottom])
+```
+
+### Stage 5: Draft plan derivation (the key algorithm)
+
+This is the most mathematically interesting step — extracting shaft assignments from the peg plan using column equivalence:
+
+```python
+def derive_draft_plan(peg_plan):
+    """
+    Derives threading, tie-up, and treadle sequence from peg plan.
+    Uses column/row equivalence class partitioning.
+    
+    Returns: {threading, tie_up, lift_plan, shaft_count, treadle_count}
+    """
+    H, W = peg_plan.shape
+    
+    # Step 1: Find unique column patterns (= shaft assignments)
+    col_patterns = {}
+    threading = np.zeros(W, dtype=int)
+    shaft_id = 0
+    
+    for c in range(W):
+        col = tuple(peg_plan[:, c].tolist())
+        if col not in col_patterns:
+            col_patterns[col] = shaft_id
+            shaft_id += 1
+        threading[c] = col_patterns[col]
+    
+    shaft_count = shaft_id
+    shaft_patterns = {v: k for k, v in col_patterns.items()}  # id → pattern
+    
+    # Step 2: Find unique row patterns (= treadle assignments)
+    row_patterns = {}
+    lift_sequence = np.zeros(H, dtype=int)
+    treadle_id = 0
+    
+    for r in range(H):
+        row = tuple(peg_plan[r, :].tolist())
+        if row not in row_patterns:
+            row_patterns[row] = treadle_id
+            treadle_id += 1
+        lift_sequence[r] = row_patterns[row]
+    
+    treadle_count = treadle_id
+    row_by_id = {v: k for k, v in row_patterns.items()}
+    
+    # Step 3: Compute tie-up matrix U[treadle × shaft]
+    # U[t][s] = 1 if any end on shaft s is lifted when treadle t is pressed
+    tie_up = np.zeros((treadle_count, shaft_count), dtype=int)
+    
+    for t_id, row_tuple in row_by_id.items():
+        for c, val in enumerate(row_tuple):
+            if val == 1:
+                s = threading[c]
+                tie_up[t_id][s] = 1
+    
+    # Verify: P should equal reconstruct(threading, tie_up, lift_sequence)
+    assert verify_draft(peg_plan, threading, tie_up, lift_sequence)
+    
+    return {
+        'threading': threading.tolist(),
+        'tie_up': tie_up.tolist(),
+        'lift_plan': lift_sequence.tolist(),
+        'shaft_count': shaft_count,
+        'treadle_count': treadle_count
+    }
+
+def verify_draft(P, threading, tie_up, lift_seq):
+    """Boolean algebra reconstruction check."""
+    H, W = P.shape
+    reconstructed = np.zeros((H, W), dtype=int)
+    for r in range(H):
+        t = lift_seq[r]
+        for c in range(W):
+            s = threading[c]
+            reconstructed[r][c] = tie_up[t][s]
+    return np.array_equal(P, reconstructed)
+```
+
+---
+
+## Part 4 — AI Architecture in Detail
+
+### What the LLM handles vs what the deterministic engine handles
+
+This boundary is the most critical architectural decision and where most naive implementations go wrong. The rule is: **the LLM produces zero numbers that feed directly into the matrix**. Every matrix value is computed deterministically.
+
+| Responsibility | LLM | Deterministic Engine |
+|---|---|---|
+| Understanding "elephant" | ✓ → queries motif library | — |
+| Choosing jacquard vs dobby | ✓ → recommends based on complexity | ✓ → validates and overrides |
+| Colour interpretation | ✓ → hex values from names | — |
+| Symmetry intent | ✓ → flags mirror/rotate | — |
+| Peg plan values (0/1) | Never | ✓ |
+| Draft computation | Never | ✓ |
+| Float length validation | Never | ✓ |
+| WIF file generation | Never | ✓ |
+| Error messages to user | ✓ | ✓ → provides raw error codes |
+
+The LLM is called exactly once per design request. All subsequent computation is deterministic Python. The only exception is the "variation generation" feature where the LLM suggests parameter perturbations (different symmetry, EPI, weave structure) and the engine generates the variant matrices.
+
+### Prompt engineering for structured generation
+
+The system uses a three-part prompt architecture:
+
+```
+[SYSTEM]   Static: role definition + JSON schema + 20 few-shot examples + error recovery instructions
+[CONTEXT]  Dynamic: user's design history, last-used parameters, available motif library index
+[USER]     The design description + any uploaded image path
+```
+
+The JSON schema is enforced at the API level using Anthropic's or OpenAI's structured output / function calling feature. This guarantees valid JSON without post-processing regex hacks. A Pydantic model validates the output before it reaches the engine:
+
+```python
+from pydantic import BaseModel, validator
+from typing import List, Optional, Literal
+
+class IntentJSON(BaseModel):
+    motif_type: Literal["geometric", "figurative", "abstract", "structural"]
+    motif_subject: str
+    weave_family: Literal["plain", "twill", "satin", "dobby_pattern", "jacquard"]
+    shaft_count_hint: Optional[int] = None
+    repeat_symmetry: List[Literal["mirror_x", "mirror_y", "rotation_180", "translation"]]
+    colour_palette: dict
+    border: dict
+    thread_material: str
+    scale_hint: Literal["fine", "medium", "coarse"]
+    hard_constraints: List[str]
+    
+    @validator('shaft_count_hint')
+    def shaft_must_be_power_of_two_or_standard(cls, v):
+        if v and v not in [2, 4, 6, 8, 12, 16, 24, 32]:
+            raise ValueError(f'Non-standard shaft count: {v}')
+        return v
+```
+
+---
+
+## Part 5 — Practical Constraints and Validation
+
+### Matrix size limits by loom type
+
+| Loom type | Max ends (cols) | Max picks (rows) | Notes |
+|---|---|---|---|
+| Rigid heddle, 2-shaft | 200 | Unlimited | Peg plan = alternating rows only |
+| 8-shaft floor loom | 800 | Unlimited | 8 distinct col patterns max |
+| 16-shaft dobby | 1600 | Unlimited | 16 distinct col patterns max |
+| 32-shaft electronic dobby | 3200 | Unlimited | 32 distinct col patterns max |
+| TC2 digital jacquard (home) | 400 | Unlimited | Any binary bitmap ≤400 wide |
+| Industrial jacquard | 2400–10000 | Unlimited | Full image resolution |
+| Murano/Stäubli CX series | 10000+ | Unlimited | Factory floor machines |
+
+Memory constraints: a 10000×10000 binary matrix is 100M cells × 1 bit = 12.5 MB, trivially handled by NumPy. Computation of draft plan via column partitioning on a 3600-wide peg plan: O(H × W) per pass, typically <1 second for any reasonable design.
+
+### Float length validation
+
+Float length (consecutive same-state cells in a row or column) determines structural integrity. Long floats are weak and snag. The engine enforces:
+
+```python
+def validate_float_lengths(peg_plan, max_float_warp=5, max_float_weft=5):
+    errors = []
+    
+    # Check warp floats (consecutive 1s in a column)
+    for c in range(peg_plan.shape[1]):
+        col = peg_plan[:, c]
+        run = max_consecutive(col, 1)
+        if run > max_float_warp:
+            errors.append(f"Warp end {c}: float length {run} exceeds max {max_float_warp}")
+    
+    # Check weft floats (consecutive 1s or 0s in a row)
+    for r in range(peg_plan.shape[0]):
+        row = peg_plan[r, :]
+        warp_run = max_consecutive(row, 1)
+        weft_run = max_consecutive(row, 0)
+        if warp_run > max_float_warp or weft_run > max_float_weft:
+            errors.append(f"Pick {r}: float issue")
+    
+    return errors
+
+def max_consecutive(arr, val):
+    maxrun, run = 0, 0
+    for v in arr:
+        run = run+1 if v==val else 0
+        maxrun = max(maxrun, run)
+    return maxrun
+```
+
+### Error taxonomy and recovery
+
+The system classifies errors into three levels:
+
+**Hard errors** (block output): shaft count exceeds loom capacity; peg plan fails reconstruction verification; float length > 2× threshold; zero interlacement (all 0s or all 1s in any row/column — structurally impossible fabric).
+
+**Soft errors** (warn and continue): selvedge not alternating; float length between threshold and 2× threshold; fewer than 25% interlacements (fragile but possible); repeat width doesn't divide evenly into fabric width.
+
+**Info notices**: shaft count could be reduced by pattern simplification; similar design achievable on simpler loom; estimated weave time exceeds typical batch.
+
+---
+
+## Part 6 — Advanced Features
+
+### Image-to-peg plan pipeline
+
+When a user uploads a motif image (JPEG, PNG, SVG), the pipeline is:
+
+```
+Upload → OpenCV decode → Grayscale → Resize to hook count
+→ Dither (Bayer ordered for textiles — better than Floyd-Steinberg for periodic structures)
+→ Binary grid → Apply weave structure overlay → Full peg plan
+```
+
+The key parameter is the dithering algorithm choice. Floyd-Steinberg diffuses error to neighbours, producing organic-looking halftones. Bayer ordered dithering produces a regular crosshatch that aligns with weave structure geometry — preferred for most textile applications. The user can switch between them via parameter.
+
+### Variation generation
+
+Given a validated peg plan, the engine generates N variations by:
+
+1. Changing the weave structure overlay (same motif, different background — twill instead of plain)
+2. Altering symmetry operators (add/remove mirror_y)
+3. Scaling the repeat unit (50%, 200%)
+4. Applying colour-and-weave effect (same peg plan, alternating thread colours creates visual pattern shift)
+5. Inverting the binary grid (swap warp-face and weft-face)
+6. Phase-shifting the repeat (different alignment of motif to loom width)
+
+These are all purely algorithmic — the LLM is not called for variations.
+
+### Fabric simulation preview
+
+The preview renders a simulated fabric image by coloring each cell of the peg plan with either the warp thread colour (if `P[i][j]=1`) or the weft thread colour (if `P[i][j]=0`). This is a simple bitmap render, trivially implemented:
+
+```python
+def render_fabric_preview(peg_plan, warp_colour=(50,50,50), weft_colour=(240,230,210),
+                          scale=4):
+    H, W = peg_plan.shape
+    img = np.zeros((H*scale, W*scale, 3), dtype=np.uint8)
+    for r in range(H):
+        for c in range(W):
+            color = warp_colour if peg_plan[r][c] == 1 else weft_colour
+            img[r*scale:(r+1)*scale, c*scale:(c+1)*scale] = color
+    # Apply slight texture: blur with tiny kernel to simulate thread diameter
+    preview = cv2.GaussianBlur(img, (scale//2*2+1, scale//2*2+1), 0.3)
+    return Image.fromarray(preview)
+```
+
+For more realistic simulation: use a displacement map based on the interlacement pattern to simulate thread crimp (over-thread is slightly raised), apply thread-colour bleed (adjacent threads slightly mix colours), and add micro-texture via Perlin noise.
+
+---
+
+## Part 7 — Complete System Architecture and Tech Stack
+
+### Backend service design
+
+```
+FastAPI application
+│
+├── POST /api/design/create          — Main endpoint: text → full design pack
+├── POST /api/design/from-image      — Image upload → peg plan
+├── GET  /api/design/{id}/preview    — PNG fabric preview
+├── GET  /api/design/{id}/export/wif — WIF file download
+├── GET  /api/design/{id}/export/tc2 — TC2 JSON for digital jacquard
+├── POST /api/design/{id}/variations — Generate N variants
+└── POST /api/design/validate        — Validate a user-supplied peg plan
+```
+
+### Data structures in memory
+
+```python
+@dataclass
+class WeaveDesign:
+    id: str                          # UUID
+    design_name: str
+    intent: IntentJSON               # LLM output (Pydantic)
+    peg_plan: np.ndarray             # shape [picks × ends], dtype uint8
+    threading: np.ndarray            # shape [ends], dtype int16
+    tie_up: np.ndarray               # shape [treadles × shafts], dtype uint8
+    lift_plan: np.ndarray            # shape [picks], dtype int16
+    shaft_count: int
+    treadle_count: int
+    hook_count: int                  # for jacquard
+    weave_type: str
+    loom_type: str
+    sett: dict                       # {epi, ppi, units}
+    validation: ValidationResult
+    preview_path: Optional[str]
+    created_at: datetime
+```
+
+### Tech stack
+
+**Core engine:** Python 3.11 with NumPy (matrix operations), OpenCV (image processing), Pillow (preview generation), Pydantic v2 (validation).
+
+**API layer:** FastAPI with async handlers. Peg plan computation runs in a thread pool executor to avoid blocking the event loop. Large matrix operations (>10000 ends) are dispatched to a Celery task queue backed by Redis.
+
+**LLM integration:** Anthropic Claude Sonnet or OpenAI GPT-4o via their respective Python SDKs. Response format enforced using `tool_use` / function calling to guarantee JSON schema compliance. LLM call is always the first step and completes in 1–3 seconds.
+
+**Storage:** PostgreSQL for design metadata and validation results. S3-compatible object storage (MinIO for self-hosted, AWS S3 for cloud) for peg plan matrices (stored as `.npy` files, ~50KB for a 1000×500 design) and preview PNGs.
+
+**Motif library:** A curated database of ~5000 SVG motifs tagged by semantic category (animal, floral, geometric, traditional, cultural). Indexed with pgvector for semantic search. The LLM's `motif_subject` field triggers a vector similarity search to find the closest matching SVG.
+
+**WIF export:** WIF (Weaving Information File) is the standard interchange format for loom software (Fiberworks, WeavePoint, PixeLoom). The exporter writes the threading, tie-up, and treadling sections exactly as per the WIF 1.1 specification.
+
+### Scaling strategy
+
+For a production system handling thousands of concurrent designs, the compute bottleneck is the matrix operations for large jacquard designs. The scaling strategy is:
+
+Designs with peg plan ≤ 1000×1000 are processed synchronously within the API request, completing in under 200ms. Designs larger than this are offloaded to an async worker queue. The LLM call is always synchronous (fast, 1–3 seconds). The API returns immediately with a design ID and polling endpoint. WebSocket connection pushes completion notification.
+
+Matrix computation is embarrassingly parallelizable across designs (each design is independent). For a single very large design (10000×5000 for industrial jacquard), NumPy operations across the full matrix take ~5 seconds on a single core. This can be accelerated with CuPy (GPU-backed NumPy) for production, reducing to ~200ms on a modern GPU.
+
+---
+
+## Part 8 — Complete Request/Response Example
+
+A user types: *"Create an elephant motif woven fabric with repeating border pattern"*
+
+**Step 1 — LLM call (1.8 seconds):**
+Returns `IntentJSON`: motif_type=figurative, motif_subject=elephant, weave_family=jacquard, shaft_count_hint=null, repeat_symmetry=["mirror_x", "translation"], border={present:true, type:"running_vine"}, scale_hint=medium.
+
+**Step 2 — Motif library lookup (0.1 seconds):**
+Vector search returns `elephant_silhouette_kerala_style.svg` (cosine similarity 0.94 to "elephant figurative traditional").
+
+**Step 3 — Rasterization (0.3 seconds):**
+SVG rasterized to 256×128 binary grid using Bayer dithering. Hook count set to 256 (fits TC2 home loom). Border strip of 16 picks running vine generated and applied.
+
+**Step 4 — Symmetry application (0.05 seconds):**
+Mirror X applied → 256×256 repeat. Translation tiling generates 4 repeats across 1024-end fabric.
+
+**Step 5 — Weave structure overlay (0.1 seconds):**
+Motif region: 2/2 twill (warp-faced). Background: plain weave. Combined into full 1024-end × 512-pick peg plan.
+
+**Step 6 — Draft derivation (0.2 seconds):**
+Column partitioning finds 256 unique patterns → jacquard confirmed. No threading reduction possible. Lift plan = 512 rows compressed to 312 unique treadle patterns.
+
+**Step 7 — Validation (0.05 seconds):**
+Max float = 4 (within limit). Interlacement ratio = 0.51. Shaft count = 256 (jacquard-only, no dobby alternative possible). Selvedge check passed. Zero hard errors, one soft warning: "border transition adds 3-float at corners — consider chamfering."
+
+**Step 8 — Output generation (0.4 seconds):**
+Preview PNG at 4× scale rendered. WIF file serialized. TC2 JSON export generated. Full WeaveDesign object persisted to database.
+
+**Total latency: ~3.1 seconds.** The user receives the complete design pack including preview image, peg plan matrix, draft plan, and downloadable WIF file.
+
+This architecture is production-deployable as described. The deterministic engine is testable independently of the LLM (unit tests over known peg plans), the LLM is replaceable without changing the engine (any model outputting valid IntentJSON works), and the output format is machine-executable by any loom software that accepts WIF, TC2 JSON, or raw binary matrix inputs.

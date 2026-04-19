@@ -9,11 +9,11 @@
   --surface:        #FFFFFF;
   --surface-raised: #FFFFFF;
 
-  /* ── Brand Gradient — from FabricAI logo ─────────────────── */
-  --grad-start:  #FF6B35;            /* logo orange */
-  --grad-mid:    #FF4D7E;            /* logo coral-pink */
-  --grad-end:    #06D6AA;            /* logo teal */
-  --gradient:    linear-gradient(135deg, #FF6B35 0%, #FF4D7E 50%, #06D6AA 100%);
+  /* ── Brand Gradient — from FabricaAI logo ─────────────────── */
+  --grad-start:  #BA0C5D;            /* logo dark magenta */
+  --grad-mid:    #E0115F;            /* logo ruby pink */
+  --grad-end:    #FF4D94;            /* logo bright pink */
+  --gradient:    linear-gradient(135deg, #BA0C5D 0%, #E0115F 50%, #FF4D94 100%);
 
   /* ── Primary Accent — Ruby Pink (Compile CTA only) ────────── */
   --accent:        #E0115F;

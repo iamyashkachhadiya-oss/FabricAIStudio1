@@ -241,12 +241,10 @@ function SetupScreen({ onGenerate }: { onGenerate: (cfg: Config) => void }) {
       {/* Header */}
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 32px', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: 'white', fontSize: 18, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-          </div>
+          <img src="/logo.png" alt="FabricaAI Logo" style={{ width: 36, height: 36, borderRadius: 9, objectFit: 'cover' }} />
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricAI Studio</div>
-            <div style={{ fontSize: 11, color: 'var(--text-3)' }}>Weaving CAD Engine</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricaAI Studio</div>
+            <div style={{ fontSize: 11, color: 'var(--text-3)' }}>Next-Gen Weaving CAD</div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
@@ -463,9 +461,7 @@ function HubScreen({ config, onBack }: { config: Config; onBack: () => void }) {
         {/* Header */}
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 32px', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: 'white', fontSize: 18, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-            </div>
+            <img src="/logo.png" alt="FabricaAI Logo" style={{ width: 36, height: 36, borderRadius: 9, objectFit: 'cover' }} />
             <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>Design Editor</div>
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -552,10 +548,8 @@ function HubScreen({ config, onBack }: { config: Config; onBack: () => void }) {
       {/* Header */}
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 32px', borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 9, background: 'linear-gradient(145deg, #1B1F3B, #2A2F52)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: 'white', fontSize: 18, fontWeight: 700, fontFamily: 'serif' }}>ƒ</span>
-          </div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricAI Studio</div>
+          <img src="/logo.png" alt="FabricaAI Logo" style={{ width: 36, height: 36, borderRadius: 9, objectFit: 'cover' }} />
+          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>FabricaAI Studio</div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           {/* Config summary */}

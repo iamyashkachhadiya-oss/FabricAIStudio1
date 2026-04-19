@@ -278,6 +278,28 @@ export default function AuthNotch({ user, showPromo, onLoginClick, onLogout, onP
             </div>
           </div>
 
+          {/* Admin Dashboard button */}
+          <a
+            href="/admin"
+            style={{
+              width: '100%', padding: '11px 16px', fontSize: 12, fontWeight: 500,
+              color: '#E0115F', background: 'none',
+              border: 'none', cursor: 'pointer', textAlign: 'left',
+              display: 'flex', alignItems: 'center', gap: 9,
+              borderBottom: '0.5px solid rgba(255,255,255,0.06)',
+              textDecoration: 'none',
+              transition: 'background 0.12s',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(224,17,95,0.06)'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = 'none'}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Admin Dashboard
+          </a>
+
           {/* Save action */}
           {!saveOpen ? (
             <button

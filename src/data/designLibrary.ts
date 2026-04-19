@@ -1086,6 +1086,1014 @@ export const designLibrary = {
       "performance_rating": 95,
       "cost_index": 250,
       "production_ease": "extremely difficult"
+    },
+    {
+      "id": "W031",
+      "name": "Warp Rib (Design #31)",
+      "fabric_type": "Rib Weave",
+      "weave_type": "Warp-faced",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 2,
+      "repeat_size": 4,
+      "angle": 90,
+      "float_length": "short",
+      "threading": "Straight",
+      "weight": "Medium",
+      "weight_range": "140-160 GSM",
+      "tags": ["rib", "warp-faced", "formal", "crisp", "vertical"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [1,1,0,0],
+        [0,0,1,1],
+        [0,0,1,1]
+      ],
+      "popularity": 85,
+      "description": "Crisp, raised vertical ribs. Created by yarn choice and specific matrix plotting over 4 picks.",
+      "applications": ["shirting", "structured apparel", "upholstery trim"],
+      "characteristics": ["Bold vertical lines", "formal appearance", "warp dominant"],
+      "performance_rating": 85,
+      "cost_index": 100,
+      "production_ease": "very easy"
+    },
+    {
+      "id": "W032",
+      "name": "Weft Rib (Design #32)",
+      "fabric_type": "Rib Weave",
+      "weave_type": "Weft-faced",
+      "twill_ratio": "N/A",
+      "direction": "Horizontal",
+      "shaft_count": 2,
+      "repeat_size": 4,
+      "angle": 0,
+      "float_length": "short",
+      "threading": "Straight",
+      "weight": "Medium",
+      "weight_range": "140-160 GSM",
+      "tags": ["rib", "weft-faced", "casual", "horizontal"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [1,1,0,0],
+        [0,0,1,1],
+        [0,0,1,1]
+      ],
+      "popularity": 80,
+      "description": "Raised horizontal ribs. Created with bolder weft yarns on a plain base.",
+      "applications": ["casual shirting", "dress fabric", "stretch base"],
+      "characteristics": ["Horizontal ridge pattern", "relaxed appearance", "softer hand"],
+      "performance_rating": 80,
+      "cost_index": 100,
+      "production_ease": "very easy"
+    },
+    {
+      "id": "W033",
+      "name": "Matt Weave (Design #33)",
+      "fabric_type": "Textured Plain Derivative",
+      "weave_type": "Matt",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 3,
+      "repeat_size": 3,
+      "angle": 90,
+      "float_length": "short",
+      "threading": "Point",
+      "weight": "Light-Medium",
+      "weight_range": "130-150 GSM",
+      "tags": ["matt", "textured", "casual", "pebbly"],
+      "peg_matrix": [
+        [1,0,1],
+        [0,1,0],
+        [1,0,1]
+      ],
+      "popularity": 85,
+      "description": "Matte surface with a pebbly hand. Subtle texture and uniform appearance.",
+      "applications": ["dress fabric", "lightweight suiting", "casual wear"],
+      "characteristics": ["Pebbly hand", "matte finish", "soft natural feel"],
+      "performance_rating": 82,
+      "cost_index": 105,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W034",
+      "name": "Regular Twill 2/1 (Design #34)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "2/1",
+      "direction": "Z",
+      "shaft_count": 3,
+      "repeat_size": 4,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "150 GSM",
+      "tags": ["twill", "denim-base"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,0,0,1]
+      ],
+      "popularity": 90,
+      "description": "Standard 2/1 twill progression.",
+      "applications": ["denim base"],
+      "characteristics": ["Diagonal lines"],
+      "performance_rating": 85,
+      "cost_index": 110,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W035",
+      "name": "Broken Twill (Design #35)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Broken Twill",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Skip",
+      "weight": "Medium",
+      "weight_range": "160 GSM",
+      "tags": ["twill", "broken"],
+      "peg_matrix": [
+        [1,1,0,0,0,0,1,1],
+        [0,1,1,0,0,0,0,1],
+        [0,0,1,1,0,0,0,0],
+        [0,0,0,1,1,0,0,0],
+        [1,1,0,0,1,1,0,0],
+        [0,1,1,0,0,1,1,0],
+        [0,0,1,1,0,0,1,1],
+        [1,0,0,1,1,0,0,1]
+      ],
+      "popularity": 85,
+      "description": "Broken twill with interrupted diagonal lines.",
+      "applications": ["suiting", "twill fabric"],
+      "characteristics": ["Broken diagonal lines"],
+      "performance_rating": 88,
+      "cost_index": 115,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W036",
+      "name": "Reversed Twill (Design #36)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "2/2",
+      "direction": "S",
+      "shaft_count": 4,
+      "repeat_size": 4,
+      "angle": -45,
+      "float_length": "medium",
+      "threading": "Reverse Point",
+      "weight": "Medium",
+      "weight_range": "150 GSM",
+      "tags": ["twill", "reversed", "reversible"],
+      "peg_matrix": [
+        [0,0,1,1],
+        [0,1,1,0],
+        [1,1,0,0],
+        [1,0,0,1]
+      ],
+      "popularity": 80,
+      "description": "Reversed diagonal progression.",
+      "applications": ["reversible fabrics"],
+      "characteristics": ["Opposite direction diagonal"],
+      "performance_rating": 85,
+      "cost_index": 105,
+      "production_ease": "easy"
+    },
+    {
+      "id": "W037",
+      "name": "Zigzag Twill (Design #37)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Zigzag",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Step",
+      "weight": "Medium",
+      "weight_range": "160 GSM",
+      "tags": ["twill", "zigzag", "decorative"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,0,0,1],
+        [1,0,0,1],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,1,0,0]
+      ],
+      "popularity": 85,
+      "description": "Lightning bolt zigzag pattern created by reversing twill direction.",
+      "applications": ["decorative suiting"],
+      "characteristics": ["Zigzag diagonal"],
+      "performance_rating": 88,
+      "cost_index": 120,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W038",
+      "name": "Herringbone Twill (Design #38)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Herringbone",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Complex Point",
+      "weight": "Heavy",
+      "weight_range": "180 GSM",
+      "tags": ["twill", "herringbone", "classic", "tweed"],
+      "peg_matrix": [
+        [1,1,0,0,0,0,1,1],
+        [0,1,1,0,0,0,0,1],
+        [0,0,1,1,0,0,0,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,0,0,1,1,0,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,1,1,0,0,0,0],
+        [0,1,1,0,0,0,0,1]
+      ],
+      "popularity": 95,
+      "description": "V-shaped diagonals reversing at midpoint. Classic herringbone aesthetic.",
+      "applications": ["tweed", "herringbone suiting"],
+      "characteristics": ["V-shaped diagonals"],
+      "performance_rating": 90,
+      "cost_index": 125,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W039",
+      "name": "Diamond Twill (Design #39)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Diamond",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Reverse Point",
+      "weight": "Medium",
+      "weight_range": "170 GSM",
+      "tags": ["twill", "diamond", "geometric"],
+      "peg_matrix": [
+        [1,1,0,0,0,0,1,1],
+        [0,1,1,0,0,0,0,1],
+        [0,0,1,1,0,0,0,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,1,1,0,0,0,0],
+        [0,1,1,0,0,0,0,1],
+        [1,1,0,0,0,0,1,1]
+      ],
+      "popularity": 88,
+      "description": "Diamond shapes formed by twill direction reversal.",
+      "applications": ["fancy suiting", "jackets"],
+      "characteristics": ["Geometric diamonds"],
+      "performance_rating": 90,
+      "cost_index": 130,
+      "production_ease": "hard"
+    },
+    {
+      "id": "W040",
+      "name": "2/2 Twill (Design #40)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "2/2",
+      "direction": "Z",
+      "shaft_count": 4,
+      "repeat_size": 4,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "160 GSM",
+      "tags": ["twill", "classic"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [1,1,0,0],
+        [0,0,1,1],
+        [0,0,1,1]
+      ],
+      "popularity": 90,
+      "description": "Crisp, even texture. Sturdy twill.",
+      "applications": ["sturdy twill"],
+      "characteristics": ["Even diagonal"],
+      "performance_rating": 90,
+      "cost_index": 110,
+      "production_ease": "easy"
+    },
+    {
+      "id": "W041",
+      "name": "3/1 Twill (Design #41)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "3/1",
+      "direction": "Z",
+      "shaft_count": 4,
+      "repeat_size": 4,
+      "angle": 45,
+      "float_length": "long",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "165 GSM",
+      "tags": ["twill", "asymmetric"],
+      "peg_matrix": [
+        [1,1,1,0],
+        [0,1,1,1],
+        [1,0,1,1],
+        [1,1,0,1]
+      ],
+      "popularity": 95,
+      "description": "Asymmetric 3 float : 1 interlace. Very high strength.",
+      "applications": ["denim", "heavy twill"],
+      "characteristics": ["Pronounced diagonal ribs"],
+      "performance_rating": 95,
+      "cost_index": 115,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W042",
+      "name": "3/2 Twill (Design #42)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "3/2",
+      "direction": "Z",
+      "shaft_count": 5,
+      "repeat_size": 5,
+      "angle": 45,
+      "float_length": "long",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "170 GSM",
+      "tags": ["twill", "balanced"],
+      "peg_matrix": [
+        [1,1,1,0,0],
+        [0,1,1,1,0],
+        [0,0,1,1,1],
+        [1,0,0,1,1],
+        [1,1,0,0,1]
+      ],
+      "popularity": 85,
+      "description": "Balanced 3 float over 2 interlace. Medium diagonal emphasis.",
+      "applications": ["suiting", "twill dress"],
+      "characteristics": ["Medium diagonal runs"],
+      "performance_rating": 90,
+      "cost_index": 115,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W043",
+      "name": "4/1 Twill (Design #43)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "4/1",
+      "direction": "Z",
+      "shaft_count": 5,
+      "repeat_size": 5,
+      "angle": 45,
+      "float_length": "long",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "175 GSM",
+      "tags": ["twill", "warp-faced"],
+      "peg_matrix": [
+        [1,1,1,1,0],
+        [0,1,1,1,1],
+        [1,0,1,1,1],
+        [1,1,0,1,1],
+        [1,1,1,0,1]
+      ],
+      "popularity": 85,
+      "description": "Extreme warp face 4:1 ratio.",
+      "applications": ["heavy denim", "twill suiting"],
+      "characteristics": ["Prominent bold diagonals"],
+      "performance_rating": 92,
+      "cost_index": 120,
+      "production_ease": "hard"
+    },
+    {
+      "id": "W044",
+      "name": "5/1 Twill (Design #44)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "5/1",
+      "direction": "Z",
+      "shaft_count": 6,
+      "repeat_size": 6,
+      "angle": 45,
+      "float_length": "long",
+      "threading": "Point",
+      "weight": "Heavy",
+      "weight_range": "190 GSM",
+      "tags": ["twill", "warp-faced", "extreme"],
+      "peg_matrix": [
+        [1,1,1,1,1,0],
+        [0,1,1,1,1,1],
+        [1,0,1,1,1,1],
+        [1,1,0,1,1,1],
+        [1,1,1,0,1,1],
+        [1,1,1,1,0,1]
+      ],
+      "popularity": 70,
+      "description": "Extremely bold diagonal with heavy float ratio 5:1.",
+      "applications": ["heavy-duty twill", "workwear denim"],
+      "characteristics": ["Extremely bold diagonal"],
+      "performance_rating": 95,
+      "cost_index": 125,
+      "production_ease": "hard"
+    },
+    {
+      "id": "W045",
+      "name": "Uneven Twill (Design #45)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Uneven Twill",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 6,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Skip",
+      "weight": "Light",
+      "weight_range": "145 GSM",
+      "tags": ["twill", "uneven", "unstructured"],
+      "peg_matrix": [
+        [1,1,0,0,1,0],
+        [0,1,1,0,0,1],
+        [1,0,1,1,0,0],
+        [0,1,0,1,1,0],
+        [1,0,0,1,0,1],
+        [0,1,0,0,1,1]
+      ],
+      "popularity": 75,
+      "description": "Unstructured uneven twill direction. Relaxed hand feeling.",
+      "applications": ["casual wear", "textured suiting"],
+      "characteristics": ["Irregular diagonal lines"],
+      "performance_rating": 80,
+      "cost_index": 110,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W046",
+      "name": "Steep Twill (Design #46)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Steep Twill",
+      "twill_ratio": "N/A",
+      "direction": "Z",
+      "shaft_count": 3,
+      "repeat_size": 4,
+      "angle": 75,
+      "float_length": "short",
+      "threading": "Point",
+      "weight": "Light",
+      "weight_range": "120 GSM",
+      "tags": ["twill", "steep"],
+      "peg_matrix": [
+        [1,0,0],
+        [1,0,0],
+        [0,1,0],
+        [0,0,1]
+      ],
+      "popularity": 80,
+      "description": "Nearly vertical diagonal lines with short floats.",
+      "applications": ["lightweight twill dress"],
+      "characteristics": ["Very steep diagonal lines"],
+      "performance_rating": 80,
+      "cost_index": 105,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W047",
+      "name": "Flat Twill (Design #47)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Flat Twill",
+      "twill_ratio": "N/A",
+      "direction": "Z",
+      "shaft_count": 4,
+      "repeat_size": 6,
+      "angle": 15,
+      "float_length": "long",
+      "threading": "Point",
+      "weight": "Medium",
+      "weight_range": "140 GSM",
+      "tags": ["twill", "flat", "shallow"],
+      "peg_matrix": [
+        [1,1,1,0,0,0],
+        [0,0,1,1,1,0],
+        [0,0,0,0,1,1],
+        [1,0,0,0,0,1]
+      ],
+      "popularity": 75,
+      "description": "Shallow twill angle less than 30 degrees.",
+      "applications": ["suiting with subtle pattern"],
+      "characteristics": ["Very shallow diagonal"],
+      "performance_rating": 80,
+      "cost_index": 105,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W048",
+      "name": "Elongated Twill (Design #48)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Elongated Twill",
+      "twill_ratio": "N/A",
+      "direction": "Z",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 60,
+      "float_length": "medium",
+      "threading": "Extended Point",
+      "weight": "Medium",
+      "weight_range": "155 GSM",
+      "tags": ["twill", "elongated"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,0,0,1],
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,0,0,1]
+      ],
+      "popularity": 80,
+      "description": "Extended twill steps giving a stretched diagonal pattern.",
+      "applications": ["fancy twill", "textured fabrics"],
+      "characteristics": ["Stretched diagonal pattern"],
+      "performance_rating": 85,
+      "cost_index": 110,
+      "production_ease": "medium"
+    },
+    {
+      "id": "W049",
+      "name": "Combined Twill (Design #49)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Combined Twill",
+      "twill_ratio": "N/A",
+      "direction": "N/A",
+      "shaft_count": 4,
+      "repeat_size": 8,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Variable Point",
+      "weight": "Medium",
+      "weight_range": "165 GSM",
+      "tags": ["twill", "combined", "decorative"],
+      "peg_matrix": [
+        [1,1,0,0,1,1,0,0],
+        [0,1,1,0,1,1,0,0],
+        [0,0,1,1,0,0,1,1],
+        [1,0,0,1,0,0,1,1],
+        [1,1,0,0,1,1,0,0],
+        [0,1,1,0,1,1,0,0],
+        [0,0,1,1,0,0,1,1],
+        [1,0,0,1,0,0,1,1]
+      ],
+      "popularity": 80,
+      "description": "Multiple twill directions grouped together in one plane.",
+      "applications": ["decorative suiting", "fashion twill"],
+      "characteristics": ["Mixed diagonal directions"],
+      "performance_rating": 82,
+      "cost_index": 120,
+      "production_ease": "hard"
+    },
+    {
+      "id": "W050",
+      "name": "Continuous Twill (Design #50)",
+      "fabric_type": "Twill Weave",
+      "weave_type": "Twill",
+      "twill_ratio": "N/A",
+      "direction": "Z",
+      "shaft_count": 4,
+      "repeat_size": 4,
+      "angle": 45,
+      "float_length": "medium",
+      "threading": "Point Continuous",
+      "weight": "Medium",
+      "weight_range": "160 GSM",
+      "tags": ["twill", "continuous", "smooth"],
+      "peg_matrix": [
+        [1,1,0,0],
+        [0,1,1,0],
+        [0,0,1,1],
+        [1,0,0,1]
+      ],
+      "popularity": 95,
+      "description": "Repeating twill with absolutely no breaks seamlessly tiling.",
+      "applications": ["denim", "twill basics"],
+      "characteristics": ["Smooth diagonal stripe"],
+      "performance_rating": 95,
+      "cost_index": 105,
+      "production_ease": "medium"
     }
+,
+
+  // SATIN / SATEEN VARIATIONS (51-66)
+  {
+    "id": "W051", "name": "Satin Weave (5-End)", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 5, "angle": 0, "float_length": "long", "threading": "Skip", "weight": "Light", "weight_range": "130 GSM",
+    "tags": ["satin", "lustrous", "smooth"], "popularity": 85,
+    "peg_matrix": [[1,0,0,0,0],[0,1,0,0,0],[0,0,1,0,0],[0,0,0,1,0],[0,0,0,0,1]],
+    "description": "Lustrous diagonal float. Very smooth hand.", "applications": ["dress fabric", "satin linings"], "characteristics": ["long floats", "lustrous"], "performance_rating": 70, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W052", "name": "Sateen Weave (5-End)", "fabric_type": "Sateen", "weave_type": "Sateen", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 5, "angle": 0, "float_length": "long", "threading": "Skip", "weight": "Light", "weight_range": "130 GSM",
+    "tags": ["sateen", "weft-faced", "soft sheen"], "popularity": 80,
+    "peg_matrix": [[1,0,0,0,1],[1,1,0,0,0],[0,1,1,0,0],[0,0,1,1,0],[0,0,0,1,1]],
+    "description": "Reversed satin with weft floats. Soft sheen.", "applications": ["sateen shirting", "dress linings"], "characteristics": ["weft-faced"], "performance_rating": 70, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W053", "name": "8-End Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 8, "angle": 0, "float_length": "long", "threading": "Skip", "weight": "Light-Medium", "weight_range": "140 GSM",
+    "tags": ["satin", "luxury"], "popularity": 90,
+    "peg_matrix": [[1,0,0,0,0,0,0,0],[0,0,0,1,0,0,0,0],[0,0,0,0,0,0,1,0],[0,1,0,0,0,0,0,0],[0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,1],[0,0,1,0,0,0,0,0],[0,0,0,0,0,1,0,0]],
+    "description": "Extremely lustrous 8-shaft satin.", "applications": ["fine dress satin", "luxury fabrics"], "characteristics": ["ultra-smooth"], "performance_rating": 60, "cost_index": 150, "production_ease": "hard"
+  },
+  {
+    "id": "W054", "name": "10-End Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 10, "repeat_size": 10, "angle": 0, "float_length": "extreme", "threading": "Skip", "weight": "Light-Medium", "weight_range": "145 GSM",
+    "tags": ["satin", "premium", "couture"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Premium satin with mirror-like sheen. +9 float.", "applications": ["premium satin", "couture"], "characteristics": ["mirror-like sheen", "ultra-slippery"], "performance_rating": 50, "cost_index": 200, "production_ease": "extreme"
+  },
+  {
+    "id": "W055", "name": "12-End Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 12, "repeat_size": 12, "angle": 0, "float_length": "extreme", "threading": "Skip", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["satin", "bridal", "extreme luster"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Bridal satin with extreme luster. Float +11.", "applications": ["bridal satin", "haute couture"], "characteristics": ["extreme luster"], "performance_rating": 45, "cost_index": 250, "production_ease": "extreme"
+  },
+  {
+    "id": "W056", "name": "Irregular Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 6, "angle": 0, "float_length": "variable", "threading": "Skip", "weight": "Light", "weight_range": "135 GSM",
+    "tags": ["satin", "textured"], "popularity": 75,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0], [1, 0, 0, 1, 0, 1]],
+    "description": "Non-uniform float placement.", "applications": ["casual satin", "textured dress"], "characteristics": ["broken luster"], "performance_rating": 75, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W057", "name": "Satin Stripe", "fabric_type": "Satin Combination", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 8, "angle": 0, "float_length": "variable", "threading": "Mixed", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["satin stripe", "striped"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Alternating satin + plain stripes.", "applications": ["striped dress", "shirting"], "characteristics": ["lustrous stripes"], "performance_rating": 80, "cost_index": 130, "production_ease": "medium"
+  },
+  {
+    "id": "W058", "name": "Satin Check", "fabric_type": "Satin Combination", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 12, "angle": 0, "float_length": "variable", "threading": "Variable", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["satin check", "checker"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin + plain in grid pattern.", "applications": ["dress fabric", "decorative"], "characteristics": ["shiny checker squares"], "performance_rating": 80, "cost_index": 140, "production_ease": "hard"
+  },
+  {
+    "id": "W059", "name": "Broken Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 8, "angle": 0, "float_length": "medium", "threading": "Hybrid", "weight": "Medium", "weight_range": "145 GSM",
+    "tags": ["satin", "broken"], "popularity": 75,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin float interrupted by tie-downs.", "applications": ["structured satin", "wrinkle-control"], "characteristics": ["firmer than regular satin"], "performance_rating": 85, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W060", "name": "Combined Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 16, "angle": 0, "float_length": "long", "threading": "Variable", "weight": "Medium", "weight_range": "145 GSM",
+    "tags": ["satin", "combined"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Multiple satin weaves in zones (5-end + 8-end).", "applications": ["fancy dress satin"], "characteristics": ["mixed luster intensities"], "performance_rating": 70, "cost_index": 150, "production_ease": "hard"
+  },
+  {
+    "id": "W061", "name": "Figured Satin", "fabric_type": "Satin", "weave_type": "Jacquard Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 20, "angle": 0, "float_length": "variable", "threading": "Jacquard", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["jacquard", "satin", "figured"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin base with motif interlace changes.", "applications": ["luxury"], "characteristics": ["patterned lustrous areas"], "performance_rating": 80, "cost_index": 200, "production_ease": "hard"
+  },
+  {
+    "id": "W062", "name": "Satin Backed Fabric", "fabric_type": "Double Cloth", "weave_type": "Double Weave", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 10, "repeat_size": 5, "angle": 0, "float_length": "variable", "threading": "Complex", "weight": "Heavy", "weight_range": "200 GSM",
+    "tags": ["double cloth", "satin backed"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0], [0, 1, 0, 1, 0], [1, 0, 0, 0, 1]],
+    "description": "Two-ply with satin face + twill back.", "applications": ["suiting", "quality dress"], "characteristics": ["lustrous front", "structured back"], "performance_rating": 90, "cost_index": 180, "production_ease": "hard"
+  },
+  {
+    "id": "W063", "name": "Double Satin", "fabric_type": "Double Cloth", "weave_type": "Double Weave", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 10, "repeat_size": 5, "angle": 0, "float_length": "long", "threading": "Complex", "weight": "Heavy", "weight_range": "200 GSM",
+    "tags": ["double cloth", "double satin", "reversible"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1], [0, 1, 0, 1, 0], [0, 0, 1, 0, 0], [0, 1, 0, 1, 0], [1, 0, 0, 0, 1]],
+    "description": "Two satin layers, interlocked.", "applications": ["reversible satin", "luxury linings"], "characteristics": ["lustrous both sides"], "performance_rating": 85, "cost_index": 200, "production_ease": "hard"
+  },
+  {
+    "id": "W064", "name": "Satin Interlock", "fabric_type": "Satin Combinations", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 8, "angle": 0, "float_length": "variable", "threading": "Mixed", "weight": "Medium-Heavy", "weight_range": "180 GSM",
+    "tags": ["satin", "interlock"], "popularity": 75,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin + plain layers, stitched together.", "applications": ["heavy satin dress", "structured"], "characteristics": ["satin surface", "locked base"], "performance_rating": 90, "cost_index": 160, "production_ease": "medium"
+  },
+  {
+    "id": "W065", "name": "Satin Network", "fabric_type": "Satin Combinations", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 10, "angle": 0, "float_length": "variable", "threading": "Skip/Point", "weight": "Light", "weight_range": "135 GSM",
+    "tags": ["satin", "network", "web"], "popularity": 70,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin float areas connected by minimal interlace grid.", "applications": ["lightweight satin", "sheer dress"], "characteristics": ["open lustrous pattern", "web-like"], "performance_rating": 65, "cost_index": 140, "production_ease": "medium"
+  },
+  {
+    "id": "W066", "name": "Reversed Satin", "fabric_type": "Satin", "weave_type": "Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 5, "angle": 0, "float_length": "long", "threading": "Skip", "weight": "Light", "weight_range": "130 GSM",
+    "tags": ["satin", "reversible"], "popularity": 80,
+    "peg_matrix": [[0,0,0,0,1],[1,0,0,0,0],[0,1,0,0,0],[0,0,1,0,0],[0,0,0,1,0]],
+    "description": "Mirror of standard satin.", "applications": ["reversible fabrics", "satin variants"], "characteristics": ["smooth", "mirror-image"], "performance_rating": 70, "cost_index": 120, "production_ease": "medium"
+  },
+
+  // CREPE & DOBBY WEAVES (67-88)
+  {
+    "id": "W067", "name": "Crepe Weave (Base)", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "short", "threading": "Straight", "weight": "Light", "weight_range": "120 GSM",
+    "tags": ["crepe", "crinkled", "matte"], "popularity": 90,
+    "peg_matrix": [[1,0,1,0],[0,1,0,1],[1,0,1,0],[0,1,0,1]],
+    "description": "Pebbly surface texture.", "applications": ["crepe dress", "casual wear"], "characteristics": ["crinkled", "matte"], "performance_rating": 85, "cost_index": 100, "production_ease": "medium"
+  },
+  {
+    "id": "W068", "name": "Crepe Satin", "fabric_type": "Crepe/Satin", "weave_type": "Mixed", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 8, "angle": 0, "float_length": "medium", "threading": "Hybrid", "weight": "Light", "weight_range": "130 GSM",
+    "tags": ["crepe", "satin", "textured"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Satin areas + crepe zones.", "applications": ["crepe dress with sheen"], "characteristics": ["lustrous + textured surface"], "performance_rating": 80, "cost_index": 125, "production_ease": "medium"
+  },
+  {
+    "id": "W069", "name": "Crepe Twill", "fabric_type": "Crepe/Twill", "weave_type": "Mixed", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 8, "angle": 45, "float_length": "medium", "threading": "Point Variable", "weight": "Light-Medium", "weight_range": "135 GSM",
+    "tags": ["crepe", "twill", "textured ribs"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Twill diagonals broken by crepe.", "applications": ["twilled crepe fabric"], "characteristics": ["textured diagonal ribs"], "performance_rating": 85, "cost_index": 115, "production_ease": "medium"
+  },
+  {
+    "id": "W070", "name": "Granular Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 3, "repeat_size": 6, "angle": 0, "float_length": "short", "threading": "Skip/Broken", "weight": "Light", "weight_range": "125 GSM",
+    "tags": ["crepe", "granular", "grainy"], "popularity": 75,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0], [1, 0, 0, 1, 0, 1]],
+    "description": "Random short floats (1-2 yarns).", "applications": ["fine crepe", "lightweight dress"], "characteristics": ["grainy", "fine crinkle"], "performance_rating": 85, "cost_index": 110, "production_ease": "medium"
+  },
+  {
+    "id": "W071", "name": "Pebble Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 8, "angle": 0, "float_length": "medium", "threading": "Point/Skip", "weight": "Light-Medium", "weight_range": "130 GSM",
+    "tags": ["crepe", "pebble"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Clustered float groups offset by row.", "applications": ["crepe dress", "textured casual"], "characteristics": ["bumpy surface"], "performance_rating": 85, "cost_index": 115, "production_ease": "medium"
+  },
+  {
+    "id": "W072", "name": "Moss Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "short", "threading": "Point", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["crepe", "moss", "dense"], "popularity": 88,
+    "peg_matrix": [[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 1, 0, 1]],
+    "description": "Very dense interlacing, fine moss-like texture.", "applications": ["structured crepe", "quality dress"], "characteristics": ["dense", "crisp"], "performance_rating": 90, "cost_index": 110, "production_ease": "medium"
+  },
+  {
+    "id": "W073", "name": "Sand Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 3, "repeat_size": 6, "angle": 0, "float_length": "short", "threading": "Mixed", "weight": "Light", "weight_range": "125 GSM",
+    "tags": ["crepe", "sand", "grainy"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0], [1, 0, 0, 1, 0, 1]],
+    "description": "Mixed short floats creating grainy sand effect.", "applications": ["casual crepe", "textured dress"], "characteristics": ["sandy", "rough texture"], "performance_rating": 85, "cost_index": 110, "production_ease": "medium"
+  },
+  {
+    "id": "W074", "name": "Flat Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "short", "threading": "Straight", "weight": "Light-Medium", "weight_range": "130 GSM",
+    "tags": ["crepe", "flat", "smooth"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 1, 0, 1]],
+    "description": "Minimal texture, flatter surface crepe.", "applications": ["crepe shirting", "smooth dress"], "characteristics": ["smooth crepe", "matte finish"], "performance_rating": 90, "cost_index": 100, "production_ease": "easy"
+  },
+  {
+    "id": "W075", "name": "Irregular Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 8, "angle": 0, "float_length": "variable", "threading": "Random", "weight": "Light-Medium", "weight_range": "130 GSM",
+    "tags": ["crepe", "irregular", "fashion"], "popularity": 75,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Random float placement, entirely unpredictable organic texture.", "applications": ["fashion crepe", "designer dress"], "characteristics": ["organic feel", "unpredictable"], "performance_rating": 80, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W076", "name": "Crepe Stripe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 12, "angle": 0, "float_length": "short", "threading": "Mixed", "weight": "Light-Medium", "weight_range": "130 GSM",
+    "tags": ["crepe", "stripe"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0]],
+    "description": "Crepe weave with plain stripes.", "applications": ["striped crepe dress"], "characteristics": ["textured stripes"], "performance_rating": 85, "cost_index": 115, "production_ease": "medium"
+  },
+  {
+    "id": "W077", "name": "Heavy Crepe", "fabric_type": "Crepe", "weave_type": "Crepe", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "short", "threading": "Straight", "weight": "Heavy", "weight_range": "200 GSM",
+    "tags": ["crepe", "heavy", "structured"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 1, 0, 1]],
+    "description": "Crepe with thicker yarns for winter.", "applications": ["crepe suiting", "winter dress"], "characteristics": ["heavy textured surface"], "performance_rating": 90, "cost_index": 120, "production_ease": "medium"
+  },
+  {
+    "id": "W078", "name": "Dobby Weave (Base)", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 8, "angle": 0, "float_length": "short", "threading": "Dobby", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["dobby", "geometric"], "popularity": 95,
+    "peg_matrix": [
+      [1,0,1,0,1,0,1,0],
+      [0,1,0,1,0,1,0,1],
+      [1,1,0,0,1,1,0,0],
+      [0,0,1,1,0,0,1,1],
+      [1,0,1,0,1,0,1,0],
+      [0,1,0,1,0,1,0,1],
+      [1,1,0,0,1,1,0,0],
+      [0,0,1,1,0,0,1,1]
+    ],
+    "description": "Programmable pattern yielding small geometric elements.", "applications": ["shirting", "dress fabric"], "characteristics": ["small geometric pattern"], "performance_rating": 90, "cost_index": 130, "production_ease": "medium"
+  },
+  {
+    "id": "W079", "name": "Geometric Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 12, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "145 GSM",
+    "tags": ["dobby", "geometric"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Squares and diamonds dobby pattern.", "applications": ["dressy shirting", "home textile"], "characteristics": ["geometric shapes"], "performance_rating": 90, "cost_index": 140, "production_ease": "medium"
+  },
+  {
+    "id": "W080", "name": "Diamond Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 16, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["dobby", "diamond"], "popularity": 88,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Diamond grid using dobby.", "applications": ["dress fabric", "upholstery"], "characteristics": ["diamond motifs"], "performance_rating": 90, "cost_index": 140, "production_ease": "medium"
+  },
+  {
+    "id": "W081", "name": "Honeycomb Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 8, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "145 GSM",
+    "tags": ["dobby", "honeycomb", "3D"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Honeycomb 3D texture cells.", "applications": ["towel fabric", "textured shirting"], "characteristics": ["3D honeycomb surface"], "performance_rating": 85, "cost_index": 145, "production_ease": "medium"
+  },
+  {
+    "id": "W082", "name": "Birdseye Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 6, "angle": 0, "float_length": "short", "threading": "Dobby", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["dobby", "birdseye", "dots"], "popularity": 92,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0], [1, 0, 0, 1, 0, 1]],
+    "description": "Small dot pattern (birds eye effect).", "applications": ["oxford shirting", "dress"], "characteristics": ["tiny circular floats"], "performance_rating": 90, "cost_index": 135, "production_ease": "medium"
+  },
+  {
+    "id": "W083", "name": "Spot Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 10, "angle": 0, "float_length": "short", "threading": "Dobby", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["dobby", "spot"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Isolated spot motifs scattered.", "applications": ["dress fabric", "casual shirting"], "characteristics": ["small isolated spots"], "performance_rating": 85, "cost_index": 130, "production_ease": "medium"
+  },
+  {
+    "id": "W084", "name": "Stripe Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 16, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["dobby", "stripe"], "popularity": 88,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0]],
+    "description": "Pattern repeats inside stripes.", "applications": ["striped shirting"], "characteristics": ["patterned stripes"], "performance_rating": 90, "cost_index": 135, "production_ease": "medium"
+  },
+  {
+    "id": "W085", "name": "Check Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 12, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "140 GSM",
+    "tags": ["dobby", "check"], "popularity": 88,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Small check boxes using dobby grid.", "applications": ["check shirting", "dress fabric"], "characteristics": ["small check boxes"], "performance_rating": 90, "cost_index": 135, "production_ease": "medium"
+  },
+  {
+    "id": "W086", "name": "Texture Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 10, "angle": 0, "float_length": "medium", "threading": "Dobby", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["dobby", "texture", "3D"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Staggered dobby creating a 3D texture.", "applications": ["textured dress", "home textile"], "characteristics": ["textured surface"], "performance_rating": 88, "cost_index": 140, "production_ease": "medium"
+  },
+  {
+    "id": "W087", "name": "Fancy Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 10, "repeat_size": 20, "angle": 0, "float_length": "variable", "threading": "Advanced Dobby", "weight": "Medium", "weight_range": "150 GSM",
+    "tags": ["dobby", "fancy", "complex"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Complex dobby with multiple motif combinations.", "applications": ["premium dress fabric", "home textile"], "characteristics": ["intricate fancy pattern"], "performance_rating": 85, "cost_index": 160, "production_ease": "hard"
+  },
+  {
+    "id": "W088", "name": "Advanced Dobby", "fabric_type": "Dobby", "weave_type": "Dobby", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 10, "repeat_size": 32, "angle": 0, "float_length": "variable", "threading": "Complex", "weight": "Medium", "weight_range": "155 GSM",
+    "tags": ["dobby", "advanced", "multi-pattern"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0]],
+    "description": "Zonned multi-patterns integrated via complex block dobby.", "applications": ["designer fabric", "premium dress"], "characteristics": ["multiple patterns integrated"], "performance_rating": 85, "cost_index": 170, "production_ease": "hard"
+  },
+
+  // JACQUARD & ADVANCED WEAVES (89-104)
+  {
+    "id": "W089", "name": "Jacquard Weave (Base)", "fabric_type": "Jacquard", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 24, "angle": 0, "float_length": "variable", "threading": "Straight", "weight": "Medium", "weight_range": "160 GSM",
+    "tags": ["jacquard", "complex"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Full individual shaft control for advanced image weaving.", "applications": ["damask", "brocade"], "characteristics": ["custom programmed patterns"], "performance_rating": 85, "cost_index": 200, "production_ease": "hard"
+  },
+  {
+    "id": "W090", "name": "Floral Jacquard", "fabric_type": "Jacquard", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 32, "repeat_size": 32, "angle": 0, "float_length": "variable", "threading": "Straight", "weight": "Medium", "weight_range": "170 GSM",
+    "tags": ["jacquard", "floral", "elaborate"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Elaborate repeating flower patterns.", "applications": ["dress fabrics", "home textile", "sarees"], "characteristics": ["floral motifs"], "performance_rating": 85, "cost_index": 220, "production_ease": "very hard"
+  },
+  {
+    "id": "W091", "name": "Damask (Jacquard)", "fabric_type": "Damask", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 32, "angle": 0, "float_length": "variable", "threading": "Straight", "weight": "Medium-Heavy", "weight_range": "180 GSM",
+    "tags": ["jacquard", "damask", "formal"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Self-reversing satin/twill motifs.", "applications": ["table linen", "upholstery", "high-end apparel"], "characteristics": ["subtle pattern", "matte on shiny"], "performance_rating": 90, "cost_index": 250, "production_ease": "very hard"
+  },
+  {
+    "id": "W092", "name": "Brocade", "fabric_type": "Brocade", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 40, "angle": 0, "float_length": "variable", "threading": "Jacquard", "weight": "Heavy", "weight_range": "200 GSM",
+    "tags": ["jacquard", "brocade", "metallic", "opulent"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Base weave with extra warp featuring metallic/color yarns.", "applications": ["bridal", "ceremonial", "high-fashion"], "characteristics": ["ornate with shimmer", "heavy"], "performance_rating": 85, "cost_index": 300, "production_ease": "extreme"
+  },
+  {
+    "id": "W093", "name": "Tapestry Weave", "fabric_type": "Tapestry", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 48, "angle": 0, "float_length": "variable", "threading": "Jacquard", "weight": "Heavy", "weight_range": "220 GSM",
+    "tags": ["jacquard", "tapestry", "decorative"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Picture-like motifs created via weft-dominant mapping.", "applications": ["upholstery", "wall hanging"], "characteristics": ["painterly image effect"], "performance_rating": 85, "cost_index": 280, "production_ease": "extreme"
+  },
+  {
+    "id": "W094", "name": "Figured Jacquard", "fabric_type": "Jacquard", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 20, "repeat_size": 20, "angle": 0, "float_length": "short", "threading": "Jacquard", "weight": "Medium", "weight_range": "160 GSM",
+    "tags": ["jacquard", "figured", "geometric"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Jacquard featuring small continuous geometric figures.", "applications": ["dress fabric", "shirting"], "characteristics": ["geometric motifs across surface"], "performance_rating": 90, "cost_index": 200, "production_ease": "hard"
+  },
+  {
+    "id": "W095", "name": "Matelassé", "fabric_type": "Matelasse", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 24, "angle": 0, "float_length": "variable", "threading": "Jacquard", "weight": "Medium-Heavy", "weight_range": "180 GSM",
+    "tags": ["jacquard", "matelasse", "quilted", "3D"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Jacquard created padded / puffed effect.", "applications": ["luxury dress", "upholstery"], "characteristics": ["raised padded motifs", "quilted layout"], "performance_rating": 85, "cost_index": 240, "production_ease": "hard"
+  },
+  {
+    "id": "W096", "name": "Double Cloth Jacquard", "fabric_type": "Double Cloth Jacquard", "weave_type": "Double Weave", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 48, "repeat_size": 32, "angle": 0, "float_length": "variable", "threading": "Jacquard Double", "weight": "Very Heavy", "weight_range": "300 GSM",
+    "tags": ["jacquard", "double cloth", "reversible"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Two jacquard layers stitched together perfectly.", "applications": ["reversible luxury", "high-end apparel"], "characteristics": ["two-sided jacquard"], "performance_rating": 80, "cost_index": 350, "production_ease": "extreme"
+  },
+  {
+    "id": "W097", "name": "Cut Jacquard", "fabric_type": "Jacquard Pile", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 32, "angle": 0, "float_length": "variable", "threading": "Jacquard", "weight": "Heavy", "weight_range": "200 GSM",
+    "tags": ["jacquard", "cut pile", "relief"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Jacquard pattern featuring cut threads to create pile effects.", "applications": ["luxury dress", "ornate fabric"], "characteristics": ["sculptured relief pattern"], "performance_rating": 80, "cost_index": 280, "production_ease": "extreme"
+  },
+  {
+    "id": "W098", "name": "Lappet Jacquard", "fabric_type": "Jacquard", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 40, "angle": 0, "float_length": "variable", "threading": "Jacquard + Lappet", "weight": "Medium-Heavy", "weight_range": "180 GSM",
+    "tags": ["jacquard", "lappet", "traditional"], "popularity": 80,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Base jacquard paired with extra lappet warp figuring.", "applications": ["dress fabric", "Indian traditional"], "characteristics": ["extra warp created pattern"], "performance_rating": 85, "cost_index": 260, "production_ease": "extreme"
+  },
+  {
+    "id": "W099", "name": "Advanced Jacquard", "fabric_type": "Jacquard", "weave_type": "Jacquard", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 32, "repeat_size": 64, "angle": 0, "float_length": "variable", "threading": "Full Jacquard", "weight": "Medium-Heavy", "weight_range": "180 GSM",
+    "tags": ["jacquard", "multi-color", "haute couture"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0], [1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1], [0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1], [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1], [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1], [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Multi-colored extreme complexity spanning large grid layouts.", "applications": ["premium dress", "haute couture"], "characteristics": ["intricate multi-color pattern"], "performance_rating": 80, "cost_index": 400, "production_ease": "extreme"
+  },
+  
+  // PILE WEAVES (100-104)
+  {
+    "id": "W100", "name": "Pile Weave (Base)", "fabric_type": "Pile Weave", "weave_type": "Pile", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 8, "angle": 0, "float_length": "long", "threading": "Pile Draft", "weight": "Heavy", "weight_range": "280 GSM",
+    "tags": ["pile", "terry", "loops"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Base weave plus extra warp creating uniform loops.", "applications": ["terry cloth", "towel"], "characteristics": ["looped surface", "soft", "absorbent"], "performance_rating": 90, "cost_index": 140, "production_ease": "medium"
+  },
+  {
+    "id": "W101", "name": "Warp Pile (Velvet)", "fabric_type": "Pile Weave", "weave_type": "Velvet", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "long", "threading": "Pile Draft", "weight": "Heavy", "weight_range": "220 GSM",
+    "tags": ["pile", "velvet", "warp-pile"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 1, 0, 1]],
+    "description": "Floats over rod are cut, giving ultra plush velvet.", "applications": ["velvet fabric", "luxury apparel"], "characteristics": ["cut velvet pile", "ultra-soft"], "performance_rating": 80, "cost_index": 200, "production_ease": "hard"
+  },
+  {
+    "id": "W102", "name": "Weft Pile (Corduroy)", "fabric_type": "Pile Weave", "weave_type": "Corduroy", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 4, "repeat_size": 4, "angle": 0, "float_length": "medium", "threading": "Twill Base", "weight": "Heavy", "weight_range": "240 GSM",
+    "tags": ["pile", "corduroy", "weft-pile"], "popularity": 90,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1]],
+    "description": "Pile inserted as weft and sliced to generate ribs.", "applications": ["corduroy pants", "casual heavy wear"], "characteristics": ["cut cord ribs", "wale-wise ribs"], "performance_rating": 85, "cost_index": 160, "production_ease": "medium"
+  },
+  {
+    "id": "W103", "name": "Loop Pile (Terry)", "fabric_type": "Pile Weave", "weave_type": "Terry", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 6, "repeat_size": 6, "angle": 0, "float_length": "long", "threading": "Terry Draft", "weight": "Very Heavy", "weight_range": "300 GSM",
+    "tags": ["pile", "terry", "loop-pile", "absorbent"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 1, 0, 1, 0, 1], [1, 0, 0, 0, 1, 0], [1, 0, 0, 1, 0, 1]],
+    "description": "Uncut heavily compacted warp loops.", "applications": ["terry towel", "beach wear"], "characteristics": ["looped surface", "raised"], "performance_rating": 90, "cost_index": 150, "production_ease": "medium"
+  },
+  {
+    "id": "W104", "name": "Combination Pile (Cut & Loop)", "fabric_type": "Pile Weave", "weave_type": "Cut & Loop", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 8, "repeat_size": 8, "angle": 0, "float_length": "variable", "threading": "Mixed Pile", "weight": "Very Heavy", "weight_range": "300 GSM",
+    "tags": ["pile", "cut & loop", "textured pile"], "popularity": 85,
+    "peg_matrix": [[1, 0, 0, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1], [0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0, 1, 0, 1, 0, 0], [1, 0, 0, 0, 1, 0, 0, 0], [1, 0, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 0], [0, 1, 1, 0, 0, 1, 0, 1]],
+    "description": "Slicing and looping combined into an intricate texture.", "applications": ["textured terry", "decorative towel"], "characteristics": ["textured surface", "variable cut"], "performance_rating": 85, "cost_index": 170, "production_ease": "hard"
+  },
+  {
+    "id": "N001", "name": "Plain Weave (Factory)", "fabric_type": "Plain Woven Cloth", "weave_type": "Plain (1/1)", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 2, "repeat_size": 2, "angle": 0, "float_length": "1", "threading": "1,2,1,2,...", "weight": "Medium", "weight_range": "120-180 GSM",
+    "tags": ["fundamental weaves", "beginner"], "popularity": 100,
+    "peg_matrix": [[1, 0], [0, 1]],
+    "description": "Alternate warp and weft intersections. Binary 1 = warp on top, 0 = weft on top", "applications": ["Apparel (shirting, dress fabrics)", "Home textiles", "Industrial"], "characteristics": ["Matte, uniform"], "performance_rating": 90, "cost_index": 100, "production_ease": "Easy"
+  },
+  {
+    "id": "N002", "name": "Basket Weave", "fabric_type": "Basket Weave Cloth", "weave_type": "Basket (2×2)", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 2, "repeat_size": 4, "angle": 0, "float_length": "2", "threading": "1,1,2,2,1,1,2,2,...", "weight": "Medium", "weight_range": "140-200 GSM",
+    "tags": ["fundamental weaves", "beginner"], "popularity": 95,
+    "peg_matrix": [[1, 1, 0, 0], [1, 1, 0, 0], [0, 0, 1, 1], [0, 0, 1, 1]],
+    "description": "Paired warp and weft yarns create basket-like appearance", "applications": ["Apparel", "Home textiles", "Decorative fabrics"], "characteristics": ["Textured, dimensional"], "performance_rating": 85, "cost_index": 105, "production_ease": "Easy-Medium"
+  },
+  {
+    "id": "N003", "name": "Rib Weave (Warp Rib)", "fabric_type": "Rib Weave Cloth", "weave_type": "Warp Rib (2/2)", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 2, "repeat_size": 4, "angle": 0, "float_length": "2", "threading": "1,1,2,2,1,1,2,2,...", "weight": "Medium", "weight_range": "130-180 GSM",
+    "tags": ["fundamental weaves", "beginner"], "popularity": 90,
+    "peg_matrix": [[1, 1, 0, 0], [0, 0, 1, 1]],
+    "description": "Warp floats dominate (2 picks). Creates vertical ridge effect", "applications": ["Apparel", "Home textiles", "Technical fabrics"], "characteristics": ["Raised vertical ridges"], "performance_rating": 88, "cost_index": 115, "production_ease": "Easy-Medium"
+  },
+  {
+    "id": "N004", "name": "Twill Weave (Regular 2/2)", "fabric_type": "Twill Weave Cloth", "weave_type": "2/2 Regular Twill", "twill_ratio": "2/2", "direction": "Right", "shaft_count": 3, "repeat_size": 4, "angle": 45, "float_length": "2", "threading": "1,2,3,1,2,3,...", "weight": "Heavy", "weight_range": "160-220 GSM",
+    "tags": ["fundamental weaves", "intermediate"], "popularity": 98,
+    "peg_matrix": [[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 1, 1], [1, 0, 0, 1]],
+    "description": "Diagonal progression +1/-1 step. Creates 45° twill line", "applications": ["Denim", "Chinos", "Upholstery"], "characteristics": ["Visible diagonal ridge"], "performance_rating": 95, "cost_index": 120, "production_ease": "Medium"
+  },
+  {
+    "id": "N005", "name": "Satin Weave (5-End)", "fabric_type": "Satin Weave Cloth", "weave_type": "5-End Satin", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 5, "repeat_size": 5, "angle": 0, "float_length": "4", "threading": "1,2,3,4,5,...", "weight": "Light-Medium", "weight_range": "120-180 GSM",
+    "tags": ["fundamental weaves", "intermediate-advanced"], "popularity": 95,
+    "peg_matrix": [[1, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 1, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]],
+    "description": "Single intersection per repeat. Long warp floats (4) create lustrous face", "applications": ["Sarees", "Bridal wear", "Evening gowns"], "characteristics": ["High luster, shiny appearance"], "performance_rating": 85, "cost_index": 140, "production_ease": "Medium-Hard"
+  },
+  {
+    "id": "N101", "name": "Double Twill", "fabric_type": "Double Twill Weave", "weave_type": "Double Twill (2/2 × 2/2)", "twill_ratio": "2/2", "direction": "Right", "shaft_count": 4, "repeat_size": 8, "angle": 45, "float_length": "3", "threading": "1,2,3,4,1,2,3,4,...", "weight": "Heavy", "weight_range": "180-240 GSM",
+    "tags": ["advanced twill", "advanced"], "popularity": 90,
+    "peg_matrix": [[1, 1, 0, 0, 1, 1, 0, 0], [0, 1, 1, 0, 0, 1, 1, 0], [0, 0, 1, 1, 0, 0, 1, 1], [1, 0, 0, 1, 1, 0, 0, 1]],
+    "description": "Two parallel twill lines. Thicker floats create bold diagonal", "applications": ["Suiting", "Outerwear"], "characteristics": ["Pronounced 3D texture"], "performance_rating": 95, "cost_index": 125, "production_ease": "Medium"
+  },
+  {
+    "id": "N201", "name": "Floral Jacquard", "fabric_type": "Jacquard Weave (Patterned)", "weave_type": "Jacquard (Patterned)", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 16, "repeat_size": 32, "angle": 0, "float_length": "3-8", "threading": "Jacquard Draft", "weight": "Medium-Heavy", "weight_range": "150-250 GSM",
+    "tags": ["jacquard weaves", "very advanced"], "popularity": 99,
+    "peg_matrix": [[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]],
+    "description": "Complex patterned weave with floral motifs. Selective shaft lifting creates image", "applications": ["Apparel (sarees, bridal wear)", "Home textiles"], "characteristics": ["Pattern creates depth and dimensionality"], "performance_rating": 80, "cost_index": 250, "production_ease": "Hard"
+  },
+  {
+    "id": "N202", "name": "Damask", "fabric_type": "Damask Weave (Reversible Patterned)", "weave_type": "Damask (Reversible Jacquard)", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 20, "repeat_size": 40, "angle": 0, "float_length": "4-5", "threading": "Reverse Damask Draft", "weight": "Heavy", "weight_range": "180-280 GSM",
+    "tags": ["damask", "very advanced", "reversible"], "popularity": 99,
+    "peg_matrix": [[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]],
+    "description": "Reversible damask. Same pattern appears on both sides (opposed floats)", "applications": ["Home textiles", "Formal apparel"], "characteristics": ["Pattern visible from both sides due to opposed floats"], "performance_rating": 80, "cost_index": 300, "production_ease": "Very Hard"
+  },
+  {
+    "id": "Z001", "name": "GenAI Auxetic Hybrid (Zone Based)", "fabric_type": "Technical Weave", "weave_type": "Hybrid", "twill_ratio": "N/A", "direction": "N/A", "shaft_count": 24, "repeat_size": 24, "angle": 0, "float_length": "3", "threading": "Zone Mapping Draft", "weight": "Heavy", "weight_range": "250-320 GSM",
+    "tags": ["auxetic", "zone-based", "generative ai", "flexible", "strong"], "popularity": 100,
+    "peg_matrix": [[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1],[1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],[1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0],[0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1]],
+    "description": "A hybrid multi-zone technical textile extracted from the GenAI Data Sheet. Features strong outer zones and an auxetic flexible center core.", "applications": ["Aerospace", "Performance Sportswear", "Smart Textiles"], "characteristics": ["Stretch under tension", "Zonal strength", "Energy dispersing"], "performance_rating": 98, "cost_index": 350, "production_ease": "Expert",
+    "zones": { "A": "plain", "B": "auxetic core" },
+    "repeat_string": "24x24",
+    "ai_intents": ["strong", "flexible", "auxetic", "space", "smart fabric"]
+  }
   ]
 }

@@ -45,16 +45,17 @@ export default function HomePage() {
           }
         `}</style>
         <img
-          src="/fabricai-logo.png"
-          alt="FabricAI Logo"
+          src="/logo.png"
+          alt="FabricaAI Logo"
           style={{
             width: 72, height: 72,
             display: 'block',
             margin: '0 auto 16px',
             animation: 'fabricai-pulse 1.6s ease-in-out infinite',
+            borderRadius: 16
           }}
         />
-        <p style={{ color: 'var(--text-3)', fontSize: 14 }}>Loading FabricAI Studio…</p>
+        <p style={{ color: 'var(--text-3)', fontSize: 14 }}>Loading FabricaAI Studio…</p>
       </div>
     </div>
   )

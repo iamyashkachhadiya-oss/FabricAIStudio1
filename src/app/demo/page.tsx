@@ -13,6 +13,7 @@ import SimulationExport from '@/components/outputs/SimulationExport'
 import DesignLibrary from '@/components/design/DesignLibrary'
 import BorderForm from '@/components/design/BorderForm'
 import DraftAnalysisTool from '@/components/analysis/DraftAnalysisTool'
+import AIDesignStudio from '@/components/design/AIDesignStudio'
 import WeftSequencePlan from '@/components/design/WeftSequencePlan'
 import AuthNotch from '@/components/auth/AuthNotch'
 import LoginModal, { type FabricUser } from '@/components/auth/LoginModal'
@@ -28,7 +29,7 @@ const NAV_TABS: { id: DemoTab; label: string }[] = [
 ]
 
 type CompileState = 'idle' | 'compiling' | 'compiled'
-type CenterMode   = 'predefined' | 'design-library' | 'draft-to-peg' | 'peg-to-draft'
+type CenterMode   = 'predefined' | 'design-library' | 'ai-studio'
 
 export default function DemoPage() {
   const [activeTab, setActiveTab]         = useState<DemoTab>('Weft')
@@ -182,10 +183,10 @@ export default function DemoPage() {
           }}>☰</button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <img src="/fabricai-logo.png" alt="FabricAI"
-              style={{ width: 28, height: 28, display: 'block', objectFit: 'contain' }} />
+            <img src="/logo.png" alt="FabricaAI"
+              style={{ width: 28, height: 28, display: 'block', objectFit: 'cover', borderRadius: 6 }} />
             <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: '-0.035em', lineHeight: 1, whiteSpace: 'nowrap' }}>
-              <span style={{ color: '#1D1D1F' }}>Fabric</span>
+              <span style={{ color: '#1D1D1F' }}>Fabrica</span>
               <span style={{ color: '#E0115F' }}>AI</span>
               <span style={{ color: '#1D1D1F' }}> Studio</span>
             </div>
@@ -222,6 +223,18 @@ export default function DemoPage() {
             }} />
             <span style={{ fontSize: 11, color: 'var(--clr-live)', fontWeight: 700, letterSpacing: '0.04em' }}>LIVE</span>
           </div>
+
+          {/* Admin button */}
+          <a href="/admin" style={{ height: 28, display: 'flex', alignItems: 'center', gap: 5, padding: '0 10px', borderRadius: 8, background: 'rgba(224,17,95,0.08)', border: '1px solid rgba(224,17,95,0.18)', color: '#E0115F', textDecoration: 'none', fontSize: 11, fontWeight: 700, letterSpacing: '-0.01em', transition: 'all 0.15s' }}
+            onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(224,17,95,0.14)'}
+            onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(224,17,95,0.08)'}
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Admin
+          </a>
 
           <div style={{ width: 1, height: 18, background: 'rgba(0,0,0,0.08)' }} />
 
@@ -350,23 +363,23 @@ export default function DemoPage() {
                 borderRadius: 10, border: '0.5px solid rgba(0,0,0,0.07)',
               }}>
                 {([
-                  { id: 'predefined'     as CenterMode, label: 'Predefined'      },
-                  { id: 'design-library' as CenterMode, label: 'Design Library'  },
-                  { id: 'draft-to-peg'  as CenterMode, label: 'Draft → Peg'     },
-                  { id: 'peg-to-draft'  as CenterMode, label: 'Peg → Draft'     },
+                  { id: 'predefined'     as CenterMode, label: 'Predefined'     },
+                  { id: 'design-library' as CenterMode, label: 'Design Library' },
+                  { id: 'ai-studio'      as CenterMode, label: '✦ AI'           },
                 ]).map(({ id, label }) => {
                   const active = centerMode === id
+                  const isAI = id === 'ai-studio'
                   return (
                     <button key={id} onClick={() => setCenterMode(id)} style={{
                       display: 'inline-flex', alignItems: 'center',
                       padding: '6px 12px', fontSize: 12,
                       fontWeight: active ? 600 : 400, letterSpacing: '-0.015em',
-                      color: active ? 'var(--text-1)' : 'var(--text-3)',
-                      background: active ? '#fff' : 'transparent',
+                      color: active ? (isAI ? '#fff' : 'var(--text-1)') : isAI ? '#E0115F' : 'var(--text-3)',
+                      background: active ? (isAI ? 'linear-gradient(135deg,#E0115F,#C4006A)' : '#fff') : 'transparent',
                       border: 'none', borderRadius: 8, cursor: 'pointer',
                       whiteSpace: 'nowrap' as const,
                       transition: 'all 0.18s ease',
-                      boxShadow: active ? '0 1px 5px rgba(0,0,0,0.14), 0 0.5px 1.5px rgba(0,0,0,0.10)' : 'none',
+                      boxShadow: active ? (isAI ? '0 2px 10px rgba(224,17,95,0.35)' : '0 1px 5px rgba(0,0,0,0.14), 0 0.5px 1.5px rgba(0,0,0,0.10)') : 'none',
                     }}>
                       {label}
                     </button>
@@ -507,40 +520,24 @@ export default function DemoPage() {
               <DesignLibrary onLoadDesign={() => setCenterMode('predefined')} />
             )}
 
-            {/* ── CONVERT PLACEHOLDERS ── */}
-            {(centerMode === 'draft-to-peg' || centerMode === 'peg-to-draft') && (
-              <div className="card" style={{
-                flex: 1, display: 'flex', flexDirection: 'column',
-                alignItems: 'center', justifyContent: 'center',
-                gap: 16, padding: '60px 24px',
-              }}>
-                <div style={{
-                  width: 56, height: 56, borderRadius: 16,
-                  background: 'linear-gradient(145deg, #E0115F22, #E0115F44)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26,
-                }}>
-                  {centerMode === 'draft-to-peg' ? '↓' : '↑'}
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.02em' }}>
-                    {centerMode === 'draft-to-peg' ? 'Draft → Peg Conversion' : 'Peg → Draft Conversion'}
-                  </div>
-                  <div style={{ fontSize: 13, color: 'var(--text-3)', marginTop: 6, maxWidth: 320, lineHeight: 1.5 }}>
-                    Mathematical conversion engine in development.
-                  </div>
-                </div>
+            {/* ── AI DESIGN STUDIO ── */}
+            {centerMode === 'ai-studio' && (
+              <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-light)' }}>
+                <AIDesignStudio />
               </div>
             )}
           </div>
         </div>
 
         {/* ══════════════  RIGHT SIDEBAR — Live Calculations  ══════════════ */}
-        <div className="hidden lg:block lg:shrink-0" style={{
-          width: 248, borderLeft: '1px solid var(--border-light)',
-          background: 'var(--sidebar-bg)', overflowY: 'auto',
-        }}>
-          <CalcPanel />
-        </div>
+        {centerMode !== 'ai-studio' && (
+          <div className="hidden lg:block lg:shrink-0" style={{
+            width: 248, borderLeft: '1px solid var(--border-light)',
+            background: 'var(--sidebar-bg)', overflowY: 'auto',
+          }}>
+            <CalcPanel />
+          </div>
+        )}
       </div>
 
       {/* ═══════════════════  STICKY COMPILE FOOTER  ════════════════════ */}
