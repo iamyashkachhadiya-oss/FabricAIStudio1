@@ -637,6 +637,20 @@ export default function AIDesignStudio() {
   // Design search
   const [borderSearch, setBorderSearch] = useState('')
   const [bodySearch, setBodySearch] = useState('')
+  const [customDesigns, setCustomDesigns] = useState<DesignEntry[]>([])
+
+  useEffect(() => {
+    fetch('/api/admin/designs')
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok && data.designs) setCustomDesigns(data.designs)
+      }).catch(console.error)
+  }, [])
+
+  const combinedLibrary = useMemo(() => {
+    return [...customDesigns, ...ALL_DESIGNS]
+  }, [customDesigns])
+
 
   // Drag & drop
   const [draggingDesign, setDraggingDesign] = useState<DesignEntry | null>(null)
@@ -668,8 +682,8 @@ export default function AIDesignStudio() {
 
   const filterDesigns = (q: string) => {
     const lq = q.toLowerCase().trim()
-    if (!lq) return ALL_DESIGNS.slice(0, 40)
-    return ALL_DESIGNS.filter(d =>
+    if (!lq) return combinedLibrary.slice(0, 40)
+    return combinedLibrary.filter(d =>
       d.name.toLowerCase().includes(lq) ||
       d.weave_type?.toLowerCase().includes(lq) ||
       d.fabric_type?.toLowerCase().includes(lq) ||
@@ -815,12 +829,12 @@ export default function AIDesignStudio() {
       // It's a design spec — find best matching pattern in library
       const weave = (result.weave_type || '').toLowerCase()
       const placement = (result.placement || '').toLowerCase()
-      const matches = ALL_DESIGNS.filter(d => {
+      const matches = combinedLibrary.filter(d => {
         if (weave && d.weave_type?.toLowerCase().includes(weave)) return true
         if (d.tags?.some((t: string) => t.toLowerCase().includes(weave))) return true
         return false
       })
-      const best = matches[0] || ALL_DESIGNS[0]
+      const best = matches[0] || combinedLibrary[0]
       if (!best) return
 
       let zone: PlacedBlock['zone'] = 'body'
@@ -843,7 +857,7 @@ export default function AIDesignStudio() {
       window.removeEventListener('ai-command', cmdHandler)
       window.removeEventListener('ai-design-update', designHandler)
     }
-  }, []) // stable — reads latest values via zoneRef
+  }, [combinedLibrary]) // stable — reads latest values via zoneRef and uses merged library
 
   // Keyboard shortcuts: +/- zoom, 0=fit, Space=pan mode
   useEffect(() => {

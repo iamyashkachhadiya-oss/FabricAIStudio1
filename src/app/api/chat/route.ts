@@ -231,18 +231,42 @@ export async function POST(req: NextRequest) {
 
     const rawText = (completion.choices[0]?.message?.content ?? '').trim()
     
-    // Extract JSON block using regex to ignore any markdown preambles or chatty text
-    const jsonMatch = /\{[\s\S]*\}/.exec(rawText)
-    let cleaned = jsonMatch ? jsonMatch[0] : rawText
-
     let parsed: any
-    try {
-      parsed = JSON.parse(cleaned)
+    const firstBrace = rawText.indexOf('{')
+    const lastBrace = rawText.lastIndexOf('}')
+
+    if (firstBrace !== -1 && lastBrace >= firstBrace) {
+      let jsonStr = rawText.substring(firstBrace, lastBrace + 1)
+      let preamble = rawText.substring(0, firstBrace).trim()
       
-      // If the LLM returned nlp_design (Mode 5), we must route it through the bridge
-      // and transform it into an action for the frontend
-      if (parsed.nlp_design) {
-        // Try to run the bridge on the user's original message instead to get deterministic output
+      const tryParse = (str: string) => {
+        try { return JSON.parse(str) } catch { return null }
+      }
+
+      parsed = tryParse(jsonStr)
+      // Attempt common repair: missing closing brace
+      if (!parsed) parsed = tryParse(jsonStr + '}')
+      if (!parsed) parsed = tryParse(jsonStr + '}}')
+
+      if (parsed) {
+        // Salvage preamble text into the answer
+        if (preamble) {
+          if (!parsed.answer) parsed.answer = preamble
+          else parsed.answer = preamble + '\n\n' + parsed.answer
+        }
+      } else {
+        // If it's hopelessly broken JSON, don't dump JSON syntax to the user.
+        // Just return the preamble (if any) or a generic fallback.
+        parsed = { answer: preamble || 'I had trouble parsing my own response. Could you rephrase your question?' }
+      }
+    } else {
+      // No JSON found at all
+      parsed = { answer: rawText }
+    }
+
+    try {
+      // If the LLM returned nlp_design (Mode 5), route it through the deterministic bridge
+      if (parsed?.nlp_design) {
         const bridgeResult = bridgeNLPToDesign(userMessage)
         const { design, intent, validation, pegPlanText, matrix } = bridgeResult
 
@@ -253,7 +277,8 @@ export async function POST(req: NextRequest) {
             payload: { text: pegPlanText, shaftCount: intent.shaft_count_hint ?? 16 },
           },
           answer: [
-            `Done! I ran the deterministic engine and generated a **${design.display_name}** weave.`,
+            parsed.answer ? parsed.answer + '\n\n' : '',
+            `Done! I generated a **${design.display_name}** weave.`,
             validation.errors.length   ? `⚠ ${validation.errors[0]}` : '',
             validation.warnings.length ? `Note: ${validation.warnings[0]}` : '',
             `Shafts needed: ${validation.shaftCount} (${validation.loomTarget} loom). The peg plan is applied to your canvas.`,
@@ -271,7 +296,7 @@ export async function POST(req: NextRequest) {
         }
       }
     } catch {
-      parsed = { answer: rawText }
+      // Ignore bridge errors, keep the originally parsed LLM response
     }
 
     return NextResponse.json({ result: parsed }, { status: 200 })

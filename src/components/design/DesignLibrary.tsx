@@ -756,6 +756,7 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
   // ── Generative presets ──
   const [genPresets, setGenPresets] = useState<GeneratedDesign[]>([])
   const [custom, setCustom] = useState<GeneratedDesign[]>([])
+  const [adminCustomDesigns, setAdminCustomDesigns] = useState<GeneratedDesign[]>([])
 
   // ── Mass generation state ──
   const [massDesigns, setMassDesigns] = useState<GeneratedDesign[]>([])
@@ -766,6 +767,22 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
   const MASS_TARGET = 10500
 
   useEffect(() => { setGenPresets(loadAllPresets()) }, [])
+
+  // Load custom admin designs
+  useEffect(() => {
+    fetch('/api/admin/designs')
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok && data.designs) {
+          setAdminCustomDesigns(data.designs.map((d: any, i: number) => {
+            // override source to indicate admin
+            const converted = staticToGen(d as SDesign, i)
+            converted.source = 'admin'
+            return converted
+          }))
+        }
+      }).catch(console.error)
+  }, [])
 
   // ── Filters ──
   const [search, setSearch] = useState('')
@@ -827,7 +844,8 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
   // ── All designs (source) ──
   const allDesigns = useMemo<GeneratedDesign[]>(() => {
     if (libTab === 'static') {
-      return staticLib.designs.map((d, i) => staticToGen(d as SDesign, i))
+      const baseStatic = staticLib.designs.map((d, i) => staticToGen(d as SDesign, i))
+      return [...adminCustomDesigns, ...baseStatic]
     }
     // Merge: mass > custom > community > presets
     const massSet = new Set(massDesigns.map(d => d.full_code))
@@ -839,8 +857,8 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
       ...genPresets.map(d => d.full_code),
     ])
     const communityFiltered = communityDesigns.filter(d => !existingCodes.has(d.full_code))
-    return [...massDesigns, ...customFiltered, ...communityFiltered, ...genPresets]
-  }, [libTab, genPresets, custom, massDesigns])
+    return [...massDesigns, ...customFiltered, ...adminCustomDesigns, ...communityFiltered, ...genPresets]
+  }, [libTab, genPresets, custom, massDesigns, adminCustomDesigns])
 
   // ── Fabric types for sidebar ──
   const fabricTypes = useMemo(() => {
@@ -892,10 +910,17 @@ export default function DesignLibrary({ onLoadDesign }: { onLoadDesign?: () => v
         (d.description || '').toLowerCase().includes(q)
       )
     }
-    if (sortBy === 'popularity') data.sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
-    else if (sortBy === 'name') data.sort((a, b) => a.display_name.localeCompare(b.display_name))
-    else if (sortBy === 'shafts_asc') data.sort((a, b) => a.shaft_count - b.shaft_count)
-    else if (sortBy === 'shafts_desc') data.sort((a, b) => b.shaft_count - a.shaft_count)
+    data.sort((a, b) => {
+      const aAdmin = a.source === 'admin' ? 1 : 0
+      const bAdmin = b.source === 'admin' ? 1 : 0
+      if (aAdmin !== bAdmin) return bAdmin - aAdmin
+      
+      if (sortBy === 'popularity') return (b.popularity || 0) - (a.popularity || 0)
+      if (sortBy === 'name') return a.display_name.localeCompare(b.display_name)
+      if (sortBy === 'shafts_asc') return a.shaft_count - b.shaft_count
+      if (sortBy === 'shafts_desc') return b.shaft_count - a.shaft_count
+      return 0
+    })
 
     return data
   }, [allDesigns, search, category, fabricFilter, weightFilter, shaftRange, sortBy, showBookmarked, bookmarks, showSimilarTo, collectionFilter])
